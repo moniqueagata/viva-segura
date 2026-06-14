@@ -19,11 +19,9 @@
 
   export default function Perfil() {
     const navigation = useNavigation();
-
     
     //pegar dados da usuaria
     const [usuario, setUsuario] = useState(null);
-
     useEffect(() => {
       const carregarUsuario = async () => {
         const dados = await AsyncStorage.getItem("user");
@@ -32,7 +30,6 @@
           setUsuario(JSON.parse(dados));
         }
       };
-
       carregarUsuario();
     }, []);
 

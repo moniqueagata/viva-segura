@@ -10,16 +10,14 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { useState, useEffect } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-
 import styles from "./styles";
 import BottomNavGuardiao from "../../components/BottomNavGuardiao";
 
 export default function PerfilGuardiao() {
   const navigation = useNavigation();
-
   const [usuario, setUsuario] = useState(null);
 
-  // 🔥 CARREGAR DADOS DO STORAGE
+  // CARREGAR DADOS DO STORAGE
   useEffect(() => {
     const carregarUsuario = async () => {
       const dados = await AsyncStorage.getItem("user");
@@ -28,9 +26,18 @@ export default function PerfilGuardiao() {
         setUsuario(JSON.parse(dados));
       }
     };
-
     carregarUsuario();
   }, []);
+
+  // Logout -> Sair da conta
+    const fazerLogout = async () => {
+        await AsyncStorage.removeItem("user");
+
+        navigation.reset({
+            index: 0,
+            routes: [{ name: 'Login' }],
+        });
+    };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -155,8 +162,7 @@ export default function PerfilGuardiao() {
         </View>
 
         {/* EXCLUIR */}
-        <Pressable style={styles.deleteButton}
-         onPress={() => navigation.navigate("Welcome")}>
+        <Pressable style={styles.deleteButton} onPress={fazerLogout}>
           <Text style={styles.deleteButtonText}>Sair da conta</Text>
         </Pressable>
       </ScrollView>

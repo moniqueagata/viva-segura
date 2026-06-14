@@ -8,27 +8,31 @@ import { useState, useEffect, useRef, useCallback } from 'react';
 import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getDistance } from 'geolib';
-import api from '../../services/api'
+import api from '../../services/api';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Feather from '@expo/vector-icons/Feather';
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 // Painel
 const { height: SCREEN_HEIGHT } = Dimensions.get('window');
-const SNAP_BOTTOM = (SCREEN_HEIGHT * 0.65) - 120;
+const SNAP_BOTTOM = (SCREEN_HEIGHT * 0.50) - 110;
 const SNAP_TOP = 0;
 
 // Icones - Locais Seguros
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import AntDesign from '@expo/vector-icons/AntDesign';
+import Foundation from '@expo/vector-icons/Foundation';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Entypo from '@expo/vector-icons/Entypo';
 
 const ICONE_TIPO = {
   delegacia: <MaterialCommunityIcons name="police-station" size={18} color="#6925b8" />,
   estacao: <FontAwesome6 name="train-subway" size={15} color="#6925b8" />,
-  apoio: <AntDesign name="woman" size={17} color="#6925b8" />,
+  apoio: <Foundation name="female-symbol" size={17} color="#6925b8" />,
   terminal: <FontAwesome5 name="bus" size={15} color="#6925b8" />,
-  policia:  <MaterialCommunityIcons name="police-station" size={18} color="#6925b8" />,
+  policia: <MaterialCommunityIcons name="police-station" size={18} color="#6925b8" />,
 };
+// ----------
 
 export default function Mapa() {
   const navigation = useNavigation();
@@ -52,18 +56,19 @@ export default function Mapa() {
   const [distanciaAtual, setDistanciaAtual] = useState(null);
 
   // Modal seleção de guardiões - Compartilhar Localização
-  const [modalGuardioes, setModalGuardioes] = useState(true);;
+  const [modalGuardioes, setModalGuardioes] = useState(false);;
   const [guardioes, setGuardioes] = useState([]);
   const [selecionados, setSelecionados] = useState([]);
+  const [guardiaoCompartilhado, setGuardiaoCompartilhado] = useState(null);
+  const [chegouAoDestino, setChegouAoDestino] = useState(false);
 
   // Animação do Painel
   const posicaoY = useRef(new Animated.Value(SNAP_BOTTOM)).current;
   const posicaoPainel = useRef(SNAP_BOTTOM);
   const ScrollViewRef = useRef(null);
   const [scrollAtivo, setScrollAtivo] = useState(false);
-
   const gesto = Animated.event(
-    [{ nativeEvent: { translationY: posicaoY } }],
+    [{ nativeEvent: { translationY: posicaoY }}],
     { useNativeDriver: true }
   );
 
@@ -109,7 +114,6 @@ export default function Mapa() {
   useEffect(() => {
     let inscrito = true;
     let subscription = null;
-
     async function iniciarMonitoramento() {
       const { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
@@ -119,7 +123,6 @@ export default function Mapa() {
       const primeiraPosicao = await Location.getCurrentPositionAsync({
         accuracy: Location.Accuracy.High,
       });
-
 
       if (primeiraPosicao && inscrito) {
         setLocation(primeiraPosicao.coords);
@@ -139,11 +142,26 @@ export default function Mapa() {
             setLocation(novaPosicao.coords);
             atualizarEndereco(novaPosicao.coords);
             enviarLocalizacaoAPI(novaPosicao.coords);
+
+            if (coordenadasDestino && guardiaoCompartilhado?.length > 0) {
+              const distancia = getDistance(
+                { latitude: novaPosicao.coords.latitude, longitude: novaPosicao.coords.longitude },
+                { latitude: coordenadasDestino.latitude, longitude: coordenadasDestino.longitude }
+              );
+              if (distancia <= 50 && !chegouAoDestino) {
+                setChegouAoDestino(true);
+                guardiaoCompartilhado.forEach(id_guardiao => {
+                  api.post('/rota-compartilhada/chegou', {
+                    id_usuaria: usuario.id_usuaria,
+                    id_guardiao: id_guardiao,
+                  }).catch(() => {});
+                });
+              }
+            }
           }
         }
       );
     }
-
     iniciarMonitoramento();
     return () => {
       inscrito = false;
@@ -196,23 +214,19 @@ export default function Mapa() {
   // POST /localizacao
   const enviarLocalizacaoAPI = async (coords) => {
     console.log(Object.keys(usuario));
-
     if (!usuario?.id_usuaria) return;
-
     try {
-
       const response = await api.post('/localizacao', {
         id_usuaria: usuario.id_usuaria,
         latitude: coords.latitude,
         longitude: coords.longitude,
       });
-
       console.log("LOCALIZAÇÃO SALVA:", response.data);
-
     } catch (error) {
       console.log("ERRO COMPLETO:", error);
     }
   };
+   
   useEffect(() => {
     carregarPontosRota();
     if (location) carregarAlertas();
@@ -271,13 +285,6 @@ export default function Mapa() {
         { latitude: destLat, longitude: destLng }
       ));
     }
-
-    mapRef.current?.animateToRegion({
-      latitude: destLat,
-      longitude: destLng,
-      latitudeDelta: 0.01,
-      longitudeDelta: 0.01,
-    });
     tracarRota(destLat, destLng);
     salvarPesquisa(ponto.nome || ponto.endereco);
   };
@@ -298,10 +305,8 @@ export default function Mapa() {
       }
 
       const resultados = await Location.geocodeAsync(`${pesquisa}, São Paulo, SP, Brasil`);
-
       if (resultados && resultados.length > 0) {
         const { latitude: lat, longitude: lng } = resultados[0];
-
         setEnderecoDestino(pesquisa);
         setCoordenadasDestino({ latitude: lat, longitude: lng });
         setModal(true);
@@ -312,10 +317,6 @@ export default function Mapa() {
             { latitude: lat, longitude: lng }
           ));
         }
-
-        mapRef.current?.animateToRegion(
-          { latitude: lat, longitude: lng, latitudeDelta: 0.01, longitudeDelta: 0.01 }, 800
-        );
         tracarRota(lat, lng);
         salvarPesquisa(pesquisa);
       } else {
@@ -327,7 +328,9 @@ export default function Mapa() {
       setBuscando(false);
     }
   };
+  // -------
 
+  // Rota traçada
   const tracarRota = async (destLat, destLng) => {
     if (!location) return;
     const origLat = location.latitude;
@@ -339,42 +342,100 @@ export default function Mapa() {
       const json = await res.json();
 
       if (json.code === 'Ok' && json.routes?.length > 0) {
-        setRotaAtiva(json.routes[0].geometry.coordinates.map(([lng, lat]) => ({ latitude: lat, longitude: lng })));
+      const coordenadas = json.routes[0].geometry.coordinates.map(
+        ([lng, lat]) => ({ latitude: lat, longitude: lng })
+      );
+      setRotaAtiva(coordenadas);
+
+      mapRef.current?.fitToCoordinates(coordenadas, {
+        edgePadding: { top: 290, right: 20, bottom: 200, left: 20 },
+        animated: true,
+      });
+
       } else {
-        setRotaAtiva([
+        const rotaSimples = [
           { latitude: origLat, longitude: origLng },
-          { latitude: destLat, longitude: destLng }
-        ]);
+          { latitude: destLat, longitude: destLng },
+        ];
+        setRotaAtiva(rotaSimples);
+        mapRef.current?.fitToCoordinates(rotaSimples, {
+          edgePadding: { top: 290, right: 20, bottom: 200, left: 20 },
+          animated: true,
+        });
       }
     } catch {
-      setRotaAtiva([
+      const rotaSimples = [
         { latitude: origLat, longitude: origLng },
-        { latitude: destLat, longitude: destLng }
-      ]);
-    }
-  };
-
-  // Compartilhar localização
-  const compartilharLocalizacao = async () => {
-    if (!location) { Alert.alert('Localização indisponível', 'Aguarde a localização ser obtida.'); return; }
-    setCompartilhando(true);
-    setModalGuardioes(true);
-
-    const { latitude, longitude } = location;
-    // const mensagem = `🚨 Preciso de ajuda!\n📍 ${endereco}\n\nhttps://maps.google.com/?q=${latitude},${longitude}`;
-    try {
-      // await Share.share({ message: mensagem });
-      await api.post('/localizacao', {
-        id_usuaria: usuario?.id,
-        latitude,
-        longitude,
-        compartilhado: true,
+        { latitude: destLat, longitude: destLng },
+      ];
+      setRotaAtiva(rotaSimples);
+      mapRef.current?.fitToCoordinates(rotaSimples, {
+        edgePadding: { top: 220, right: 20, bottom: 220, left: 20 },
+        animated: true,
       });
-    } catch { }
-    finally {
-      setCompartilhando(false);
     }
   };
+  // ----------
+
+  // Compartilhamento de rota - Modal
+  // Guardiões vinculados a usuária
+  useEffect(() => {
+    async function carregarGuardioes() {
+      if (!usuario?.id_usuaria) return;
+      try {
+        const res = await api.get(`/guardioes/${usuario.id_usuaria}`);
+        console.log('STATUS:', res.status);
+        console.log('DADOS:', JSON.stringify(res.data));
+        console.log('Guardiões retornados:', JSON.stringify(res.data));
+        setGuardioes(Array.isArray(res.data) ? res.data : []);
+      } catch {
+        console.log('Erro ao carregar guardiões:', e);
+        setGuardioes([]);
+      }
+    }
+    carregarGuardioes();
+  }, [usuario]);
+
+  const toggleSelecionado = (id_guardiao) => {
+    setSelecionados(prev =>
+      prev.includes(id_guardiao)
+        ? prev.filter(id => id !== id_guardiao)
+        : [...prev, id_guardiao]
+    );
+  };
+
+  const concluirCompartilhamento = async () => {
+    if (selecionados.length === 0) {
+      Alert.alert('Atenção', 'Selecione ao menos um guardião');
+      return;
+    }
+    if (!location || !coordenadasDestino) {
+      Alert.alert('Erro', 'Localização ou destino indisponível');
+      return;
+    }
+    try {
+      await Promise.all(
+        selecionados.map(id_guardiao =>
+          api.post('/rota-compartilhada', {
+            id_usuaria: usuario.id_usuaria,
+            id_guardiao: id_guardiao,
+            origemLatitude: location.latitude,
+            origemLongitude: location.longitude,
+            destinoLatitude: coordenadasDestino.latitude,
+            destinoLongitude: coordenadasDestino.longitude,
+            endereco_destino: enderecoDestino,
+          })
+        )
+      );
+      setGuardiaoCompartilhado(selecionados);
+      setModalGuardioes(false);
+      setSelecionados([]);
+      Alert.alert('✅ Compartilhado', 'Seus guardiões foram notificados.');
+    } catch {
+      Alert.alert('Erro', 'Não foi possível compartilhar. Tente novamente.');
+    }
+  };
+  // -------------
 
   // Animação na navegação
   const { width } = useWindowDimensions();
@@ -472,66 +533,61 @@ export default function Mapa() {
                 coordinate={rotaAtiva[rotaAtiva.length - 1]}
                 title={enderecoDestino}
               >
-                <FontAwesome5 name="map-marker" size={20} color="#ff88a7" />
+                <MaterialIcons name="location-pin" size={33} color="#895ad4" />
               </Marker>
             )}
-            {/* {alertas.map((alerta) => {
-              const aLat = Number(alerta.latitude);
-              const aLng = Number(alerta.longitude);
-              if (isNaN(aLat) || isNaN(aLng)) return null;
-
-              return (
-                <Marker
-                  key={`alerta-${alerta.id}`}
-                  coordinate={{ latitude: aLat, longitude: aLng }}
-                  title={`⚠️ ${alerta.tipo_alerta || 'Alerta'}`}
-                  description={alerta.descricao}
-                  pinColor="#ff4444"
-                />
-              );
-            })} */}
             {rotaAtiva && rotaAtiva.length > 0 && (
-              <Polyline coordinates={rotaAtiva} strokeColor="#ff88a7" strokeWidth={2} lineDashPattern={[0]} />
+              <Polyline coordinates={rotaAtiva} strokeColor="#895ad4" strokeWidth={2} lineDashPattern={[0]} />
             )}
           </MapView>
-
+          {/* Modal Topo -> cálculo de trajeto e compartilhamento */}
           {modal && (
             <View style={styles.modalContainer}>
               <View style={styles.modalTopo}>
-                <View style={styles.left}>
-                  <View style={styles.rowM}>
-                    <Image
-                      source={require('../../../imgMapa/alert.png')}
-                      style={{ width: 22, height: 22 }}
-                      tintColor='#bbb'
-                    />
-                    <Text style={styles.text}>Sua localização atual</Text>
-                  </View>
-                  <View style={styles.linha} />
-                  <View style={styles.rowM}>
-                    <Image
-                      source={require('../../../imgMapa/pin.png')}
-                      style={{ width: 22, height: 22 }}
-                      tintColor='#ff88a7'
-                    />
-                    <Text style={styles.endereço} numberOfLines={2}>{enderecoDestino}</Text>
-                  </View>
-                  <View style={styles.footer}>
-                    <Text style={styles.km}>Distância de</Text>
-                    {distanciaAtual !== null && (
-                      <Text style={styles.km}>
-                        {distanciaAtual >= 1000 ? `${(distanciaAtual / 1000).toFixed(1)} km` : `${distanciaAtual} metros`}
-                      </Text>
-                    )}
+                <View style={{ width: '100%', alignItems: 'flex-end'}}>
+                  <Pressable onPress={() => { setModal(false); setRotaAtiva(null); setDistanciaAtual(null); }}>
+                    <Feather name="x" size={17} color="#aaa" />
+                  </Pressable>
+                </View>
+                <View style={styles.contentModal}>
+                  <Text style={styles.endereço}>{enderecoDestino}</Text>
+                  {distanciaAtual !== null && (
+                    <Text style={styles.kmTempo}>32 min  •  {distanciaAtual >= 1000 ? `${(distanciaAtual / 1000).toFixed(1)} km` : `${distanciaAtual} metros`}</Text>
+                  )}
+                  <View style={styles.btnCompartilhar}>
+                    <Text style={styles.text}>{'Deseja compartilhar\nseu trajeto?'}</Text>
+                    <Pressable style={styles.button} onPress={() => setModalGuardioes(true)}>
+                      <Text style={styles.txWhite}>Compartilhar</Text>
+                    </Pressable>
                   </View>
                 </View>
-                <Pressable style={styles.right} onPress={() => { setModal(false); setRotaAtiva(null); setDistanciaAtual(null); }}>
-                  <Image
-                    source={require('../../../imgMapa/add.png')}
-                    style={{ width: 20, height: 20, transform: [{ rotate: '45deg' }] }}
-                    tintColor='#505050'
-                  />
-                </Pressable>
+                {guardiaoCompartilhado?.length > 0 && (
+                  <View style={{ width: '100%', marginVertical: 4, paddingHorizontal: 5, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                    <Ionicons name="people-sharp" size={15} color="#895ad4" />
+                    <Text style={{ fontSize: 13, fontWeight: '700', color: '#895ad4' }}>Compartilhando com:</Text>
+                    <View style={{ flexDirection: 'row', marginLeft: 7 }}>
+                      {guardioes
+                        .filter(g => guardiaoCompartilhado.includes(g.id) || guardiaoCompartilhado.includes(g.id_guardiao))
+                        .map((g, index) => (
+                          <View 
+                            key={g.id ?? g.id_guardiao}
+                            style={[styles.avatar, { marginLeft: index === 0 ? 0 : -7, zIndex: index }]}>
+                            {g.foto ? (
+                              <Image source={{ uri: g.foto }} 
+                                style={{ width: '100%', height: '100%' }} 
+                              />
+                            ) : (
+                              <Image source={require('../../../assets/img/icon2.png')} 
+                                style={{ width: '100%', height: '100%' }} 
+                                resizeMode="contain" 
+                              />
+                            )}
+                          </View>
+                        ))
+                      }
+                    </View>
+                  </View>
+                )}
               </View>
             </View>
           )}
@@ -541,10 +597,9 @@ export default function Mapa() {
             enabled={!scrollAtivo}
           >
             <Animated.View style={[styles.painel, { transform: [{ translateY: posicaoY }] }]}>
-              <View style={{ width: '100%', alignItems: 'center' }} onTouchStart={() => setScrollAtivo(false)}>
+              <View style={{ width: '100%', alignItems: 'center', marginBottom: '4%' }} onTouchStart={() => setScrollAtivo(false)}>
                 <View style={styles.puxador} />
               </View>
-
               <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}
                 ref={ScrollViewRef}
                 onScroll={(event) => {
@@ -559,7 +614,7 @@ export default function Mapa() {
               >
                 <View style={styles.row}>
                   <View style={styles.inputContainer}>
-                    <Image source={require('../../../imgMapa/lupa.png')}
+                    <Image source={require('../../../assets/img/lupa.png')}
                       style={{ width: 22, height: 22 }}
                       tintColor='#ddd'
                     />
@@ -575,7 +630,7 @@ export default function Mapa() {
                     />
                     {pesquisa.length > 0 && (
                       <Pressable style={styles.btnSearch} onPress={buscarEndereco}>
-                        <Image source={require('../../../imgMapa/send.png')} style={{ width: 15, height: 15 }} tintColor="#fff" />
+                        <Image source={require('../../../assets/img/send.png')} style={{ width: 15, height: 15 }} tintColor="#fff" />
                       </Pressable>
                     )}
                   </View>
@@ -610,19 +665,10 @@ export default function Mapa() {
                           </Pressable>
                         ))
                       ) : (
-                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#808080' }}>Nenhum local encontrado</Text>
+                        <Text style={{ fontSize: 14, fontWeight: '400', color: '#808080' }}>Local não encontrado</Text>
                       )}
                     </View>
                   )}
-                  <View style={styles.compartilhar}>
-                    <Text style={styles.subtitulo}>Deseja compartilhar sua localização atual?</Text>
-                    <Pressable
-                      style={styles.button}
-                      onPress={compartilharLocalizacao}
-                    >
-                      <Text style={styles.txWhite}>Compartilhar agora</Text>
-                    </Pressable>
-                  </View>
                 </View>
               </ScrollView>
             </Animated.View>
@@ -656,29 +702,95 @@ export default function Mapa() {
             </Pressable>
           ))}
         </View>
+        {/* MODAIS - Seleção de guardião, Confirmação de compartilhamento de Trajeto e Conclusão de Trajeto */}
         <Modal
           visible={modalGuardioes}
           onDismiss={() => setModalGuardioes(false)}
           contentContainerStyle={styles.overlayModal}
         >
           <View style={styles.modal}>
-            <Text style={styles.modalSubtitulo}>Escolha com quem você deseja compartilhar sua localização</Text>
+            <Text style={styles.modalSubtitulo}>Escolha com quem você deseja compartilhar</Text>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
-              <View style={styles.cardGuardiao}>
-                <View style={styles.upload} />
-
-              </View>
-              <View style={styles.cardGuardiao}>
-                
-              </View>
-              <View style={styles.cardGuardiao}>
-
-              </View>
-
-              <Pressable style={styles.btnConcluir}>
-                <Text>Concluir</Text>
-              </Pressable>
+              {guardioes.length === 0 ? (
+                <Text style={{ textAlign: 'center', marginVertical: '10%', fontSize: 13, fontWeight: '300', color: '#aaa'}}>
+                  Você ainda não tem guardiões confirmados
+                </Text>
+              ) : (
+                guardioes.map((guardiao) => {
+                    const selecionado = selecionados.includes(guardiao.id_guardiao);
+                    return (
+                      <Pressable 
+                        key={guardiao.id_guardiao}
+                        style={[styles.cardGuardiao, selecionado && { borderWidth: 1, borderColor: '#6925b8' }]}
+                        onPress={() => toggleSelecionado(guardiao.id_guardiao)}
+                      >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 15}}>
+                          <View style={styles.fotoGuardiao}>
+                            {guardiao.foto ? (
+                              <Image
+                                source={{ uri: guardiao.foto }}
+                                style={{ width: '100%', height: '100%' }}
+                              />
+                            ) : (
+                              <Image
+                                source={require('../../../assets/img/icon2.png')}
+                                style={{ width: '100%', height: '100%' }}
+                                resizeMode="contain"
+                              />
+                            )}
+                          </View>
+                          <Text style={[styles.nomeGuardiao, selecionado && { color: '#6925b8' }]}>{guardiao.nome}</Text>
+                        </View>
+                        <View style={[styles.toogle, selecionado && { backgroundColor: '#6925b8', borderColor: 'transparent' }]}>
+                          {selecionado && (
+                            <Image
+                              source={require('../../../assets/img/check.png')}
+                              style={{ width: 10, height: 10 }}
+                            />
+                          )}
+                        </View>
+                      </Pressable>
+                    )
+                  })
+              )}
             </ScrollView>
+            <Pressable style={styles.btnConcluir} onPress={concluirCompartilhamento}>
+              <Text style={styles.txWhite}>Concluir</Text>
+            </Pressable>
+          </View>
+        </Modal>
+        <Modal
+          visible={chegouAoDestino}
+          onDismiss={() => setChegouAoDestino(false)}
+          contentContainerStyle={styles.overlayModal}
+        >
+          <View style={styles.modal}>
+            <Text style={[styles.modalSubtitulo, { fontSize: 20, fontWeight: '700', color: '#6925b8'}]}>🎉 Você chegou ao destino!</Text>
+            <Text style={{ marginBottom: '6%', textAlign: 'center', fontSize: 15, color: '#454545' }}>Deseja continuar compartilhando sua localização?</Text>
+            <View style={{ flexDirection: 'row', gap: 22 }}>
+              <Pressable
+                style={[styles.btnConcluir, { backgroundColor: '#d13f3f' }]}
+                onPress={async () => {
+                  await Promise.all(
+                    guardiaoCompartilhado.map(id_guardiao =>
+                      api.post('/rota-compartilhada/encerrar', {
+                        id_usuaria:  usuario.id_usuaria,
+                        id_guardiao: id_guardiao,
+                      }).catch(() => {})
+                    )
+                  );
+                  setGuardiaoCompartilhado(null);
+                  setChegouAoDestino(false);
+                  setRotaAtiva(null);
+                  setModal(false);
+                }}
+              >
+                <Text style={{ color: '#fff', fontSize: 15, fontWeight: '500' }}>Encerrar</Text>
+              </Pressable>
+              <Pressable style={styles.btnConcluir} onPress={() => setChegouAoDestino(false)}>
+                <Text style={[styles.txWhite, { fontSize: 15, fontWeight: '500' }]}>Continuar</Text>
+              </Pressable>
+            </View>
           </View>
         </Modal>
       </View>

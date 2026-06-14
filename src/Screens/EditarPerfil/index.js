@@ -142,29 +142,6 @@ export default function EditarPerfil() {
   }
 };
 
-// const [foto, setFoto] = useState(usuario?.foto || null);
-
-// const escolherFoto = async () => {
-//   const permissao = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-//   if (permissao.status !== "granted") {
-//     alert("Permissão negada");
-//     return;
-//   }
-
-//   const resultado = await ImagePicker.launchImageLibraryAsync({
-//     mediaTypes: ['images'],
-//     allowsEditing: true,
-//     aspect: [1, 1],
-//     quality: 0.1,
-// base64: false,
-//   });
-
-//   if (!resultado.canceled) {
-//   setFoto(resultado.assets[0].uri);
-// }
-// };
-
   return (
     <View style={styles.container}>
       <Portal>
@@ -223,7 +200,7 @@ export default function EditarPerfil() {
           <Pressable style={styles.edit} onPress={() => setModal(true)}>
             <Image
               source={require('../../../assets/img/pen.png')}
-              style={{ width: 18, height: 18 }}
+              style={{ width: 20, height: 20 }}
               tintColor='#fff'
               resizeMode='contain'
             />

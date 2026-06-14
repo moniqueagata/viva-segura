@@ -10,7 +10,7 @@ export default StyleSheet.create({
     justifyContent: 'center',
   },
 
-  // Card Topo -> cálculo de distância
+  // Modal Topo -> cálculo de trajeto e compartilhamento
   modalContainer: {
     position: 'absolute',
     top: 50,
@@ -22,76 +22,75 @@ export default StyleSheet.create({
   modalTopo: {
     backgroundColor: '#fff',
     width: '100%',
-    minHeight: 130,
+    maxHeight: 190,
     borderRadius: 15,
-    padding: 18,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+    paddingHorizontal: 19,
+    paddingVertical: 15,
+    alignItems: 'flex-start',
     elevation: 8,
     shadowColor: '#0000008a',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
     shadowRadius: 5,
-    gap: 10
   },
-
-  left: {
-    width: '91%',
-    justifyContent: 'center'
-  },
-
-  rowM: {
-    alignItems: 'center',
-    flexDirection: 'row',
-    gap: 10,
-    paddingLeft: 8
-  },
-
-  linha: {
+  
+  contentModal: {
     width: '100%',
-    height: 2,
-    backgroundColor: '#f5f5f5',
-    borderRadius: 10,
-    marginVertical: '4%',
-  },
-
-  text: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#606060',
-    paddingVertical: 3,
-    paddingLeft: 8
+    paddingHorizontal: 8,
+    gap: 5,
   },
 
   endereço: {
-    fontSize: 16,
+    fontSize: 17,
+    fontWeight: '700',
+    color: '#6925b8',
+  },
+
+  kmTempo: {
+    fontSize: 14,
     fontWeight: '500',
-    color: '#ff88a7',
-    paddingVertical: 3,
-    paddingLeft: 8
+    color: '#aaa',
   },
 
-  right: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    height: 20,
-    width: 20,
-  },
-
-  footer: {
+  btnCompartilhar: {
     width: '100%',
-    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'flex-start',
-    paddingLeft: 6,
-    gap: 2,
-    marginTop: 15
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginVertical: 10,
   },
 
-  km: {
-    fontSize: 13,
-    color: '#606060', 
-    fontWeight: '500'
+  text: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#666',
+    lineHeight: 17
+  } , 
+
+  button: {
+    width: 140,
+    height: 40,
+    backgroundColor: '#6925b8',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 30,
+  },
+
+  txWhite: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#fff'
+  },
+
+  // Foto/Avatar -> guardiões
+  avatar: {
+    width: 27,
+    height: 27,
+    borderRadius: 16,
+    backgroundColor: '#f1f1f1',
+    overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: '#fff',
   },
   // ---------
 
@@ -107,7 +106,7 @@ export default StyleSheet.create({
     overflow: 'hidden',
     borderRadius: 20,
     borderWidth: 1,
-    borderColor: '#ff88a7'
+    borderColor: '#895ad4'
   },
 
   scroll: {
@@ -116,12 +115,12 @@ export default StyleSheet.create({
 
   painel: {
     width: '100%',
-    height: SCREEN_HEIGHT * 0.65,
+    height: SCREEN_HEIGHT * 0.50,
     backgroundColor: '#fff',
     position: 'absolute',
     bottom: 0,
     paddingHorizontal: 14,
-    paddingTop: 20,
+    paddingTop: 10,
     alignItems: 'center',
     justifyContent:  'flex-start',
     borderTopLeftRadius: 30,
@@ -131,23 +130,23 @@ export default StyleSheet.create({
   contentPainel: {
     width: '100%',
     alignItems: 'center',
-    marginVertical: '10%',
+    marginVertical: '4%',
     justifyContent: 'space-between',
-    paddingBottom: 22
+    paddingBottom: 20
   },
 
   puxador: {
     width: '10%',
-    height: 4,
+    height: 3,
     backgroundColor: '#e0e0e0',
     borderRadius: 2,
-    marginBottom: '5%',
   },
 
   row: {
     width: '100%',
     flexDirection: 'row',
     justifyContent: 'space-between',
+    marginVertical: 7
   },
 
   inputContainer: {
@@ -204,7 +203,7 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     gap: 10,
-    marginVertical: 12
+    marginVertical: 10
   },
 
   card: {
@@ -217,37 +216,13 @@ export default StyleSheet.create({
     alignItems: 'flex-start',
     justifyContent: 'center',
     padding: 17,
-    gap: 4
-  },
-
-  compartilhar: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginVertical: '8%',
-    gap: 10
+    gap: 5
   },
 
   subtitulo: {
     fontSize: 15,
     fontWeight: '500',
     color: '#6925b8',
-  },
-
-  button: {
-    width: 190,
-    height: 47,
-    backgroundColor: '#6925b8',
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 30,
-    marginVertical: '2%',
-  },
-
-  txWhite: {
-    fontSize: 16,
-    fontWeight: '500',
-    color: '#fff'
   },
 
   nomeLocal: {
@@ -291,12 +266,13 @@ export default StyleSheet.create({
     color: '#fff'
   },
 
-  // Modal seleção de guardiões
+  // Modal -> seleção de guardiões
   overlayModal: {
     width: '100%',
+    maxHeight: 460,
     backgroundColor: '#fff',
-    borderTopLeftRadius: 50,
-    borderTopRightRadius: 50,
+    borderTopLeftRadius: 40,
+    borderTopRightRadius: 40,
     position: 'absolute',
     bottom: 0,
     margin: 0,
@@ -304,35 +280,67 @@ export default StyleSheet.create({
 
   modal: {
     width: '100%',
+    height: '100%',
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 30,
-    paddingVertical: 30,
-  },
-
-  cardGuardiao: {
-    width: '100%',
-    height: 66,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#fff',
-    borderWidth: 1,
-    borderRadius: 10,
-    marginVertical: 5,
+    paddingVertical: 10,
   },
 
   modalSubtitulo: {
     fontSize: 15,
     fontWeight: '500',
-    color: '#6925b8',
-    paddingHorizontal: 10,
+    color: '#454545',
     textAlign: 'center',
-    marginBottom: '7%'
+    marginVertical: '8%'
+  },
+
+  cardGuardiao: {
+    width: '100%',
+    height: 77,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 5,
+    marginVertical: 8,
+    gap: 15
+  },
+
+  fotoGuardiao: {
+    width: 57,
+    height: 57,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    overflow: 'hidden'
+  },
+
+  nomeGuardiao: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#888'
+  },
+
+  toogle: {
+    width: 22,
+    height: 22,
+    backgroundColor: 'transparent',
+    borderWidth: 1,
+    borderColor: '#ddd',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 33,
   },
 
   btnConcluir: {
-    width: 190,
-    height: 47,
+    width: 150,
+    height: 45,
     backgroundColor: '#6925b8',
     alignItems: 'center',
     justifyContent: 'center',

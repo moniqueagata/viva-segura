@@ -50,27 +50,27 @@ export default StyleSheet.create({
   },
 
   upload: {
-    width: 160,
-    height: 160,
+    width: 180,
+    height: 180,
     backgroundColor: '#f1f1f1',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '100%',
-    borderWidth: 2,
+    borderWidth: 3,
     borderColor: '#6925b8',
     overflow: 'hidden',
   },
 
   edit: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor: '#6925b8',
     borderRadius: '100%',
     position: 'absolute',
     bottom: 0,
-    right: 0
+    right: 5
   },
   // ----
 
@@ -81,8 +81,8 @@ export default StyleSheet.create({
   },
 
   label: {
-    fontSize: 17,
-    fontWeight: '400',
+    fontSize: 15,
+    fontWeight: '500',
     color: '#bbb',
     paddingLeft: 8,
     marginBottom: 8,

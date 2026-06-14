@@ -139,7 +139,7 @@ export default function Central() {
               style={[styles.btnEnviar, { opacity: duvida.trim().length > 0 ? 1 : 0.3 }]}
               onPress={enviarDuvida}
             >
-              <Image source={require('../../../imgMapa/send.png')} style={{ width: 12, height: 12 }} tintColor="#fff" />
+              <Image source={require('../../../assets/img/send.png')} style={{ width: 12, height: 12 }} tintColor="#fff" />
             </Pressable>
           </View>
           <View style={styles.session}>
