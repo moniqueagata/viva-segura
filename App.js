@@ -69,7 +69,7 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="Mapa" component={Mapa}
+          <Stack.Screen name="HomeGuardiao" component={HomeGuardiao}
             options={{
               headerShown: false
             }}
@@ -135,6 +135,11 @@ export default function App() {
             }}
           />
           <Stack.Screen name="EditarEndereco" component={EditarEndereco}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="Mapa" component={Mapa}
             options={{
               headerShown: false
             }}
@@ -215,11 +220,6 @@ export default function App() {
             headerShown: false
             }}
             />
-          <Stack.Screen name="HomeGuardiao" component={HomeGuardiao}
-            options={{
-              headerShown: false
-            }}
-          />
           <Stack.Screen name="CadastroGuardiao3" component={CadastroGuardiao3}
             options={{
               headerShown: false

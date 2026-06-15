@@ -347,6 +347,22 @@ export default StyleSheet.create({
     borderRadius: 30,
     marginVertical: '7%',
   },
+  // ------
 
+  // Modal -> sucesso compartilhamento de trajeto
+  modalSucesso: {
+    width: '85%',
+    height: 180,
+    backgroundColor: '#fff',
+    borderRadius: 20,
+    alignSelf: 'center',
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.15,
+    shadowRadius: 8,
+    bottom: 30
+  },
+  // -------
 
 });

@@ -58,7 +58,9 @@ export default function Login() {
             }
 
         } catch (error) {
-            console.log(error.response?.data || error.message);
+            console.log("STATUS:", error.response?.status);
+            console.log("ERRO:", error.response?.data);
+            console.log("MESSAGE:", error.message);
             alert("Erro ao fazer login.");
         } finally {
             setLoading(false);

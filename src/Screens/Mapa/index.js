@@ -61,6 +61,7 @@ export default function Mapa() {
   const [selecionados, setSelecionados] = useState([]);
   const [guardiaoCompartilhado, setGuardiaoCompartilhado] = useState(null);
   const [chegouAoDestino, setChegouAoDestino] = useState(false);
+  const [modalSucesso, setModalSucesso] = useState(false);
 
   // Animação do Painel
   const posicaoY = useRef(new Animated.Value(SNAP_BOTTOM)).current;
@@ -591,6 +592,7 @@ export default function Mapa() {
               </View>
             </View>
           )}
+          {/* ------ */}
           <PanGestureHandler
             onGestureEvent={gesto}
             onHandlerStateChange={estadoPainel}
@@ -757,6 +759,16 @@ export default function Mapa() {
             <Pressable style={styles.btnConcluir} onPress={concluirCompartilhamento}>
               <Text style={styles.txWhite}>Concluir</Text>
             </Pressable>
+          </View>
+        </Modal>
+        <Modal
+          visible={modalSucesso}
+          onDismiss={() => setModalSucesso(false)}
+          contentContainerStyle={styles.modalSucesso}
+        >
+          <View style={styles.modal}>
+              <Text style={{ fontSize: 20, fontWeight: '700', color: '#6925b8' }}>Solicitação enviada!</Text>
+              <Text style={[styles.text, {textAlign: 'center', fontSize: 15, fontWeight: '300', marginVertical: '5%', lineHeight: 20}]}>{'Seu pedido foi enviado ao guardião.\nVocê receberá uma notificação assim que ele aceitar o convite'}</Text>
           </View>
         </Modal>
         <Modal

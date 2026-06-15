@@ -7,11 +7,11 @@ export default StyleSheet.create({
   },
 
   content: {
-      flex: 1,
-      width: '100%',
-      paddingHorizontal: 20,
-      alignItems: 'center',
-    },
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+  },
     
  fundoEmbaixo: {
  
