@@ -69,11 +69,6 @@ export default function App() {
     <PaperProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="HomeGuardiao" component={HomeGuardiao}
-            options={{
-              headerShown: false
-            }}
-          />
           <Stack.Screen name="Splash" component={Splash}
             options={{
               headerShown: false
@@ -179,6 +174,11 @@ export default function App() {
               headerShown: false
             }}
           />
+          <Stack.Screen name="HomeGuardiao" component={HomeGuardiao}
+            options={{
+              headerShown: false
+            }}
+          />
           <Stack.Screen name="PerfilGuardiao" component={PerfilGuardiao}
             options={{
               headerShown: false
@@ -240,7 +240,6 @@ export default function App() {
               headerShown: false
             }}
           />
-          
         </Stack.Navigator>
       </NavigationContainer>
     </PaperProvider>

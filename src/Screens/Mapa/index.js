@@ -431,8 +431,9 @@ export default function Mapa() {
       setGuardiaoCompartilhado(selecionados);
       setModalGuardioes(false);
       setSelecionados([]);
-      Alert.alert('✅ Compartilhado', 'Seus guardiões foram notificados.');
-    } catch {
+      setModalSucesso(true);
+    } catch (error) {
+      console.log('ERRO COMPARTILHAR:', error.response?.data || error.message);
       Alert.alert('Erro', 'Não foi possível compartilhar. Tente novamente.');
     }
   };
@@ -447,10 +448,8 @@ export default function Mapa() {
 
   useEffect(() => {
     const medidaAtual = medidas[abaAtiva];
-
     if (medidaAtual) {
       const { x, width } = medidaAtual;
-
       const destinoX = x + (width / 2) - (larguraAba / 2);
 
       Animated.spring(posicaoX, {
@@ -538,7 +537,7 @@ export default function Mapa() {
               </Marker>
             )}
             {rotaAtiva && rotaAtiva.length > 0 && (
-              <Polyline coordinates={rotaAtiva} strokeColor="#895ad4" strokeWidth={2} lineDashPattern={[0]} />
+              <Polyline coordinates={rotaAtiva} strokeColor="#895ad4" strokeWidth={2} />
             )}
           </MapView>
           {/* Modal Topo -> cálculo de trajeto e compartilhamento */}
@@ -563,7 +562,7 @@ export default function Mapa() {
                   </View>
                 </View>
                 {guardiaoCompartilhado?.length > 0 && (
-                  <View style={{ width: '100%', marginVertical: 4, paddingHorizontal: 5, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
+                  <View style={{ width: '100%', marginTop: 4, paddingHorizontal: 5, flexDirection: 'row', alignItems: 'center', gap: 8 }}>
                     <Ionicons name="people-sharp" size={15} color="#895ad4" />
                     <Text style={{ fontSize: 13, fontWeight: '700', color: '#895ad4' }}>Compartilhando com:</Text>
                     <View style={{ flexDirection: 'row', marginLeft: 7 }}>
@@ -715,7 +714,7 @@ export default function Mapa() {
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
               {guardioes.length === 0 ? (
                 <Text style={{ textAlign: 'center', marginVertical: '10%', fontSize: 13, fontWeight: '300', color: '#aaa'}}>
-                  Você ainda não tem guardiões confirmados
+                  Você ainda não tem guardiões vinculados
                 </Text>
               ) : (
                 guardioes.map((guardiao) => {

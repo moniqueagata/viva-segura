@@ -11,15 +11,11 @@ export default function BottomNavGuardiao({ abaAtivaInicial = 0 }) {
             bottom: 0,
             left: 0,
             right: 0,
-
             flexDirection: 'row',
             justifyContent: 'space-around',
             alignItems: 'center',
-
             backgroundColor: '#87D3B6',
-
             height: 80,
-
             borderTopLeftRadius: 25,
             borderTopRightRadius: 25,
         }}>
@@ -50,8 +46,8 @@ export default function BottomNavGuardiao({ abaAtivaInicial = 0 }) {
                     <Image
                         source={require('../../../assets/imgHomeGuardiao/home.png')}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 35,
+                            height: 35,
                             tintColor: abaAtivaInicial === 0 ? '#4B0082' : '#FFFFFF'
                         }}
                     />
@@ -72,8 +68,8 @@ export default function BottomNavGuardiao({ abaAtivaInicial = 0 }) {
                     <Image
                         source={require('../../../assets/imgHomeGuardiao/chat.png')}
                         style={{
-                            width: 50,
-                            height: 50,
+                            width: 40,
+                            height: 40,
                             tintColor: abaAtivaInicial === 1 ? '#4B0082' : '#FFFFFF'
                         }}
                     />
@@ -94,8 +90,8 @@ export default function BottomNavGuardiao({ abaAtivaInicial = 0 }) {
                     <Image
                         source={require('../../../assets/imgHomeGuardiao/anjo.png')}
                         style={{
-                            width: 55,
-                            height: 55,
+                            width: 50,
+                            height: 50,
                             tintColor: abaAtivaInicial === 2 ? '#4B0082' : '#FFFFFF'
                         }}
                     />
@@ -116,8 +112,8 @@ export default function BottomNavGuardiao({ abaAtivaInicial = 0 }) {
                     <Image
                         source={require('../../../assets/imgHomeGuardiao/meuPerfil.png')}
                         style={{
-                            width: 45,
-                            height: 45,
+                            width: 40,
+                            height: 40,
                             tintColor: abaAtivaInicial === 3 ? '#4B0082' : '#FFFFFF'
                         }}
                     />

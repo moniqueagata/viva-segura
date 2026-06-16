@@ -1,17 +1,6 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    container: {
-    backgroundColor: '#F3F9F7',
-    borderRadius: 20,
-    padding: 18,
-    marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
-  },
 
   header: {
     width: '100%',
@@ -20,28 +9,24 @@ export default StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     paddingHorizontal: 25,
-    paddingTop: 30
-  },
-
-  headerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#EBF4F1',
-    padding: 10,
-    borderRadius: 15,
-  },
-
-  avatarImage: {
-    width: 35,
-    height: 35,
-    borderRadius: 17.5,
-    marginRight: 10,
+    paddingTop: 30,
   },
 
   headerText: {
     fontSize: 16,
     fontWeight: '700',
-    color: '#43af86'
+    color: '#43af86',
+    paddingLeft: 10
+  },
+
+  upload: {
+    width: 50,
+    height: 50,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    overflow: 'hidden'
   },
 
   content: {
@@ -58,17 +43,13 @@ export default StyleSheet.create({
 
   // Card de solicitação
   cardSolicitacao: {
+    padding: 15,
     backgroundColor: '#fff',
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 12,
     borderWidth: 1,
-    borderColor: '#e8d5ff',
-    shadowColor: '#6925b8',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.08,
-    shadowRadius: 6,
-    elevation: 3,
+    borderColor: '#d4ddda',
+    borderRadius: 20,
+    marginVertical: '5%',
+    borderWidth: 1,
   },
 
   fotoSolicitacao: {
@@ -77,14 +58,14 @@ export default StyleSheet.create({
     borderRadius: 25,
     backgroundColor: '#f1f1f1',
     overflow: 'hidden',
-    borderWidth: 2,
+    borderWidth: 1,
     borderColor: '#4B0082',
   },
 
   btnAceitar: {
     flex: 1,
     height: 38,
-    backgroundColor: '#4B0082',
+    backgroundColor: '#87D3B6',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
@@ -93,16 +74,46 @@ export default StyleSheet.create({
   btnRecusar: {
     flex: 1,
     height: 38,
-    backgroundColor: '#ffeaea',
+    backgroundColor: '#d13f3f',
     borderRadius: 20,
     alignItems: 'center',
     justifyContent: 'center',
   },
 
+  // Card de compartilhamento de rota
+  cardRota: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#d4ddda',
+    borderRadius: 20,
+    padding: 18,
+    marginBottom: 20,
+  },
+
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f5faf8',
+    padding: 10,
+    borderRadius: 15,
+  },
+
+  fotoUsuaria: {
+    width: 35,
+    height: 35,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    borderWidth: 1,
+    borderColor: '#318f7b',
+    overflow: 'hidden'
+  },
+
   mapPlaceholder: {
     width: '50%',
     height: 110,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#ddd',
     borderRadius: 12,
     position: 'relative',
     overflow: 'hidden',
@@ -116,9 +127,12 @@ export default StyleSheet.create({
   },
 
   button: {
-    backgroundColor: '#4B0082',
+    width: 150,
+    height: 33,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#87D3B6',
     borderRadius: 20,
-    paddingVertical: 10,
     alignItems: 'center',
   },
 

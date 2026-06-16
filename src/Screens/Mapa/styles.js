@@ -22,7 +22,6 @@ export default StyleSheet.create({
   modalTopo: {
     backgroundColor: '#fff',
     width: '100%',
-    maxHeight: 190,
     borderRadius: 15,
     paddingHorizontal: 19,
     paddingVertical: 15,

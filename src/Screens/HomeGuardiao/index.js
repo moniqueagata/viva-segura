@@ -4,12 +4,12 @@ import {
   View,
   Image,
   Pressable,
-  ScrollView,
-  SafeAreaView, 
+  ScrollView, 
   Animated, 
   Easing, 
   Linking
 } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapView, { Marker } from "react-native-maps";
 import * as Location from "expo-location";
@@ -18,6 +18,8 @@ import { useNavigation } from "@react-navigation/native";
 import BottomNavGuardiao from "../../components/BottomNavGuardiao";
 import styles from "./styles";
 import api from "../../services/api";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons'; // -> Icone Pin
+
 
 export default function HomeGuardiao() {
   const navigation = useNavigation();
@@ -123,7 +125,7 @@ export default function HomeGuardiao() {
       const { id_usuaria } = JSON.parse(user);
       try {
         const res = await api.get(`/rota-compartilhada/pendentes/${id_usuaria}`);
-        setSolicitacoesPendentes([]);
+        setSolicitacoesPendentes(Array.isArray(res.data) ? res.data : []);
       } catch {
         setSolicitacoesPendentes([]);
       }
@@ -142,23 +144,25 @@ export default function HomeGuardiao() {
         id_guardiao: id_usuaria,
       });
       setSolicitacoesPendentes(prev => prev.filter(s => s.id_rota !== id_rota));
-    } catch {
-      console.log('Erro ao aceitar solicitação');
+      const json = await api.get(`/guardiao/home/${id_usuaria}`);
+      setUsuarios(json.data.data);
+      console.log('HOME APÓS ACEITAR:', JSON.stringify(json.data));
+    } catch (error){
+      console.log('Erro ao aceitar:', error.response?.data || error.message);
     }
   };
   // --------
 
-  // Geolocalização
+  // Geolocalização + Cálculo de distância
   useEffect(() => {
     const buscarLocalizacao = async () => {
-      try {
-        // LOCALIZAÇÃO DA USUÁRIA
-        const response = await api.get("/localizacao/1");
-
+      try { // LOCALIZAÇÃO DA USUÁRIA
+        if (usuarios.length === 0) return; // ← para se não tiver usuária
+        const { id_usuaria } = usuarios[0].usuaria;
+        const response = await api.get(`/localizacao/${id_usuaria}`);
         const dados = response.data;
         const latitudeUsuaria = parseFloat(dados.latitude);
         const longitudeUsuaria = parseFloat(dados.longitude);
-
         setLocation({
           latitude: latitudeUsuaria,
           longitude: longitudeUsuaria,
@@ -169,10 +173,8 @@ export default function HomeGuardiao() {
           latitude: latitudeUsuaria,
           longitude: longitudeUsuaria,
         });
-
         if (enderecoConvertido.length > 0) {
           const local = enderecoConvertido[0];
-
           setEndereco(`${local.street || ""}, ${local.streetNumber || ""}`);
         }
 
@@ -182,7 +184,6 @@ export default function HomeGuardiao() {
           const localGuardiao = await Location.getCurrentPositionAsync({});
           const latitudeGuardiao = localGuardiao.coords.latitude;
           const longitudeGuardiao = localGuardiao.coords.longitude;
-          // CALCULAR DISTÂNCIA
           const distanciaMetros = calcularDistancia(
             latitudeGuardiao,
             longitudeGuardiao,
@@ -198,7 +199,7 @@ export default function HomeGuardiao() {
     buscarLocalizacao();
     const interval = setInterval(buscarLocalizacao, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [usuarios]);
 
   function calcularDistancia(lat1, lon1, lat2, lon2) {
     const R = 6371e3;
@@ -217,32 +218,23 @@ export default function HomeGuardiao() {
   // -------
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
-      <StatusBar style="dark" />
-      {/* HEADER - Fora do ScrollView para ficar fixo no topo */}
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }} edges={['bottom']}>
       <View style={styles.header}>
         <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Pressable onPress={() => navigation.navigate("PerfilGuardiao")}>
-            {fotoGuardiao ? (
-              <Image
-                source={{ uri: fotoGuardiao }}
-                style={{
-                  width: 45,
-                  height: 45,
-                  marginRight: 12,
-                  borderRadius: 100,
-                }}
-              />
-            ) : (
-              <Image
-                source={require("../../../assets/imgHomeGuardiao/perfil.png")}
-                style={{
-                  width: 45,
-                  height: 45,
-                  marginRight: 12,
-                }}
-              />
-            )}
+            <View style={styles.upload}>
+              {fotoGuardiao ? (
+                <Image
+                  source={{ uri: fotoGuardiao }}
+                  style={{ width: '100%', height: '100%' }}
+                />
+              ) : (
+                <Image
+                  source={require("../../../assets/img/icon2.png")}
+                  style={{ width: '100%', height: '100%' }}
+                />
+              )}
+            </View>
           </Pressable>
           <Text style={styles.headerText}>Olá, {nomeGuardiao}</Text>
         </View>
@@ -260,9 +252,7 @@ export default function HomeGuardiao() {
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
           {solicitacoesPendentes.length > 0 && (
             <View style={{ marginBottom: 24 }}>
-              <Text style={{ fontSize: 15, fontWeight: '700', color: '#4B0082', marginBottom: 12 }}>
-                🛡️ Solicitações pendentes
-              </Text>
+              <Text style={{ fontSize: 15, fontWeight: '500', color: '#454545', marginVertical: 3 }}>Solicitações pendentes</Text>
               {solicitacoesPendentes.map((solicitacao) => (
                 <View key={solicitacao.id_rota} style={styles.cardSolicitacao}>
                   <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
@@ -274,22 +264,16 @@ export default function HomeGuardiao() {
                         />
                       ) : (
                         <Image
-                          source={require('../../../assets/imgHomeGuardiao/perfil.png')}
+                          source={require('../../../assets/img/icon2.png')}
                           style={{ width: '100%', height: '100%' }}
                           resizeMode="contain"
                         />
                       )}
                     </View>
-                    <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 15, fontWeight: '700', color: '#4B0082' }}>
-                        {solicitacao.usuaria?.nome}
-                      </Text>
-                      <Text style={{ fontSize: 12, color: '#888', marginTop: 2 }}>
-                        📍 {solicitacao.endereco_destino}
-                      </Text>
-                      <Text style={{ fontSize: 11, color: '#bbb', marginTop: 2 }}>
-                        Quer compartilhar a rota com você
-                      </Text>
+                    <View style={{ flex: 1, gap: 4 }}>
+                      <Text style={{ fontSize: 15, fontWeight: '700', color: '#4B0082' }}>{solicitacao.usuaria?.nome}</Text>
+                      <Text style={{ fontSize: 11, color: '#bbb' }}>Quer compartilhar a rota com você</Text>
+                      <Text style={{ fontSize: 12, color: '#888' }}>📍 {solicitacao.endereco_destino}</Text>
                     </View>
                   </View>
                   <View style={{ flexDirection: 'row', gap: 10, marginTop: 14 }}>
@@ -299,44 +283,39 @@ export default function HomeGuardiao() {
                         prev.filter(s => s.id_rota !== solicitacao.id_rota)
                       )}
                     >
-                      <Text style={{ color: '#d13f3f', fontWeight: '600', fontSize: 13 }}>Recusar</Text>
+                      <Text style={{ color: '#fff', fontWeight: '500', fontSize: 14 }}>Recusar</Text>
                     </Pressable>
                     <Pressable
                       style={styles.btnAceitar}
                       onPress={() => aceitarSolicitacao(solicitacao.id_rota)}
                     >
-                      <Text style={{ color: '#fff', fontWeight: '600', fontSize: 13 }}>Aceitar</Text>
+                      <Text style={{ color: '#fff', fontWeight: '500', fontSize: 14 }}>Aceitar</Text>
                     </Pressable>
                   </View>
                 </View>
               ))}
             </View>
           )}
-
           {usuarios.map((item) => (
-            <View key={item.id} style={styles.container}>
-              <View style={styles.headerRow}>
-                <Image
-                  source={require("../../../assets/imgHomeGuardiao/perfil.png")}
-                  style={styles.avatarImage}
-                />
-
-                <Text style={styles.headerText}>
-                  Você está protegendo{" "}
-                  <Text style={{ fontWeight: "bold" }}>{item.usuaria.nome}.</Text>
-                </Text>
+            <View key={item.id} style={styles.cardRota}>
+              <View style={styles.row}>
+                <View style={styles.fotoUsuaria}>
+                  {item.usuaria?.foto ? (
+                    <Image
+                      source={{ uri: item.usuaria.foto }}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  ) : (
+                    <Image
+                      source={require("../../../assets/img/icon2.png")}
+                      style={{ width: '100%', height: '100%' }}
+                    />
+                  )}
+                </View>
+                <Text style={{ fontSize: 15, fontWeight: '500', color: '#318f7b', paddingLeft: 10 }}>Você está protegendo {item.usuaria.nome}</Text>
               </View>
-
               <View style={{ flexDirection: "row", marginTop: 15 }}>
-                <View
-                  style={{
-                    width: 150,
-                    height: 150,
-                    borderRadius: 20,
-                    overflow: "hidden",
-                    backgroundColor: "#ddd",
-                  }}
-                >
+                <View style={{ width: 150, height: 150, borderRadius: 10, overflow: "hidden", backgroundColor: "#ddd" }}>
                   <View style={{ flex: 1 }}>
                     {location && (
                       <MapView
@@ -348,42 +327,19 @@ export default function HomeGuardiao() {
                           longitudeDelta: 0.01,
                         }}
                       >
-                        <Marker coordinate={location} />
+                        <Marker coordinate={location}>
+                          <MaterialIcons name="location-pin" size={33} color="#87D3B6" />
+                        </Marker>
                       </MapView>
                     )}
                   </View>
                 </View>
-
-                <View
-                  style={{
-                    flex: 1,
-                    paddingLeft: 15,
-                    justifyContent: "space-between",
-                  }}
-                >
-                  <Text
-                    style={{ color: "#A0522D", fontSize: 13, lineHeight: 18 }}
-                  >
-                    {item.usuaria.nome} está a {distancia} metros de você.
-                  </Text>
-
-                  <Text
-                    style={{
-                      color: "#777",
-                      fontSize: 12,
-                      marginTop: 6,
-                    }}
-                  >
-                    {endereco}
-                  </Text>
-
+                <View style={{ flex: 1, paddingLeft: 15, justifyContent: "space-around" }}>
+                  <Text style={{ color: "#a03e2d", fontSize: 13, lineHeight: 14 }}>{item.usuaria.nome} está a {distancia} metros de você</Text>
+                  <Text style={{ color: "#777", fontSize: 12, marginTop: 6 }}>{endereco}</Text>
                   <Pressable
                     style={styles.button}
-                    onPress={() =>
-                      navigation.navigate("AcompanharRota", {
-                        usuaria: item.usuaria,
-                      })
-                    }
+                    onPress={() => navigation.navigate("AcompanharRota", {usuaria: item.usuaria})}
                   >
                     <Text style={styles.buttonText}>Acompanhar Rota</Text>
                   </Pressable>
@@ -467,6 +423,7 @@ export default function HomeGuardiao() {
         )}
       </View>
       <BottomNavGuardiao abaAtivaInicial={0} />
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }

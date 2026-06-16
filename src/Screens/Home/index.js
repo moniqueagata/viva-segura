@@ -5,7 +5,6 @@ import { useState, useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../../components/BottomNav";
-
 import * as Location from "expo-location";
 import api from "../../services/api";
 import { Alert } from "react-native";
@@ -71,7 +70,7 @@ export default function Home() {
 
           // Procura na lista se existe algum guardião que ainda está com o status de pendente
           // (Estou assumindo que o campo se chama 'status' e o valor inicial é 'pendente' ou vazio)
-          const temPendente = listaGuardioes.some(guardiao => guardiao.status === "pendente" || !guardiao.status);
+          const temPendente = listaGuardioes.some(guardiao => guardiao.status === "pendente");
 
           if (temPendente) {
             Alert.alert(

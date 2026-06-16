@@ -1,9 +1,26 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
+    // scrollview
+    scroll: {
+        width: '100%'
+    },
 
     container: {
         flex: 1,
+    },
+
+    botaoVoltar: {
+        position: "absolute",
+        top: 30,
+        left: 20,
+        width: 50,
+        height: 50,
+        borderRadius: '100%',
+        backgroundColor: "#FFF",
+        justifyContent: "center",
+        alignItems: "center",
+        zIndex: 999,
     },
 
     map: {
@@ -25,7 +42,7 @@ export default StyleSheet.create({
         borderTopRightRadius: 30,
         padding: 25,
         minHeight: 350,
-
+        alignItems: 'center',
     },
 
     fotoContainer: {
@@ -41,21 +58,22 @@ export default StyleSheet.create({
         height: 90,
         borderRadius: 100,
         borderWidth: 5,
-        borderColor: "#6c27a8",
+        borderColor: "#fff",
         backgroundColor: "#FFF",
     },
 
     nome: {
-        fontSize: 28,
-        fontWeight: "bold",
-        color: "#6c27a8",
+        fontSize: 26,
+        fontWeight: '700',
+        color: "#43af86",
         textAlign: "center",
-        marginTop: 45,
+        marginTop: '8%'
     },
 
     texto: {
-        fontSize: 18,
-        marginTop: 15,
+        fontSize: 16,
+        color: '#888',
+        marginVertical: '5%',
     },
 
     distanciaBox: {
@@ -71,7 +89,6 @@ export default StyleSheet.create({
         backgroundColor: "#56CDA6",
         marginRight: 8,
         marginTop: 4,
-
     },
 
     distanciaTexto: {
@@ -87,20 +104,21 @@ export default StyleSheet.create({
     },
 
     markerImage: {
-        width: 55,
-        height: 55,
+        width: 35,
+        height: 35,
+        backgroundColor: '#f1f1f1',
         borderRadius: 100,
         borderWidth: 3,
         borderColor: "#FFF",
     },
 
     botaoAbrir: {
-        backgroundColor: "#6c27a8",
+        backgroundColor: "#87D3B6",
         paddingVertical: 14,
-        borderRadius: 18,
+        borderRadius: 30,
         alignItems: "center",
-        marginTop: 40,
-        width: "100%",
+        marginTop: '8%',
+        width: "80%",
     },
 
     textoBotao: {
@@ -109,35 +127,31 @@ export default StyleSheet.create({
         fontWeight: "bold",
     },
 
-
     overlay: {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  right: 0,
-  bottom: 0,
-  backgroundColor: "rgba(0,0,0,0.4)",
-},
+        position: "absolute",
+        top: 0,
+        left: 0,
+        right: 0,
+        bottom: 0,
+    },
 
     bottomSheet: {
-  position: "absolute",
-  bottom: 0,
-  left: 0,
-  right: 0,
-
-  backgroundColor: "#ffffff",
-  maxHeight: "85%",
-
-  borderTopLeftRadius: 30,
-  borderTopRightRadius: 30,
-
-  padding: 20,
-  paddingBottom: 30,
-},
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: "#ffffff",
+        maxHeight: "85%",
+        borderTopLeftRadius: 30,
+        borderTopRightRadius: 30,
+        paddingHorizontal: 20,
+        paddingTop: 20,
+    },
+    
     linha: {
         width: 60,
-        height: 6,
-        backgroundColor: "#c2c2c2",
+        height: 4,
+        backgroundColor: "#ddd",
         borderRadius: 10,
         alignSelf: "center",
         marginBottom: 20,
@@ -151,9 +165,9 @@ export default StyleSheet.create({
     },
 
     nomeModal: {
-        color: "#6c27a8",
-        fontSize: 24,
-        fontWeight: "bold",
+        color: "#43af86",
+        fontSize: 20,
+        fontWeight: '700',
     },
 
     status: {
@@ -164,7 +178,7 @@ export default StyleSheet.create({
     },
 
     badge: {
-        backgroundColor: "#6c27a8",
+        backgroundColor: "#43af86",
         width: 58,
         height: 58,
         borderRadius: 29,
@@ -206,7 +220,7 @@ export default StyleSheet.create({
         paddingVertical: 16,
         borderRadius: 18,
         alignItems: "center",
-        marginTop: 12,
+        marginVertical: '10%'
     },
 
     botaoText: {
@@ -229,8 +243,10 @@ export default StyleSheet.create({
     },
 
     cardMini: {
-        backgroundColor: "#ededed",
-        borderRadius: 22,
+        backgroundColor: '#fff',
+        borderWidth: 1,
+        borderColor: '#d4ddda',
+        borderRadius: 20,
         padding: 18,
     },
 
@@ -249,17 +265,17 @@ export default StyleSheet.create({
         width: 28,
         height: 14,
         borderWidth: 1.5,
-        borderColor: "#fff",
+        borderColor: "#aaa",
         borderRadius: 4,
         marginRight: 20,
-        padding: 2,
+        paddingHorizontal: 1,
+        paddingVertical: 2,
     },
 
     bateriaNivel: {
         height: "100%",
         backgroundColor: "#56CDA6",
         borderRadius: 2,
-
     },
 
     valorContainer: {
@@ -283,17 +299,14 @@ export default StyleSheet.create({
     },
 
     cardMapa: {
-  marginTop: 16,
-  marginHorizontal: 16,
-  backgroundColor: "#fff",
-  borderRadius: 16,
-  overflow: "hidden",
-  elevation: 4,
-  shadowColor: "#000",
-  shadowOpacity: 0.1,
-  shadowRadius: 8,
-  shadowOffset: { width: 0, height: 3 },
-},
+        width: '100%',
+        marginVertical: '10%',
+        backgroundColor: "#fff",
+        borderRadius: 20,
+        overflow: "hidden",
+        borderWidth: 1,
+        borderColor: '#d4ddda',
+    },
 
 mapMini: {
   width: "100%",
