@@ -24,6 +24,12 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "f8650a80-bd8b-4ac4-a922-6f6fc64eee67"
+      }
+    },
+    "owner": "kawannyyy"
   }
 }
