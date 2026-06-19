@@ -21,31 +21,31 @@ import Passo1 from "./src/Screens/Cadastro/Passo1";
 import Passo2 from "./src/Screens/Cadastro/Passo2";
 import Passo3 from "./src/Screens/Cadastro/Passo3";
 import Passo4 from './src/Screens/Cadastro/Passo4';
-
-// Main principal do app
+// Main principal - Usuária
 import Home from "./src/Screens/Home";
-
+import Telefones from "./src/Screens/Telefones";
+import MeusEnderecos from "./src/Screens/MeusEnderecos";
+import AdicionarEndereco from "./src/Screens/AdicionarEndereco";
+import AdicionarPontoSeguro from "./src/Screens/AdicionarPontoSeguro";
+import EditarEndereco from "./src/Screens/EditarEndereco";
+//Mapa
+import Mapa from "./src/Screens/Mapa";
 // Perfil Usuária
 import Perfil from "./src/Screens/Perfil";
 import EditarPerfil from "./src/Screens/EditarPerfil";
 import Notificacoes from "./src/Screens/Notificacoes";
 import Central from "./src/Screens/Central";
 import HelpChat from "./src/Screens/HelpChat";
-import Telefones from "./src/Screens/Telefones";
-import MeusEnderecos from "./src/Screens/MeusEnderecos";
-import AdicionarEndereco from "./src/Screens/AdicionarEndereco";
-import AdicionarPontoSeguro from "./src/Screens/AdicionarPontoSeguro";
-import EditarEndereco from "./src/Screens/EditarEndereco";
 
 //Tela meus guardiões
 import MeusGuardioes from "./src/Screens/MeusGuardioes";
 import AddGuardiao from "./src/Screens/MeusGuardioes/AddGuardiao";
 
-//Tela Guardioes
+//Cadastro Guardião 
 import CadastroGuardiao1 from "./src/Screens/CadastroGuardiao/CadastroGuardiao1";
 import CadastroGuardiao2 from "./src/Screens/CadastroGuardiao/CadastroGuardiao2";
 import CadastroGuardiao3 from "./src/Screens/CadastroGuardiao/CadastroGuardiao3";
-
+//Tela Guardiãos -----
 import HomeGuardiao from "./src/Screens/HomeGuardiao";
 import CentralEmergencia from "./src/Screens/CentralEmergencia";
 import PerfilGuardiao from './src/Screens/PerfilGuardiao';
@@ -56,10 +56,6 @@ import AcompanharRota from './src/Screens/AcompanharRota';
 import ChatGuardiao from './src/Screens/ChatGuardiao';
 import Mensagens from './src/Screens/Mensagens';
 import EditarPerfilGuardiao from './src/Screens/EditarPerfilGuardiao';
-
-
-//Mapa
-import Mapa from "./src/Screens/Mapa";
 
 
 const Stack = createNativeStackNavigator();

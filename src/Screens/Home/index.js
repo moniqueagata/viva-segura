@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {View,Image,Text,Pressable,useWindowDimensions,Animated,} from "react-native";
+import {View, Image, Text, Pressable, useWindowDimensions, Animated,} from "react-native";
 import styles from "./styles";
 import { useState, useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -9,7 +9,7 @@ import * as Location from "expo-location";
 import api from "../../services/api";
 import { Alert } from "react-native";
 import * as Notifications from "expo-notifications"; 
-
+// Notificações
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -19,30 +19,25 @@ Notifications.setNotificationHandler({
 });
 
 export default function Home() {
-  const navigation = useNavigation();
-
-  const [nomeUsuario, setNomeUsuario] = useState("");
-  const [fotoUsuario, setFotoUsuario] = useState(null);
-
   const [holding, setHolding] = useState(false);
   const holdTimeout = useRef(null);
+
+  // Buscar dados da usuária e notificações
+  const [nomeUsuario, setNomeUsuario] = useState("");
+  const [fotoUsuario, setFotoUsuario] = useState(null);
 
   useEffect(() => {
     const carregarUsuario = async () => {
       const user = await AsyncStorage.getItem("user");
-
       if (user) {
         const usuarioConvertido = JSON.parse(user);
         setNomeUsuario(usuarioConvertido.nome);
         setFotoUsuario(usuarioConvertido.foto);
-
         const idUsuario = usuarioConvertido.id_usuaria || usuarioConvertido.id;
 
-        // 1. >>> SISTEMA DE REGISTRO DO PUSH TOKEN <<<
         try {
           const { status: statusExistente } = await Notifications.getPermissionsAsync();
           let statusFinal = statusExistente;
-          
           if (statusExistente !== "granted") {
             const { status } = await Notifications.requestPermissionsAsync();
             statusFinal = status;
@@ -51,53 +46,27 @@ export default function Home() {
           if (statusFinal === "granted") {
             const tokenData = await Notifications.getExpoPushTokenAsync();
             const tokenObtido = tokenData.data;
-
             await api.post(`/usuaria/${idUsuario}/salvar-token`, {
               push_token: tokenObtido,
             });
-
             console.log("Push Token salvo com sucesso:", tokenObtido);
           }
         } catch (error) {
           console.log("Erro ao gerenciar notificações:", error);
         }
-        
-        // 2. >>> NOVA ADIÇÃO: VERIFICAR SE HÁ GUARDIÕES AGUARDANDO ACEITE <<<
-        try {
-          // Faz a requisição para a sua rota de listar guardiões da usuária
-          const response = await api.get(`/guardioes/${idUsuario}`);
-          const listaGuardioes = response.data;
-
-          // Procura na lista se existe algum guardião que ainda está com o status de pendente
-          // (Estou assumindo que o campo se chama 'status' e o valor inicial é 'pendente' ou vazio)
-          const temPendente = listaGuardioes.some(guardiao => guardiao.status === "pendente");
-
-          if (temPendente) {
-            Alert.alert(
-              "⏳ Guardiões Pendentes",
-              "Você possui convites de guardiões que ainda estão aguardando o aceite."
-            );
-          }
-        } catch (error) {
-          console.log("Erro ao verificar guardiões pendentes:", error);
-        }
-        // >>> FIM DA NOVA ADIÇÃO <<<
       }
     };
-
     carregarUsuario();
   }, []);
+  // ------------
 
+  // Botão de pânico - SOS
   const enviarSOS = async () => {
     try {
       const user = await AsyncStorage.getItem("user");
-
       if (!user) return;
-
       const usuario = JSON.parse(user);
-
       console.log("USUARIO COMPLETO:", usuario);
-
       const permissao = await Location.requestForegroundPermissionsAsync();
 
       if (permissao.status !== "granted") {
@@ -106,7 +75,6 @@ export default function Home() {
       }
 
       const local = await Location.getCurrentPositionAsync({});
-
       const idUsuario = usuario.id_usuaria || usuario.id;
 
       console.log({
@@ -122,15 +90,15 @@ export default function Home() {
       });
 
       Alert.alert("🚨 SOS enviado!");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
       Alert.alert("Erro ao enviar SOS");
+      console.log('ERRO SOS:', error.response?.data)
+      console.log('ERRO MESSAGE:', error.message);
     }
   };
 
   const iniciarHold = () => {
     setHolding(true);
-
     holdTimeout.current = setTimeout(() => {
       enviarSOS();
       setHolding(false);
@@ -139,11 +107,11 @@ export default function Home() {
 
   const cancelarHold = () => {
     setHolding(false);
-
     if (holdTimeout.current) {
       clearTimeout(holdTimeout.current);
     }
   };
+  // ------------
 
   return (
     <View style={styles.container}>
@@ -153,7 +121,7 @@ export default function Home() {
             <Image source={{ uri: fotoUsuario }} style={styles.iconiUsario} />
           ) : (
             <Image
-              source={require("../../../assets/img/Home/iconi.jpeg")}
+              source={require("../../../assets/img/icon2.png")}
               style={styles.iconiUsario}
             />
           )}
@@ -203,7 +171,6 @@ export default function Home() {
         />
         <Text style={styles.texto}>Meus endereços</Text>
       </Pressable>
-
       <Pressable
         style={styles.botao}
         onPress={() => navigation.navigate("Telefones")}
@@ -214,20 +181,10 @@ export default function Home() {
         />
         <Text style={styles.texto}>Telefones públicos</Text>
       </Pressable>
-
-      <Pressable style={styles.botao}
-        onPress={() => navigation.navigate("AdicionarPontoSeguro")}
-      >
-        <Image
-          source={require("../../../assets/img/Home/iconeBotao(3).jpeg")}
-          style={styles.imagem}
-        />
-        <Text style={styles.texto}>Pontos Seguros</Text>
-      </Pressable>
-
       </View>
+      {/* Navegação */}
       <BottomNav abaAtivaInicial={0} />
-
+      {/* --------- */}
       <StatusBar style="auto" />
     </View>
   );

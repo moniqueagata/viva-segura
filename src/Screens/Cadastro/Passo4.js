@@ -90,8 +90,8 @@ export default function Passo4() {
           mediaTypes: 'images',
           allowsEditing: true,
           aspect: [1, 1],
-        quality: 0.1,
-base64: false,
+          quality: 0.1,
+          base64: false,
         });
   
         if (!resultado.canceled) {

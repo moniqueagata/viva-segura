@@ -1,14 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  Text,
-  View,
-  Image,
-  Pressable,
-  ScrollView, 
-  Animated, 
-  Easing, 
-  Linking
-} from "react-native";
+import { Text, View, Image, Pressable, ScrollView, Animated,  Easing, Linking } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import MapView, { Marker } from "react-native-maps";
@@ -19,7 +10,6 @@ import BottomNavGuardiao from "../../components/BottomNavGuardiao";
 import styles from "./styles";
 import api from "../../services/api";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'; // -> Icone Pin
-
 
 export default function HomeGuardiao() {
   const navigation = useNavigation();
@@ -38,7 +28,7 @@ export default function HomeGuardiao() {
   const [quantidadeAlertas, setQuantidadeAlertas] = useState(0);
   const pulseAnim = useRef(new Animated.Value(1)).current;
 
-  // 🔥 animação baseada no alerta REAL
+  // Animação do alerta - SOS
   useEffect(() => {
     if (alertaPrincipal) {
       Animated.loop(
@@ -62,14 +52,14 @@ export default function HomeGuardiao() {
     }
   }, [alertaPrincipal]);
 
-  // 🔥 buscar alertas
+  // Buscar alertas de SOS ativos
   const buscarAlertas = async () => {
     try {
       const res = await api.get("/botao-panico-ativos");
       const data = res.data;
 
       if (data && data.length > 0) {
-        setAlertaPrincipal(data[0]); // usuária real
+        setAlertaPrincipal(data[0]); 
         setQuantidadeAlertas(data.length);
       } else {
         setAlertaPrincipal(null);
@@ -85,11 +75,11 @@ export default function HomeGuardiao() {
     const interval = setInterval(() => {
       buscarAlertas();
     }, 5000);
-
     return () => clearInterval(interval);
   }, []);
   // -------
 
+  // Buscar dados do guardião
   useEffect(() => {
     const carregarUsuario = async () => {
       const user = await AsyncStorage.getItem("user");
@@ -116,6 +106,7 @@ export default function HomeGuardiao() {
     };
     carregarUsuarios();
   }, []);
+  // ---------
 
   // Solicitação de compartilhamento de trajeto 
   useEffect(() => {
@@ -156,8 +147,9 @@ export default function HomeGuardiao() {
   // Geolocalização + Cálculo de distância
   useEffect(() => {
     const buscarLocalizacao = async () => {
-      try { // LOCALIZAÇÃO DA USUÁRIA
-        if (usuarios.length === 0) return; // ← para se não tiver usuária
+      try {
+         // LOCALIZAÇÃO DA USUÁRIA
+        if (usuarios.length === 0) return; 
         const { id_usuaria } = usuarios[0].usuaria;
         const response = await api.get(`/localizacao/${id_usuaria}`);
         const dados = response.data;
@@ -168,7 +160,6 @@ export default function HomeGuardiao() {
           longitude: longitudeUsuaria,
         });
 
-        // ENDEREÇO DA USUÁRIA
         const enderecoConvertido = await Location.reverseGeocodeAsync({
           latitude: latitudeUsuaria,
           longitude: longitudeUsuaria,
@@ -177,7 +168,6 @@ export default function HomeGuardiao() {
           const local = enderecoConvertido[0];
           setEndereco(`${local.street || ""}, ${local.streetNumber || ""}`);
         }
-
         // LOCALIZAÇÃO DO GUARDIÃO
         const permissao = await Location.requestForegroundPermissionsAsync();
         if (permissao.status === "granted") {
@@ -209,9 +199,9 @@ export default function HomeGuardiao() {
     const a =
       Math.sin(dLat / 2) * Math.sin(dLat / 2) +
       Math.cos(radiano(lat1)) *
-        Math.cos(radiano(lat2)) *
-        Math.sin(dLon / 2) *
-        Math.sin(dLon / 2);
+      Math.cos(radiano(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
@@ -348,8 +338,7 @@ export default function HomeGuardiao() {
             </View>
           ))}
         </ScrollView>
-
-  {/* 🔥 MODAL DE EMERGÊNCIA */}
+        {/* MODAL DE SOS */}
         {alertaPrincipal && (
           <View style={{
             position: "absolute",
@@ -374,55 +363,33 @@ export default function HomeGuardiao() {
               }}
             >
               <Text style={{ fontSize: 26 }}>🚨</Text>
-
-              <Text style={{ fontSize: 20, fontWeight: "bold" }}>
-                Emergência Ativa
-              </Text>
-
-              <Text style={{ color: "#666", marginTop: 6 }}>
-                {quantidadeAlertas} acionamentos de SOS
-              </Text>
+              <Text style={{ fontSize: 20, fontWeight: "bold" }}>Emergência Ativa</Text>
+              <Text style={{ color: "#666", marginTop: 6 }}>{quantidadeAlertas} acionamentos de SOS</Text>
 
               <View style={{ marginTop: 15 }}>
-                <View style={{
-                  backgroundColor: "#F8F8F8",
-                  padding: 12,
-                  borderRadius: 12,
-                }}>
-                  <Text style={{ fontWeight: "bold" }}>
-                    {alertaPrincipal?.usuaria?.nome}
-                  </Text>
-
-                  <Text style={{ color: "#777" }}>
-                    SOS ATIVO
-                  </Text>
+                <View style={{ backgroundColor: "#F8F8F8", padding: 12, borderRadius: 12 }}>
+                  <Text style={{ fontWeight: "bold" }}>{alertaPrincipal?.usuaria?.nome}</Text>
+                  <Text style={{ color: "#777" }}>SOS ATIVO</Text>
                 </View>
               </View>
-              <Pressable
-                onPress={() => navigation.navigate("CentralEmergencia")}
-                style={{ marginTop: 15, backgroundColor: "#FF3B30", padding: 12, borderRadius: 10 }}
-              >
+              <Pressable onPress={() => navigation.navigate("CentralEmergencia")} style={{ marginTop: 15, backgroundColor: "#FF3B30", padding: 12, borderRadius: 10 }}>
                 <Text style={{ color: "#fff", fontWeight: "bold", textAlign: "center" }}>Ir para Central de Emergência</Text>
               </Pressable>
 
-              <Pressable
-                onPress={() => Linking.openURL("tel:190")}
-                style={{ marginTop: 15, backgroundColor: "#FF3B30", padding: 12, borderRadius: 10 }}
-              >
+              <Pressable onPress={() => Linking.openURL("tel:190")} style={{ marginTop: 15, backgroundColor: "#FF3B30", padding: 12, borderRadius: 10 }}>
                 <Text style={{ color: "#FFF", fontWeight: "bold", textAlign: "center" }}>Ligar 190</Text>
               </Pressable>
 
-              <Pressable
-                onPress={() => setAlertaPrincipal(null)}
-                style={{ marginTop: 10, alignItems: "center" }}
-              >
+              <Pressable onPress={() => setAlertaPrincipal(null)} style={{ marginTop: 10, alignItems: "center" }}>
                 <Text>Fechar</Text>
               </Pressable>
             </Animated.View>
           </View>
         )}
       </View>
+      {/* Navegação */}
       <BottomNavGuardiao abaAtivaInicial={0} />
+      {/* --------- */}
       <StatusBar style="auto" />
     </SafeAreaView>
   );
