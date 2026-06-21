@@ -1,7 +1,7 @@
-import { View, Text, Pressable, Image, Dimensions, StyleSheet, useWindowDimensions, TextInput, Animated, ScrollView, Alert, Share } from 'react-native';
+import { View, Text, Pressable, Image, Dimensions, StyleSheet, TextInput, Animated, ScrollView, Alert } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { GestureHandlerRootView, PanGestureHandler, State } from 'react-native-gesture-handler';
-import { Modal, Portal } from "react-native-paper";
+import { GestureHandlerRootView, State, PanGestureHandler } from 'react-native-gesture-handler';
+import { Modal } from "react-native-paper";
 import styles from './styles';
 import { useNavigation } from '@react-navigation/native';
 import { useState, useEffect, useRef, useCallback } from 'react';
@@ -9,6 +9,8 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getDistance } from 'geolib';
 import api from '../../services/api';
+import SOSButton from "../../components/SOSButton";
+import BottomNav from "../../components/BottomNav";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -439,47 +441,10 @@ export default function Mapa() {
   };
   // -------------
 
-  // Animação na navegação
-  const { width } = useWindowDimensions();
-  const [medidas, setMedidas] = useState({});
-  const [abaAtiva, setAbaAtiva] = useState(1);
-  const larguraAba = 60;
-  const posicaoX = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const medidaAtual = medidas[abaAtiva];
-    if (medidaAtual) {
-      const { x, width } = medidaAtual;
-      const destinoX = x + (width / 2) - (larguraAba / 2);
-
-      Animated.spring(posicaoX, {
-        toValue: destinoX,
-        useNativeDriver: true,
-        bounciness: 4,
-      }).start();
-    }
-  }, [abaAtiva, medidas]);
-
-  const abaLayout = (index, event) => {
-    const { x, width } = event.nativeEvent.layout;
-    setMedidas(prev => ({
-      ...prev, [index]: { x, width }
-    }));
-  };
-
-  const abas = [
-    { label: 'Home', rota: "Home", imagem: require('../../../assets/img/home.png'), index: 0 },
-    { label: 'Mapa', rota: "Mapa", imagem: require('../../../assets/img/map.png'), index: 1 },
-    { label: 'Guardião', rota: "MeusGuardioes", imagem: require('../../../assets/img/angel.png'), index: 2 },
-    { label: 'Você', rota: "Perfil", imagem: require('../../../assets/img/profile.png'), index: 3 }
-  ];
-  //----------
-
   const abrirPainel = () => {
     posicaoPainel.current = SNAP_TOP;
     posicaoY.setOffset(SNAP_TOP);
     posicaoY.setValue(0);
-
     Animated.spring(posicaoY, {
       toValue: 0,
       tension: 65,
@@ -675,34 +640,6 @@ export default function Mapa() {
             </Animated.View>
           </PanGestureHandler>
         </View>
-        <View style={styles.navegacao}>
-          <Animated.View
-            style={[styles.line,
-            { width: larguraAba, transform: [{ translateX: posicaoX }] }
-            ]}
-          />
-          {abas.map((aba) => (
-            <Pressable
-              key={aba.index}
-              style={styles.buttonNav}
-              onPress={() => {
-                setAbaAtiva(aba.index);
-
-                if (aba.rota) {
-                  navigation.navigate(aba.rota);
-                }
-              }}
-              onLayout={(event) => abaLayout(aba.index, event)}
-            >
-              <Image source={aba.imagem}
-                style={{ width: 22, height: 22 }}
-                tintColor={abaAtiva === aba.index ? '#ff80aa' : '#fff'}
-                resizeMode='contain'
-              />
-              <Text style={[styles.textNav, abaAtiva === aba.index && { color: '#ff80aa' }]}>{aba.label}</Text>
-            </Pressable>
-          ))}
-        </View>
         {/* MODAIS - Seleção de guardião, Confirmação de compartilhamento de Trajeto e Conclusão de Trajeto */}
         <Modal
           visible={modalGuardioes}
@@ -804,6 +741,9 @@ export default function Mapa() {
             </View>
           </View>
         </Modal>
+        {/* Navegação */}
+        <BottomNav abaAtivaInicial={1} />
+        {/* --------- */}
       </View>
     </GestureHandlerRootView>
   );

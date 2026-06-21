@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 
-
 export default function EditarPerfil() {
   const navigation = useNavigation();
   const [modal, setModal] = useState(false);
@@ -92,15 +91,14 @@ export default function EditarPerfil() {
         setUsuario(JSON.parse(user));
       }
     }
-
     carregarUsuario();
   }, []);
 
   useEffect(() => {
-  if (usuario?.foto) {
-    setFoto(usuario.foto);
-  }
-}, [usuario]);
+    if (usuario?.foto) {
+      setFoto(usuario.foto);
+    }
+  }, [usuario]);
 
   const salvar = async () => {
     try {
@@ -125,22 +123,15 @@ export default function EditarPerfil() {
         JSON.stringify(response.data.data)
       );
 
-      Alert.alert(
-      "Sucesso",
-      "Atualizado com sucesso!",
-      [
-        {
-          text: "OK",
-          onPress: () => navigation.goBack()
-        }
-      ]
-    );
+      Alert.alert("Sucesso","Atualizado com sucesso!",
+        [{ text: "OK", onPress: () => navigation.goBack()}]
+      );
 
-  } catch (error) {
-    console.log(error.response?.data || error.message);
-    alert("Erro ao atualizar");
-  }
-};
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      alert("Erro ao atualizar");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -179,9 +170,7 @@ export default function EditarPerfil() {
         </Pressable>
         <Text style={styles.tituloHeader}>Editar perfil</Text>
       </View>
-
       <View style={styles.content}>
-
         <View style={styles.photoUpload}>
           <Pressable style={styles.upload} onPress={() => setModal(true)}>
             {foto ? (

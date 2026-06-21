@@ -6,60 +6,53 @@ export default StyleSheet.create({
     backgroundColor: "#fff",
   },
 
-  fundoEncima: {
+  header: {
     backgroundColor: "#550FA4",
-    height: '12%',
+    width: '100%',
+    height: 90,
     flexDirection: "row",
     alignItems: "center",
-  },
-
-  imagem: {
-    height: 20,
-    width: 20,
-    marginLeft: 20,
-     marginTop:'55%',
+    justifyContent: "flex-start",
+    paddingHorizontal: 22,
+    paddingTop: 22,
+    gap: 20,
   },
 
   titulo: {
     color: "#fff",
-    fontSize: 22,
-    fontWeight:'600',
- marginLeft: '15%',
- marginTop:'7%',
+    fontSize: 18,
+    fontWeight: '700',
+  },
+
+  content: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 25,
+    alignItems: 'center',
+    paddingVertical: 22,
   },
 
   card: {
-    backgroundColor: "#FAFAFA",
-    marginHorizontal: 15,
-    marginTop: 18,
+    width: '100%',
+    backgroundColor: "#fff",
     padding: 20,
+    marginVertical: 10,
     borderRadius: 15,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    gap: 8,
   },
 
  tituloCard: {
-    color: "#653F8F",
-    fontSize: 17,
-    marginBottom: 10,
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#50198f",
   },
 
-telefone: {
-    color: "#9e9e9e",
+  numero: {
+    color: "#999",
     fontSize: 15,
-     marginLeft: 5,
+    fontWeight: 500,
   },
-  viewNumero:{
-    flexDirection: 'row',
-  },
-  imagemTelefone:{
-       height: 17,
-       marginLeft: 4,
-    width: 17,
-    
-  },
-    imagemTelefoneW:{
-       height: 19,
-       marginLeft: 4,
-    width: 19,
-    
-  }
+
 });

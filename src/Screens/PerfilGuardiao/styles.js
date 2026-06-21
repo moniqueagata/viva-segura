@@ -1,118 +1,154 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  scrollContent: {
-    paddingHorizontal: 25,
-    paddingBottom: 40,
-    paddingTop: 20,
-    alignItems: 'center',
-  },
-  headerTitle: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#4B0082', // Roxo escuro do título "Meu Perfil"
-    textAlign: 'center',
-    marginVertical: 15,
-  },
-  avatarContainer: {
-    position: 'relative',
-    marginVertical: 15,
-  },
-  avatarPlaceholder: {
-    width: 140,
-    height: 140,
-    borderRadius: 70,
-    justifyContent: 'center',
-    alignItems: 'center',
-    overflow: 'hidden',
-    borderWidth: 3,
-  borderColor: '#56CDA6',
-
-  },
-  avatarImage: {
-    width: '90%',
-    height: '90%',
-    borderRadius: 60,
-  },
-  cameraButton: {
-    position: 'absolute',
-    bottom: 0,
-    right: 5,
-    backgroundColor: '#56CDA6', // Verde água do botão de câmera
-    width: 38,
-    height: 38,
-    borderRadius: 19,
-    justifyContent: 'center',
-    alignItems: 'center',
-    elevation: 2,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 1.41,
-  },
-  cameraIcon: {
-    width: 20,
-    height: 20,
-  },
-  userInfoContainer: {
-    alignItems: 'center',
-    marginBottom: 25, // Reduzido levemente para equilibrar com o menu maior
-  },
-  userName: {
-    fontSize: 22,
-    fontWeight: 'bold',
-    color: '#56CDA6', // Verde água do nome do usuário
-    marginBottom: 4,
-  },
-  userStatus: {
-    fontSize: 14,
-    color: '#4B0082',
-    fontWeight: '500',
-  },
-  menuContainer: {
-    width: '100%',
-    marginBottom: 30,
-  },
-  menuItem: {
-    flexDirection: 'row',
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingVertical: 16, // Padding vertical ajustado para a lista maior
-    borderBottomWidth: 1,
-    borderBottomColor: '#F5F5F5', // Linha sutil de separação entre os itens
   },
-  menuItemLeft: {
-    flexDirection: 'row',
+
+  scroll: {
+    width: '100%'
+  },
+
+  content: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 20,
+    paddingVertical: 20,
     alignItems: 'center',
   },
-  menuIcon: {
-    width: 24,
-    height: 24,
-    marginRight: 20,
-  },
-  menuItemText: {
-    fontSize: 18,
-    color: '#4B0082', // Texto em roxo escuro
-    fontWeight: '500',
-  },
-  arrowIcon: {
-    width: 14,
-    height: 14,
-    transform: [{ scaleX: -1 }], // Inverte a seta caso o asset original aponte para a esquerda
-  },
-  deleteButton: {
-    marginTop: 15,
-    paddingVertical: 12,
+
+  profile: {
     width: '100%',
     alignItems: 'center',
+    height: 240,
+    paddingTop: 30,
   },
-  deleteButtonText: {
-    color: '#BA3D3A', // Vermelho sutil para a ação de excluir
-    fontSize: 16,
+
+  // Foto de perfil
+  photoUpload: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 2,
+    position:  'relative',
+  },
+
+  upload: {
+    width: 120,
+    height: 120,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+  },
+
+  // ----
+  text: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: '4%'
+  },
+
+  nome: {
+    fontSize: 20,
     fontWeight: '500',
+    color: '#414141',
+    marginBottom: 4
   },
+
+  desc: {
+    fontSize: 14,
+    fontWeight: '400',
+    color: '#909090',
+  },
+
+  buttonEdit: {
+    width: 130,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#56CDA6',
+    borderRadius: 22,
+    marginVertical: 5,
+  },
+
+  textWhite: {
+    fontSize: 15,
+    fontWeight: '400',
+    color: '#fff'
+  },
+
+  settings: {
+    width: '100%',
+    marginTop: '18%',
+  },
+
+  sessions:{
+    fontSize: 14,
+    color: '#919191',
+    marginVertical: 8
+  },
+
+  gridButtons: {
+    width: '100%',
+    minHeight: 100,
+    alignItems: 'center',
+  },
+
+  button: {
+    width: '100%',
+    height: 50,
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    marginVertical: '3%'
+  },
+
+  grid: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 23
+  },
+
+  textButton: {
+    fontSize: 15,
+    fontWeight: '500',
+    color: '#454545',
+  },
+
+  circle: {
+    width: 40,
+    height: 40,
+    borderRadius: '100%',
+    backgroundColor: '#f5f5f5',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+
+  logout: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginVertical: 20
+  },
+
+  buttonLogout: {
+    width: '100%',
+    height: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  textRed: {
+    fontSize: 16,
+    fontWeight: '300',
+    letterSpacing: 0.5,
+    color: '#909090',
+  },
+
 });

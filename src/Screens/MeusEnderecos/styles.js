@@ -3,61 +3,66 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-   backgroundColor:'#ffffff'
-  },
-  fundoEncima: {
-    backgroundColor: "#550FA4",
-    height: 110,
-    flexDirection: "row",
-    alignItems: "center",
+    backgroundColor:'#ffffff',
   },
 
-  imagem: {
-    height: 20,
-    width: 20,
-    marginLeft: 20,
-    marginTop:40,
+  header: {
+    backgroundColor: "#550FA4",
+    width: '100%',
+    height: 90,
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "flex-start",
+    paddingHorizontal: 22,
+    paddingTop: 22,
+    gap: 20,
   },
 
   titulo: {
     color: "#fff",
-    fontSize: 20,
-    fontWeight:'600',
- marginLeft: '19%',
-     marginTop:40,
+    fontSize: 18,
+    fontWeight: '700',
   },
-  botaoAdicionar:{
-    width:'40%',
-    height:40,
-    marginLeft:'5%',
+
+  content: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 25,
+    alignItems: 'center',
+    paddingVertical: 22,
+  },
+
+  subtitulo: {
+    fontSize: 15,
+    textAlign: 'center',
+    fontWeight: 400,
+    color: "#454545",
+  },
+
+  buttonContainer: {
+    width: '100%',
+    justifyContent: 'center',
+    marginVertical: '10%'
+  },
+
+  button:{
+    width: 140,
+    height: 40,
     backgroundColor:"#550FA4",
     borderRadius:20,
+    paddingHorizontal: 15,
     flexDirection:'row',
-marginBottom:'10%',
-marginTop:15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+  },
 
-  },
-  botaoTexto:{
-    fontSize:18,
-    fontWeight:300,
+  txWhite:{
+    fontSize: 15,
+    fontWeight: '500',
     color:'#fff',
-    textAlign:'center',
-    marginTop:7,
-    marginLeft:30,
   },
-  imagemMais:{
-    height:20,
-    width:20,
-    marginTop:12,
-    marginLeft:10,
-  },
-  definaTexto:{
-    fontSize:15,
-    textAlign:'center',
-    fontWeight:400,
-    color:"#550FA4",
-    marginTop:17,
-  },
+  
 
 card: {
 

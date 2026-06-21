@@ -15,6 +15,7 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#fff',
     paddingHorizontal: 22,
+    paddingTop: 8,
     gap: 36
   },
 
@@ -23,27 +24,24 @@ export default StyleSheet.create({
     height: 28,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 30,
+    marginTop: 6,
   },
 
   tituloHeader: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '500',
-    color: '#6925b8',
-        marginTop: 30,
-
+    color: '#56CDA6'
   },
 
   content: {
     width: '100%',
     paddingHorizontal: 20,
     paddingVertical: 20,
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     alignItems: 'center',
   },
 
   // Foto de Perfil
-
   photoUpload: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -52,38 +50,16 @@ export default StyleSheet.create({
   },
 
   upload: {
-  width: 150,
-  height: 150,
-  borderRadius: 60,
-  alignSelf: "center",
-  justifyContent: "center",
-  alignItems: "center",
-  position: "relative",
-},
-
-fotoPerfil: {
-  width: "100%",
-  height: "100%",
-  borderRadius: 80,
-  borderColor:  "#56CDA6",
-  borderWidth: 3,
-
-},
-
-botaoLapis: {
-  position: "absolute",
-  bottom: 5,
-  right: 5,
-
-  width: 32,
-  height: 32,
-  borderRadius: 16,
-
-  backgroundColor: "#56CDA6",
-
-  justifyContent: "center",
-  alignItems: "center",
-},
+    width: 180,
+    height: 180,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    borderWidth: 3,
+    borderColor: '#56CDA6',
+    overflow: 'hidden',
+  },
 
   edit: {
     width: 45,
@@ -94,61 +70,98 @@ botaoLapis: {
     borderRadius: '100%',
     position: 'absolute',
     bottom: 0,
-    right: 0
+    right: 5
   },
-
   // ----
 
   gridInputs: {
     width: '95%',
     minHeight: 400,
-    marginTop: 30,
-    gap: 5
+    marginVertical: '10%'
   },
 
   label: {
-    fontSize: 20,
+    fontSize: 15,
     fontWeight: '500',
-    color: '#454545',
-    paddingLeft: 8
+    color: '#bbb',
+    paddingLeft: 8,
+    marginBottom: 8,
   },
 
   inputContainer: {
     width: '100%',
-    height: 60,
-    marginVertical: 10,
+    height: 50,
     borderWidth: 1,
     borderColor: '#ccc',
     borderRadius: 10,
-    paddingHorizontal: 30,
+    paddingHorizontal: 14,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
+    marginBottom: 20,
   },
 
   input: {
-    width: '100%',
-    height: 55,
+    minWidth: 280,
+    height: '100%',
     outlineStyle: 'none',
-    fontSize: 18
+    fontSize: 15
   },
 
   buttonPurple: {
-    width: '90%',
-    height: 60,
+    width: '60%',
+    height: 50,
     backgroundColor: '#56CDA6',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
-    marginTop: '30%'
   },
 
   textWhite: {
-    fontSize: 20,
-    fontWeight: '500',
+    fontSize: 16,
+    fontWeight: '400',
     color: '#fff'
-  }
+  },
 
+  // Modal
+  modalContainer: {
+    width: '100%',
+    height: 300,
+    backgroundColor: '#fff',
+    borderTopLeftRadius: 50,
+    borderTopRightRadius: 50,
+    position: 'absolute',
+    bottom: 0,
+    margin: 0,
+  },
 
+  modal: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+    gap: 20,
+  },
+
+  buttonModal: {
+    width: '90%',
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+    flexDirection: 'row',
+    gap: 15
+  },
+
+  txRed: {
+    color: '#c04b4b',
+    fontSize: 17,
+    fontWeight: '400',
+  },
+
+  txPurple: {
+    color: '#717171',
+    fontSize: 17,
+    fontWeight: '400',
+  },
   
 });

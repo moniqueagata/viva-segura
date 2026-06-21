@@ -1,30 +1,15 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  View,
-  Text,
-  Pressable,
-  Image,
-  Animated,
-  KeyboardAvoidingView,
-  ScrollView,
-  Platform,
-} from "react-native";
+import { View, Text, Pressable, Image, Animated, KeyboardAvoidingView, ScrollView, Platform } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { TextInput as PaperInput, Modal, Portal } from "react-native-paper";
+import { TextInput as PaperInput } from "react-native-paper";
 import { useState, useRef, useEffect } from "react";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import styles from "./styles/styles_passo3";
-import api from "../../services/api";
 
 export default function Passo3() {
   const navigation = useNavigation();
   const route = useRoute();
-
-  const { nome, cpf, dataNasc, telefone, email, perfilSelecionado } =
-    route.params || {};
-
-  const [checked, setChecked] = useState(false);
-  const [modal, setModal] = useState(false);
+  const { nome, cpf, dataNasc, telefone, email, perfilSelecionado } = route.params;
 
   // Senha
   const [senha, setSenha] = useState("");
@@ -45,22 +30,24 @@ export default function Passo3() {
 
   // Verificação
   const irParaPasso4 = () => {
-  navigation.navigate("Passo4", {
-    nome,
-    cpf,
-    dataNasc,
-    telefone,
-    email,
-    perfilSelecionado,
-    senha
-  });
-};
+    navigation.navigate("Passo4", {
+      nome,
+      cpf,
+      dataNasc,
+      telefone,
+      email,
+      perfilSelecionado,
+      senha
+    });
+  };
 
+  // Barra de progresso
   // Barra de progresso
   const [width, setWidth] = useState(0);
   const animatedValue = useRef(new Animated.Value(-1000)).current;
   const [reactiveValue, setReactiveValue] = useState(-1000);
-  const steps = 3;
+  const step = 3;
+  const steps = 5;
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -71,11 +58,9 @@ export default function Passo3() {
   }, [reactiveValue]);
 
   useEffect(() => {
-    const passoAtual =
-      caracteres && maiusculaEMinuscula && numero && senhasIguais ? 3 : 3;
-    setReactiveValue(-width + (width * passoAtual) / steps);
-  }, [caracteres, maiusculaEMinuscula, numero, senhasIguais, width]);
-
+    setReactiveValue(-width + (width * step) / steps);
+  }, [step, width]);
+  
   return (
     <View style={{ flex: 1, backgroundColor: '#ffffff' }}>
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }}>
@@ -114,12 +99,12 @@ export default function Passo3() {
 
             <View style={styles.content}>
               <View style={styles.logo}>
-              <Image
-                source={require("../../../assets/img/logo.png")}
-                style={{ width: 130, height: 130 }}
-                resizeMode="contain"
-              />
-            </View>
+                <Image
+                  source={require("../../../assets/img/logo.png")}
+                  style={{ width: 130, height: 130 }}
+                  resizeMode="contain"
+                />
+              </View>
 
             <Text style={styles.titulo}>Crie uma senha segura</Text>
 

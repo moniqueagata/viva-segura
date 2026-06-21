@@ -1,40 +1,20 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import {
-  ActivityIndicator,
-  Alert,
-  Animated,
-  FlatList,
-  Image,
-  Linking,
-  Pressable,
-  RefreshControl,
-  ScrollView,
-  Share,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
+import { ActivityIndicator, Alert, FlatList, Linking, Pressable, RefreshControl, ScrollView, Share, Text, TextInput, View } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Ionicons } from "@expo/vector-icons";
 import * as Location from "expo-location";
 import * as Notifications from "expo-notifications";
-import { StatusBar } from "expo-status-bar";
 import { useNavigation } from "@react-navigation/native";
-import BottomNav from "../../src/components/BottomNav";
-import SOSButton from "../../src/components/SOSButton";
-import api from "../../src/services/api";
-import styles from "./styles";
-import { buscarNoticias, CATEGORIAS } from '../../src/Screens/Mural/services/newApi';
-import { obterFavoritos, obterCurtidas, alternarFavorito, alternarCurtida } from '../src/Screens/Mural/services/storage';
+import api from "../../services/api";
+import { buscarNoticias, CATEGORIAS } from './services/apiMural';
+import { obterFavoritos, obterCurtidas, alternarFavorito, alternarCurtida } from './services/storage';
 import MenuLateral from './MenuLateral';
+import styles from "./styles";
+import BottomNav from "../../components/BottomNav";
+import SOSButton from "../../components/SOSButton";
 
 export default function Mural() {
-  
- const navigation = useNavigation();
-
-  const [nomeUsuario, setNomeUsuario] = useState("");
-  const [fotoUsuario, setFotoUsuario] = useState(null);
-
+  const navigation = useNavigation();
   const [holding, setHolding] = useState(false);
   const holdTimeout = useRef(null);
 
@@ -48,7 +28,6 @@ export default function Mural() {
         setFotoUsuario(usuarioConvertido.foto);
 
         const idUsuario = usuarioConvertido.id_usuaria || usuarioConvertido.id;
-
         // Salva o push token no banco
         try {
           const { status: statusExistente } = await Notifications.getPermissionsAsync();
@@ -61,8 +40,8 @@ export default function Mural() {
 
           if (statusFinal === "granted") {
             const tokenData = await Notifications.getExpoPushTokenAsync({
-  projectId: 'f8650a80-bd8b-4ac4-a922-6f6fc64eee67',
-});
+              projectId: 'f8650a80-bd8b-4ac4-a922-6f6fc64eee67',
+            });
             const tokenObtido = tokenData.data;
 
             console.log("TOKEN OBTIDO:", tokenObtido);
@@ -241,12 +220,12 @@ Notifications.setNotificationHandler({
           <Pressable onPress={() => setMenuAberto(true)}>
             <Ionicons name="menu" size={26} color="#6925b8" />
           </Pressable>
-<View style={styles.tituloContainer}>
-  <Text style={styles.titulo}>Mural</Text>
-  <Text style={styles.subtitulo}>
-    Notícias selecionadas para você
-  </Text>
-</View>          
+          <View style={styles.tituloContainer}>
+            <Text style={styles.titulo}>Mural</Text>
+            <Text style={styles.subtitulo}>
+              Notícias selecionadas para você
+            </Text>
+          </View>          
           <View style={{ width: 26 }} />
         </View>
 
@@ -292,6 +271,7 @@ Notifications.setNotificationHandler({
             data={noticias}
             keyExtractor={(item) => item.id}
             contentContainerStyle={styles.lista}
+            showsVerticalScrollIndicator={false}
             refreshControl={
               <RefreshControl refreshing={atualizando} onRefresh={aoAtualizar} colors={['#6925b8']} />
             }
@@ -336,9 +316,10 @@ Notifications.setNotificationHandler({
           />
         )}
       </View>
- <SOSButton />
+      {/* Navegação */}
+        <BottomNav abaAtivaInicial={3} />
+      {/* --------- */}
       <MenuLateral visivel={menuAberto} onFechar={() => setMenuAberto(false)} favoritos={favoritos} curtidas={curtidas} />
-      <BottomNav abaAtivaInicial={3} />
     </View>
   );
 }

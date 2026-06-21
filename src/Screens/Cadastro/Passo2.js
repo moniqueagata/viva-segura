@@ -42,7 +42,7 @@ export default function Passo2() {
   const animatedValue = useRef(new Animated.Value(-1000)).current;
   const [reactiveValue, setReactiveValue] = useState(-1000);
   const step = 2;
-  const steps = 3;
+  const steps = 5;
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -67,7 +67,6 @@ export default function Passo2() {
             contentContainerStyle={styles.container}
             keyboardShouldPersistTaps="handled"
           >
-            {" "}
             <View style={styles.header}>
               <Pressable
                 style={styles.btnExit}

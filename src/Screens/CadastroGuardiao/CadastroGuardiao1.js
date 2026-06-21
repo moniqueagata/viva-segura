@@ -8,12 +8,10 @@ import styles from'./styles/stylesGuardiao1';
 
 export default function CadastroGuardiao1() {
     const navigation = useNavigation();
-
     const [nome, setNome] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
     const [codUsu, setCodUsu] = useState('');
-
 
     // Validação
     const formularioValido =
@@ -40,18 +38,14 @@ export default function CadastroGuardiao1() {
       setReactiveValue(-width + (width * step) / steps);
     }, [step, width]);
 
-  return (
-<KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-  >
+return (
+  <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#ffffff' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <ScrollView
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-        
-              <View style={styles.header}>
+      <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Passo1')}>
           <Image source={require('../../../assets/imgGuardiao/arrow_2.png')} 
             style={{ width: 20, height: 20 }}

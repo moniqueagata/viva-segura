@@ -1,42 +1,37 @@
 import 'react-native-gesture-handler';
-
 import React from "react";
 import { PaperProvider } from "react-native-paper";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs([
-  'Text strings must be rendered within a <Text> component',
-]);
+LogBox.ignoreLogs(['Text strings must be rendered within a <Text> component',]);
 
-// Telas
+// Telas iniciais do app
 import Splash from "./src/Screens/Splash";
 import Welcome from "./src/Screens/Welcome";
 import Login from "./src/Screens/Login";
-
 // Cadastro Usuaria
 import Passo1 from "./src/Screens/Cadastro/Passo1";
 import Passo2 from "./src/Screens/Cadastro/Passo2";
 import Passo3 from "./src/Screens/Cadastro/Passo3";
 import Passo4 from './src/Screens/Cadastro/Passo4';
+import Passo5 from './src/Screens/Cadastro/Passo5';
 // Main principal - Usuária
 import Home from "./src/Screens/Home";
 import Telefones from "./src/Screens/Telefones";
 import MeusEnderecos from "./src/Screens/MeusEnderecos";
-import AdicionarEndereco from "./src/Screens/AdicionarEndereco";
-import AdicionarPontoSeguro from "./src/Screens/AdicionarPontoSeguro";
-import EditarEndereco from "./src/Screens/EditarEndereco";
+import AdicionarEndereco from "./src/Screens/MeusEnderecos/AdicionarEndereco";
 //Mapa
 import Mapa from "./src/Screens/Mapa";
+// Mural notícias
+import Mural from "./src/Screens/Mural";
 // Perfil Usuária
 import Perfil from "./src/Screens/Perfil";
 import EditarPerfil from "./src/Screens/EditarPerfil";
 import Notificacoes from "./src/Screens/Notificacoes";
 import Central from "./src/Screens/Central";
 import HelpChat from "./src/Screens/HelpChat";
-
 //Tela meus guardiões
 import MeusGuardioes from "./src/Screens/MeusGuardioes";
 import AddGuardiao from "./src/Screens/MeusGuardioes/AddGuardiao";
@@ -52,7 +47,7 @@ import PerfilGuardiao from './src/Screens/PerfilGuardiao';
 import NotificacoesGuardiao from './src/Screens/NotificacoesGuardiao';
 import CentralAjuda from './src/Screens/CentralAjuda';
 import CentralGuardiao from './src/Screens/CentralGuardiao';
-import AcompanharRota from './src/Screens/AcompanharRota';
+import AcompanharRota from './src/Screens/HomeGuardiao/AcompanharRota';
 import ChatGuardiao from './src/Screens/ChatGuardiao';
 import Mensagens from './src/Screens/Mensagens';
 import EditarPerfilGuardiao from './src/Screens/EditarPerfilGuardiao';
@@ -90,7 +85,12 @@ export default function App() {
               headerShown: false
             }}
           />
-           <Stack.Screen name="Passo4" component={Passo4}
+          <Stack.Screen name="Passo4" component={Passo4}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="Passo5" component={Passo5}
             options={{
               headerShown: false
             }}
@@ -120,16 +120,6 @@ export default function App() {
               headerShown: false
             }}
           />
-          <Stack.Screen name="AdicionarPontoSeguro" component={AdicionarPontoSeguro}
-            options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen name="EditarEndereco" component={EditarEndereco}
-            options={{
-              headerShown: false
-            }}
-          />
           <Stack.Screen name="Mapa" component={Mapa}
             options={{
               headerShown: false
@@ -141,6 +131,11 @@ export default function App() {
             }}
           />
           <Stack.Screen name="AddGuardiao" component={AddGuardiao}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="Mural" component={Mural}
             options={{
               headerShown: false
             }}
@@ -170,6 +165,21 @@ export default function App() {
               headerShown: false
             }}
           />
+          <Stack.Screen name="CadastroGuardiao3" component={CadastroGuardiao3}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="CadastroGuardiao2" component={CadastroGuardiao2}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="CadastroGuardiao1" component={CadastroGuardiao1}
+            options={{
+              headerShown: false
+            }}
+          />
           <Stack.Screen name="HomeGuardiao" component={HomeGuardiao}
             options={{
               headerShown: false
@@ -195,7 +205,6 @@ export default function App() {
               headerShown: false
             }}
           />
-
           <Stack.Screen name="CentralEmergencia" component={CentralEmergencia}
             options={{
               headerShown: false
@@ -216,21 +225,6 @@ export default function App() {
             headerShown: false
             }}
             />
-          <Stack.Screen name="CadastroGuardiao3" component={CadastroGuardiao3}
-            options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen name="CadastroGuardiao2" component={CadastroGuardiao2}
-            options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen name="CadastroGuardiao1" component={CadastroGuardiao1}
-            options={{
-              headerShown: false
-            }}
-          />
           <Stack.Screen name="Mensagens" component={Mensagens}
             options={{
               headerShown: false

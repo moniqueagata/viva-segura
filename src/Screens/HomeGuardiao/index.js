@@ -228,7 +228,6 @@ export default function HomeGuardiao() {
           </Pressable>
           <Text style={styles.headerText}>Olá, {nomeGuardiao}</Text>
         </View>
-
         <View>
           <Pressable>
             <Image

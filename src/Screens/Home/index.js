@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import {View, Image, Text, Pressable, useWindowDimensions, Animated,} from "react-native";
+import { View, Image, Text, Pressable } from "react-native";
 import styles from "./styles";
 import { useState, useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,6 +19,7 @@ Notifications.setNotificationHandler({
 });
 
 export default function Home() {
+  const navigation = useNavigation();
   const [holding, setHolding] = useState(false);
   const holdTimeout = useRef(null);
 
@@ -115,74 +116,69 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
-        <View style={styles.viewFlex}>
-        <Pressable onPress={() => navigation.navigate("Perfil")}>
-          {fotoUsuario ? (
-            <Image source={{ uri: fotoUsuario }} style={styles.iconiUsario} />
-          ) : (
+        <View style={styles.header}>
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Pressable onPress={() => navigation.navigate("Perfil")}>
+              <View style={styles.upload}>
+                {fotoUsuario ? (
+                  <Image
+                    source={{ uri: fotoUsuario }}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                ) : (
+                  <Image
+                    source={require("../../../assets/img/icon2.png")}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                )}
+              </View>
+            </Pressable>
+            <Text style={styles.textHeader}>Olá, {nomeUsuario}</Text>
+          </View>
+        <View>
+          <Pressable>
             <Image
-              source={require("../../../assets/img/icon2.png")}
-              style={styles.iconiUsario}
+              source={require("../../../assets/img/sino_1.png")}
+              style={{ width: 22, height: 22, tintColor: "#550fa4" }}
             />
-          )}
-        </Pressable>
-        <Text style={styles.ola}>Olá, {nomeUsuario}</Text>
-
-        <Pressable onPress={() => navigation.navigate("Notificacoes")}>
-          <Image
-            source={require("../../../assets/img/Home/i (2).jpeg")}
-            style={styles.notificacao}
-          />
-        </Pressable>
+          </Pressable>
+        </View>
       </View>
       <View style={styles.content}>
-      <Text style={styles.textoAjuda}>Precisando de ajuda? Use o SOS</Text>
-
-      <Pressable
-        style={[
-          styles.sos,
-          holding && { opacity: 0.6, transform: [{ scale: 0.95 }] }
-        ]}
-        onPressIn={iniciarHold}
-        onPressOut={cancelarHold}
-      >
-        <Image
-          source={require("../../../assets/img/Home/sos.jpeg")}
-          style={styles.imagemSos}
-        />
-      </Pressable>
-
-      <Text style={styles.textoEmergencia}>EMERGÊNCIA</Text>
-
-      <Text style={styles.textoSosPequeno}>
-        Pressione o botão por 3 seconds para{" "}
-      </Text>
-      <Text style={styles.textoSosPequeno2}>
-        mandar sua geolocalização ao seu guardião
-      </Text>
-
-      <Pressable
-        style={styles.botao}
-        onPress={() => navigation.navigate("MeusEnderecos")}
-      >
-        <Image
-          source={require("../../../assets/img/Home/iconeBotao(1).jpeg")}
-          style={styles.imagem}
-        />
-        <Text style={styles.texto}>Meus endereços</Text>
-      </Pressable>
-      <Pressable
-        style={styles.botao}
-        onPress={() => navigation.navigate("Telefones")}
-      >
-        <Image
-          source={require("../../../assets/img/Home/iconeBotao(2).jpeg")}
-          style={styles.imagem}
-        />
-        <Text style={styles.texto}>Telefones públicos</Text>
-      </Pressable>
+        <Text style={styles.subtitulo}>🚨 Precisando de ajuda? Use o SOS</Text>
+        <View style={{ width: '100%', alignItems: 'center', marginVertical: 20 }}>
+          <Pressable
+            style={[styles.buttonSos, holding && { opacity: 0.6, transform: [{ scale: 0.95 }] }]}
+            onPressIn={iniciarHold}
+            onPressOut={cancelarHold}
+          >
+            <View style={styles.circle}>
+              <Image
+                source={require("../../../assets/img/sos.png")}
+                style={{ width: 120, height: 120 }}
+              />
+            </View>
+          </Pressable>
+          <Text style={{ fontSize: 18, color: "#F66E91", fontWeight:700, textAlign:'center' }}>EMERGÊNCIA</Text>
+          <Text style={styles.desc}>{`Pressione o botão por 3 segundos e\nserá enviado um alerta ao seu guardião`}</Text>
+        </View>
+        <View style={{ width: '100%', alignItems: 'center', marginVertical: 25 }}>
+          <Pressable style={styles.button} onPress={() => navigation.navigate("MeusEnderecos")}>
+            <Image
+              source={require("../../../assets/img/endereco.png")}
+              style={{ width: 33, height: 33, tintColor: "#844ec2" }}
+            />
+            <Text style={{ fontSize: 18, fontWeight: '500', color: "#844ec2", }}>Meus endereços</Text>
+          </Pressable>
+          <Pressable style={styles.button} onPress={() => navigation.navigate("Telefones")}>
+            <Image
+              source={require("../../../assets/img/tel.png")}
+              style={{ width: 33, height: 33, tintColor: "#844ec2" }}
+            />
+            <Text style={{ fontSize: 18, fontWeight: '500', color: "#844ec2", }}>Telefones públicos</Text>
+          </Pressable>
+        </View>
       </View>
-      {/* Navegação */}
       <BottomNav abaAtivaInicial={0} />
       {/* --------- */}
       <StatusBar style="auto" />

@@ -273,8 +273,10 @@ export default StyleSheet.create({
     borderTopLeftRadius: 40,
     borderTopRightRadius: 40,
     position: 'absolute',
-    bottom: 0,
+    bottom: 80,
     margin: 0,
+    zIndex: 999,     
+    elevation: 999,
   },
 
   modal: {

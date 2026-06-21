@@ -1,22 +1,13 @@
 import { StatusBar } from "expo-status-bar";
-import {
-  View,
-  Text,
-  SafeAreaView,
-  FlatList,
-  Image,
-  Pressable,
-} from "react-native";
+import { View, Text, FlatList, Image, Pressable } from "react-native";
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
-
 import BottomNavGuardiao from "../../components/BottomNavGuardiao";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
 
-
 import { Linking, Alert } from "react-native";
-
 
 export default function CentralEmergencia() {
   const navigation = useNavigation();
@@ -79,51 +70,33 @@ export default function CentralEmergencia() {
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
-
-      {/* topo */}
       <View style={styles.row}>
         <View style={styles.fotoBox}>
           <Image
             source={
               item.foto
                 ? { uri: item.foto }
-                : require("../../../assets/imgHomeGuardiao/perfil.png")
+                : require("../../../assets/img/icon2.png")
             }
             style={styles.foto}
           />
         </View>
-
         <View style={{ flex: 1 }}>
           <Text style={styles.nome}>{item.nome}</Text>
-
-          <Text style={styles.status}>
-            🚨 EMERGÊNCIA ATIVA
-          </Text>
+          <Text style={styles.status}>🚨 EMERGÊNCIA ATIVA </Text>
         </View>
-
-      
       </View>
-
       {/* info */}
-      <Text style={styles.info}>
-        {item.quantidadeAlertas} acionamentos SOS
-      </Text>
-
-      <Text style={styles.info}>
-        Último alerta: {item.dataHoraAlerta}
-      </Text>
-
+      <Text style={styles.info}>{item.quantidadeAlertas} acionamentos SOS</Text>
+      <Text style={styles.info}>Último alerta: {item.dataHoraAlerta}</Text>
       {/* ações */}
       <View style={styles.actions}>
         <Pressable
           style={styles.btnSecundario}
-          onPress={() =>
-            navigation.navigate("AcompanharRota", { usuaria: item })
-          }
+          onPress={() => navigation.navigate("AcompanharRota", { usuaria: item })}
         >
           <Text style={styles.btnTextSec}>Acompanhar rota</Text>
         </Pressable>
-
         <Pressable
           style={[styles.btnPrincipal, { backgroundColor: "#d32a27" }]}
           onPress={() => ligarEmergencia(item)}
@@ -137,13 +110,8 @@ export default function CentralEmergencia() {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" />
-
       <Text style={styles.title}>Central de Emergência</Text>
-
-      <Text style={styles.subtitle}>
-Veja aqui os alertas recebidos em tempo real!
-      </Text>
-
+      <Text style={styles.subtitle}>Veja aqui os alertas recebidos em tempo real!</Text>
       <FlatList
         data={alertas}
         keyExtractor={(item) => item.id_alerta.toString()}
@@ -151,7 +119,6 @@ Veja aqui os alertas recebidos em tempo real!
         contentContainerStyle={{ padding: 16, paddingBottom: 120 }}
         showsVerticalScrollIndicator={false}
       />
-
       <BottomNavGuardiao abaAtivaInicial={2} />
     </SafeAreaView>
   );

@@ -47,25 +47,24 @@ export default function CadastroGuardiao2() {
     const [width, setWidth] = useState(0);
     const animatedValue = useRef(new Animated.Value(-1000)).current;
     const [reactiveValue, setReactiveValue] = useState(-1000);
+    const step = 3;
     const steps = 4;
 
     useEffect(() => {
-        Animated.timing(animatedValue, {
-            toValue: reactiveValue,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
+      Animated.timing(animatedValue, {
+        toValue: reactiveValue,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
     }, [reactiveValue]);
 
     useEffect(() => {
-        const passoAtual = (caracteres && maiusculaEMinuscula && numero && senhasIguais) ? 4 : 3;
-        setReactiveValue(-width + (width * passoAtual) / steps);
-
-    }, [caracteres, maiusculaEMinuscula, numero, senhasIguais, width]);
+      setReactiveValue(-width + (width * step) / steps);
+    }, [step, width]);
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: '#ffffff' }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <ScrollView

@@ -8,7 +8,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: "space-between",
     alignItems: "center",
-    paddingHorizontal: 25,
+    paddingHorizontal: 22,
     paddingTop: 30,
   },
 
@@ -20,8 +20,8 @@ export default StyleSheet.create({
   },
 
   upload: {
-    width: 50,
-    height: 50,
+    width: 47,
+    height: 47,
     backgroundColor: '#f1f1f1',
     alignItems: 'center',
     justifyContent: 'center',

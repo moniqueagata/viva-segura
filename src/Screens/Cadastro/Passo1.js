@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from "react";
 
 export default function Passo1() {
   const navigation = useNavigation();
-
   // Escolha de perfil
   const [perfil, setPerfil] = useState(null);
 
@@ -15,7 +14,7 @@ export default function Passo1() {
   const animatedValue = useRef(new Animated.Value(-1000)).current;
   const [reactiveValue, setReactiveValue] = useState(-1000);
   const step = 1;
-  const steps = 3;
+  const steps = 5;
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -29,7 +28,7 @@ export default function Passo1() {
     setReactiveValue(-width + (width * step) / steps);
   }, [step, width]);
 
-  return (
+return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Pressable
