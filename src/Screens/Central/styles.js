@@ -61,7 +61,8 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ddd',
     marginVertical: '5%',
-    paddingHorizontal: 18
+    paddingLeft: 18,
+    paddingRight: 8
   },
 
   input: {
@@ -70,18 +71,12 @@ export default StyleSheet.create({
   },
 
   btnEnviar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 30,
     backgroundColor: '#6925b8',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-
-  btnEnviarTexto: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
   },
 
   chat: {

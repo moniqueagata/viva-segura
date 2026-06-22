@@ -144,15 +144,12 @@ export default function Mensagens() {
 
     // ─── RENDER ──────────────────────────────────────────────────
     return (
-        <SafeAreaView style={styles.container}>
+        <View style={styles.container}>
             <KeyboardAvoidingView
                 style={{ flex: 1 }}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 keyboardVerticalOffset={20}
             >
-                <StatusBar style="dark" />
-
-                {/* HEADER */}
                 <View style={styles.header}>
                     <Pressable
                         onPress={() => navigation.navigate(origem)}
@@ -181,11 +178,8 @@ export default function Mensagens() {
                             />
                         )}
                     </View>
-
                     <Text style={styles.headerName}>{contato?.nome}</Text>
                 </View>
-
-                {/* MENSAGENS */}
                 <ScrollView
                     ref={scrollRef}
                     style={styles.chatArea}
@@ -206,18 +200,14 @@ export default function Mensagens() {
                         </View>
                     ))}
                 </ScrollView>
-
-                {/* INPUT */}
                 <View style={styles.footer}>
                     <View style={styles.inputWrapper}>
                         <TextInput
                             style={styles.inputField}
                             value={texto}
                             onChangeText={setTexto}
-                                autoFocus={true}
-
+                            autoFocus={true}
                         />
-
                         {/* BOTÃO SOS — só aparece para a usuária */}
                         {tipoUsuario === "usuario" && (
                             <Pressable
@@ -228,7 +218,6 @@ export default function Mensagens() {
                             </Pressable>
                         )}
                     </View>
-
                     <Pressable
                         style={styles.sendCircleButton}
                         onPress={() => enviarMensagem()}
@@ -236,8 +225,7 @@ export default function Mensagens() {
                         <Text style={styles.sendIconArrow}>↑</Text>
                     </Pressable>
                 </View>
-
             </KeyboardAvoidingView>
-        </SafeAreaView>
+        </View>
     );
 }

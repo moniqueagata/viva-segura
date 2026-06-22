@@ -3,41 +3,41 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
-  },
-  scroll: {
-    flex: 1,
-  },
-  content: {
-    paddingHorizontal: 20,
-    paddingBottom: 30,
-  },
-  
-  headerContainer: {
-    marginBottom: 25,
-  },
-  backButton: {
-    flexDirection: 'row',
+    backgroundColor: '#fff',
     alignItems: 'center',
-  },
-  backArrow: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#4B0082', 
-    marginRight: 12,
-    marginTop: -4, 
-  },
-  
-  headerTitle: {
-    fontSize: 30,
-    fontWeight: "bold",
-    marginTop: 20,
-    marginLeft: 16,
-    color: "#6c27a8",
+    justifyContent: 'space-between',
+    paddingTop: 8
   },
 
+  header: {
+    width: '100%',
+    height: 80,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 22,
+    paddingTop: 30,
+  },
 
-    subtitle: {
+  tituloHeader: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#66b697',
+  },
+
+  scroll: {
+    width: '100%'
+  },
+
+  content: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    paddingVertical: 22,
+  },
+
+  subtitle: {
     fontSize: 18,
     marginLeft: 16,
     marginTop: 5,
@@ -47,7 +47,7 @@ export default StyleSheet.create({
   chatCard: {
     flexDirection: 'row',
     backgroundColor: '#F6F6F6', 
-    borderRadius: 18,
+    borderRadius: 10,
     padding: 16,
     marginBottom: 16,
     alignItems: 'center',
@@ -55,14 +55,15 @@ export default StyleSheet.create({
   },
   
   avatarPlaceholder: {
-    width: 64,
-    height: 64,
+    width: 57,
+    height: 57,
     borderRadius: 32,
     backgroundColor: '#EAEAEA',
     justifyContent: 'center',
     alignItems: 'center',
     marginRight: 16,
   },
+
   avatarImage: {
     width: '100%',
     height: '100%',
@@ -71,14 +72,17 @@ export default StyleSheet.create({
   
   textContainer: {
     flex: 1,
-    paddingRight: 45, 
+    paddingLeft: 5, 
+    justifyContent: 'center',
+    gap: 3
   },
+
   userName: {
-    fontSize: 19,
-    fontWeight: 'bold',
-    color: '#4B0082', 
-    marginBottom: 7,
+    fontSize: 18,
+    fontWeight: '700',
+    color: '#66b697', 
   },
+  
   lastMessage: {
     fontSize: 14,
     color: '#8E8E93', 

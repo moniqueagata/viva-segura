@@ -86,7 +86,7 @@ export default function MeusGuardioes() {
         ) : (
           <FlatList
             data={guardioes}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id_guardiao.toString()}
 
             ListEmptyComponent={
               <View style={styles.vazio}>

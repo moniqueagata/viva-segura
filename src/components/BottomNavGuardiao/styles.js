@@ -22,7 +22,7 @@ export default StyleSheet.create({
   },
 
   buttonNav: {
-    width: 66,
+    width: 80,
     height: 66,
     alignItems: 'center',
     justifyContent: 'center',

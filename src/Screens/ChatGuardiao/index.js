@@ -33,14 +33,12 @@ export default function ChatGuardiao() {
     }, []);
 
 return (
-    <SafeAreaView style={styles.container}>
-        <StatusBar style="dark" />
+    <View style={styles.container}>
+        <View style={styles.header}>
+            <Text style={styles.tituloHeader}>Suas mensagens</Text>
+        </View>
         <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
             <View style={styles.content}>
-                <View style={styles.headerContainer}>
-                    <Text style={styles.headerTitle}>Chat</Text>
-                    <Text style={styles.subtitle}>Clique no card para conversar com a sua usuária protegida! </Text>
-                </View>
                 {Array.isArray(usuarios) &&
                 usuarios.map((item) => (
                 <Pressable
@@ -77,6 +75,6 @@ return (
             </View>
         </ScrollView>
         <BottomNavGuardiao abaAtivaInicial={1} />
-    </SafeAreaView>
+    </View>
     );
 }

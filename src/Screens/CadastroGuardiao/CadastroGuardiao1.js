@@ -47,7 +47,7 @@ return (
     >
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Passo1')}>
-          <Image source={require('../../../assets/imgGuardiao/arrow_2.png')} 
+          <Image source={require('../../../assets/img/arrow_2.png')} 
             style={{ width: 20, height: 20 }}
             tintColor='#ccc'
             resizeMode='contain' 
@@ -56,25 +56,16 @@ return (
         <View style={styles.barra}
           onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
         >
-          <Animated.View
-            style={[
-              styles.barraPurple, { transform:[{ translateX: animatedValue }]}
-            ]}
-          />
+          <Animated.View style={[styles.barraPurple, { transform:[{ translateX: animatedValue }]}]} />
         </View>
       </View>
-
         <View style={styles.logo}>
-          <Image source={require('../../../assets/imgGuardiao/logo.png')} 
+          <Image source={require('../../../assets/img/logo.png')} 
             style={{ width: 130, height: 130 }} 
             resizeMode='contain'
           />
         </View>
-
-        <Text style={styles.subtitulo}>
-          Preencha as informações que estão abaixo
-        </Text>
-
+        <Text style={styles.subtitulo}>Preencha as informações que estão abaixo</Text>
         <View style={styles.inputsContainer}>
           <PaperInput
             label={<Text style={{ fontSize: 15, letterSpacing: 0.4 }}>Nome</Text>}
@@ -104,7 +95,6 @@ return (
             keyboardType='phone-pad'
             render={props => ( <TextInputMask {...props} type={'cel-phone'} options={{maskType: 'BRL', withDDD: true, dddMask: '(11) '}} />)}
           />
-
           <PaperInput
             label={<Text style={{ fontSize: 15, letterSpacing: 0.4 }}>E-mail</Text>}
             mode='outlined'
@@ -134,7 +124,6 @@ return (
             maxLength={100}
           />               
         </View>
-
         <View style={styles.buttonContainer}>
           <Pressable style={[styles.btnPurple, !formularioValido && {opacity: 0.5}]}
             onPress={() => { 
@@ -143,8 +132,7 @@ return (
             <Text style={styles.txWhite}>Continuar</Text>
           </Pressable>
         </View>
-        
-            <StatusBar style="auto" />
+      <StatusBar style="auto" />
     </ScrollView>
   </KeyboardAvoidingView>
   );

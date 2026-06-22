@@ -89,7 +89,7 @@ export default function Perfil() {
                                 tintColor='#ccc'  
                             />
                         </Pressable>
-                        <Pressable style={styles.button}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate("AlterarSenha")}>
                             <View style={styles.grid}>
                                 <View style={styles.circle}>
                                     <Image source={require('../../../assets/img/password.png')}
@@ -125,7 +125,7 @@ export default function Perfil() {
                                 tintColor='#ccc'  
                             />
                         </Pressable>
-                        <Pressable style={styles.button}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate("TermosPrivacidade")}>
                             <View style={styles.grid}>
                                 <View style={styles.circle}>
                                     <Image source={require('../../../assets/img/terms.png')}
@@ -134,7 +134,7 @@ export default function Perfil() {
                                         resizeMode='contain'
                                     />
                                 </View>
-                                <Text style={styles.textButton}>Termos</Text>
+                                <Text style={styles.textButton}>Termos e Privacidade</Text>
                             </View>
                             <Image source={require('../../../assets/img/arrow_2.png')}
                                 style={{ width: 14, height: 14, transform: [{ scaleX: -1 }] }}

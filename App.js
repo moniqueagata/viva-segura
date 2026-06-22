@@ -20,8 +20,7 @@ import Passo5 from './src/Screens/Cadastro/Passo5';
 // Main principal - Usuária
 import Home from "./src/Screens/Home";
 import Telefones from "./src/Screens/Telefones";
-import MeusEnderecos from "./src/Screens/MeusEnderecos";
-import AdicionarEndereco from "./src/Screens/MeusEnderecos/AdicionarEndereco";
+import EnderecoUsuaria from './src/Screens/EnderecoUsuaria';
 //Mapa
 import Mapa from "./src/Screens/Mapa";
 // Mural notícias
@@ -29,9 +28,11 @@ import Mural from "./src/Screens/Mural";
 // Perfil Usuária
 import Perfil from "./src/Screens/Perfil";
 import EditarPerfil from "./src/Screens/EditarPerfil";
+import AlterarSenha from './src/Screens/AlterarSenha';
 import Notificacoes from "./src/Screens/Notificacoes";
 import Central from "./src/Screens/Central";
 import HelpChat from "./src/Screens/HelpChat";
+import TermosPrivacidade from './src/Screens/TermosPrivacidade';
 //Tela meus guardiões
 import MeusGuardioes from "./src/Screens/MeusGuardioes";
 import AddGuardiao from "./src/Screens/MeusGuardioes/AddGuardiao";
@@ -40,18 +41,19 @@ import AddGuardiao from "./src/Screens/MeusGuardioes/AddGuardiao";
 import CadastroGuardiao1 from "./src/Screens/CadastroGuardiao/CadastroGuardiao1";
 import CadastroGuardiao2 from "./src/Screens/CadastroGuardiao/CadastroGuardiao2";
 import CadastroGuardiao3 from "./src/Screens/CadastroGuardiao/CadastroGuardiao3";
-//Tela Guardiãos -----
+// Main - Guardião
 import HomeGuardiao from "./src/Screens/HomeGuardiao";
+import AcompanharRota from './src/Screens/HomeGuardiao/AcompanharRota';
 import CentralEmergencia from "./src/Screens/CentralEmergencia";
+// Chat
+import ChatGuardiao from './src/Screens/ChatGuardiao';
+import Mensagens from './src/Screens/Mensagens';
+// Perfil Guardião
 import PerfilGuardiao from './src/Screens/PerfilGuardiao';
 import NotificacoesGuardiao from './src/Screens/NotificacoesGuardiao';
 import CentralAjuda from './src/Screens/CentralAjuda';
 import CentralGuardiao from './src/Screens/CentralGuardiao';
-import AcompanharRota from './src/Screens/HomeGuardiao/AcompanharRota';
-import ChatGuardiao from './src/Screens/ChatGuardiao';
-import Mensagens from './src/Screens/Mensagens';
 import EditarPerfilGuardiao from './src/Screens/EditarPerfilGuardiao';
-
 
 const Stack = createNativeStackNavigator();
 
@@ -110,12 +112,7 @@ export default function App() {
               headerShown: false
             }}
           />
-          <Stack.Screen name="MeusEnderecos" component={MeusEnderecos}
-            options={{
-              headerShown: false
-            }}
-          />
-          <Stack.Screen name="AdicionarEndereco" component={AdicionarEndereco}
+          <Stack.Screen name="EnderecoUsuaria" component={EnderecoUsuaria}
             options={{
               headerShown: false
             }}
@@ -155,12 +152,22 @@ export default function App() {
               headerShown: false
             }}
           />
+          <Stack.Screen name="AlterarSenha" component={AlterarSenha}
+            options={{
+              headerShown: false
+            }}
+          />
           <Stack.Screen name="Central" component={Central}
             options={{
               headerShown: false
             }}
           />
           <Stack.Screen name="HelpChat" component={HelpChat}
+            options={{
+              headerShown: false
+            }}
+          />
+          <Stack.Screen name="TermosPrivacidade" component={TermosPrivacidade}
             options={{
               headerShown: false
             }}

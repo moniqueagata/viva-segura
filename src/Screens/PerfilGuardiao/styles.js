@@ -142,6 +142,7 @@ export default StyleSheet.create({
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: '5%'
   },
 
   textRed: {

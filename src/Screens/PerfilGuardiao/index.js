@@ -131,7 +131,7 @@ return (
                                     resizeMode='contain'
                                 />
                             </View>
-                            <Text style={styles.textButton}>Termos</Text>
+                            <Text style={styles.textButton}>Termos e Privacidade</Text>
                         </View>
                         <Image source={require('../../../assets/img/arrow_2.png')}
                             style={{ width: 14, height: 14, transform: [{ scaleX: -1 }] }}

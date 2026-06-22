@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Image, Text, Pressable } from "react-native";
+import { View, Image, Text, Pressable, Alert, Modal } from "react-native";
 import styles from "./styles";
 import { useState, useEffect, useRef } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -7,7 +7,6 @@ import { useNavigation } from "@react-navigation/native";
 import BottomNav from "../../components/BottomNav";
 import * as Location from "expo-location";
 import api from "../../services/api";
-import { Alert } from "react-native";
 import * as Notifications from "expo-notifications"; 
 // Notificações
 Notifications.setNotificationHandler({
@@ -23,38 +22,51 @@ export default function Home() {
   const [holding, setHolding] = useState(false);
   const holdTimeout = useRef(null);
 
+  const [modalGuardiaoPendente, setModalGuardiaoPendente] = useState(false);
+  const [guardiaoPendente, setGuardiaoPendente] = useState(null);
+  const [modalGuardiaoAtivo, setModalGuardiaoAtivo] = useState(false);
+  const [guardiaoAtivo, setGuardiaoAtivo] = useState(null);
+
   // Buscar dados da usuária e notificações
   const [nomeUsuario, setNomeUsuario] = useState("");
   const [fotoUsuario, setFotoUsuario] = useState(null);
 
   useEffect(() => {
     const carregarUsuario = async () => {
-      const user = await AsyncStorage.getItem("user");
-      if (user) {
+      try {
+        const user = await AsyncStorage.getItem("user");
+        if (!user) return;
+
         const usuarioConvertido = JSON.parse(user);
         setNomeUsuario(usuarioConvertido.nome);
         setFotoUsuario(usuarioConvertido.foto);
-        const idUsuario = usuarioConvertido.id_usuaria || usuarioConvertido.id;
 
-        try {
-          const { status: statusExistente } = await Notifications.getPermissionsAsync();
-          let statusFinal = statusExistente;
-          if (statusExistente !== "granted") {
-            const { status } = await Notifications.requestPermissionsAsync();
-            statusFinal = status;
-          }
-          
-          if (statusFinal === "granted") {
-            const tokenData = await Notifications.getExpoPushTokenAsync();
-            const tokenObtido = tokenData.data;
-            await api.post(`/usuaria/${idUsuario}/salvar-token`, {
-              push_token: tokenObtido,
-            });
-            console.log("Push Token salvo com sucesso:", tokenObtido);
-          }
-        } catch (error) {
-          console.log("Erro ao gerenciar notificações:", error);
+        const idUsuario = usuarioConvertido.id_usuaria || usuarioConvertido.id;
+        console.log("ID DA USUÁRIA (HOME):", idUsuario);
+
+        const response = await api.get(`/usuaria/home/${idUsuario}`);
+        const vinculos = response.data?.data || [];
+        console.log("RESPOSTA HOME USUÁRIA:", response.data);
+        console.log("VÍNCULOS:", vinculos);
+
+        const vinculoPendente = vinculos.find(
+          (vinculo) => String(vinculo.statusVinculo).toLowerCase() === "pendente"
+        );
+        const vinculoAtivo = vinculos.find(
+          (vinculo) => String(vinculo.statusVinculo).toLowerCase() === "aceito"
+        );
+
+        if (vinculoPendente) {
+          setGuardiaoPendente(vinculoPendente.guardiao || null);
+          setModalGuardiaoPendente(true);
+        } else if (vinculoAtivo) {
+          setGuardiaoAtivo(vinculoAtivo.guardiao || null);
+          setModalGuardiaoAtivo(true);
         }
+      } catch (error) {
+        console.log("ERRO COMPLETO PENDÊNCIA:", error);
+        console.log("MENSAGEM:", error?.message);
+        console.log("RESPOSTA:", error?.response?.data);
       }
     };
     carregarUsuario();
@@ -68,8 +80,8 @@ export default function Home() {
       if (!user) return;
       const usuario = JSON.parse(user);
       console.log("USUARIO COMPLETO:", usuario);
-      const permissao = await Location.requestForegroundPermissionsAsync();
 
+      const permissao = await Location.requestForegroundPermissionsAsync();
       if (permissao.status !== "granted") {
         Alert.alert("Permissão negada");
         return;
@@ -77,7 +89,6 @@ export default function Home() {
 
       const local = await Location.getCurrentPositionAsync({});
       const idUsuario = usuario.id_usuaria || usuario.id;
-
       console.log({
         id_usuaria: idUsuario,
         latitude: local.coords.latitude,
@@ -163,7 +174,7 @@ export default function Home() {
           <Text style={styles.desc}>{`Pressione o botão por 3 segundos e\nserá enviado um alerta ao seu guardião`}</Text>
         </View>
         <View style={{ width: '100%', alignItems: 'center', marginVertical: 25 }}>
-          <Pressable style={styles.button} onPress={() => navigation.navigate("MeusEnderecos")}>
+          <Pressable style={styles.button} onPress={() => navigation.navigate("EnderecoUsuaria")}>
             <Image
               source={require("../../../assets/img/endereco.png")}
               style={{ width: 33, height: 33, tintColor: "#844ec2" }}
@@ -180,7 +191,96 @@ export default function Home() {
         </View>
       </View>
       <BottomNav abaAtivaInicial={0} />
-      {/* --------- */}
+      {/* Modais */}
+      <Modal
+        visible={modalGuardiaoPendente}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalGuardiaoPendente(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0, 0, 0, 0.45)",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 24,
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              backgroundColor: "#FFFFFF",
+              borderRadius: 20,
+              padding: 24,
+            }}
+          >
+            <Text style={{ fontSize: 21, fontWeight: "bold", textAlign: "center", color: "#6925B8", marginBottom: 3 }}>Guardião pendente</Text>
+            <Text style={{ fontSize: 16, textAlign: "center", color: "#444", lineHeight: 23, marginVertical: '10%' }}>O convite para{" "}<Text style={{ fontWeight: "bold" }}>{guardiaoPendente?.nome || "seu guardião"}</Text>{" "}foi enviado.</Text>
+            <Pressable
+              onPress={() => setModalGuardiaoPendente(false)}
+              style={{
+                backgroundColor: "#6925B8",
+                paddingVertical: 14,
+                borderRadius: 12,
+              }}
+            >
+              <Text style={{ color: "#FFFFFF", fontWeight: "bold", fontSize: 16, textAlign: "center" }}>Entendi</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
+      <Modal
+        visible={modalGuardiaoAtivo}
+        transparent
+        animationType="fade"
+        onRequestClose={() => setModalGuardiaoAtivo(false)}
+      >
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: "rgba(0, 0, 0, 0.45)",
+            justifyContent: "center",
+            alignItems: "center",
+            padding: 24,
+          }}
+        >
+          <View
+            style={{
+              width: "100%",
+              backgroundColor: "#FFFFFF",
+              borderRadius: 20,
+              padding: 24,
+            }}
+          >
+            <Text style={{ fontSize: 21, fontWeight: "bold", textAlign: "center", color: "#6925B8", marginBottom: 12 }}>Guardião ativo!</Text>
+            <Text style={{ fontSize: 16, textAlign: "center", color: "#444", lineHeight: 23, marginBottom: 8 }}><Text style={{ fontWeight: "bold" }}>{guardiaoAtivo?.nome || "Seu guardião"}</Text>{" "}aceitou o convite.</Text>
+            <Text style={{ fontSize: 16, textAlign: "center", color: "#444", lineHeight: 23, marginBottom: 24 }}>Agora você pode visualizar esse vínculo na tela Meus Guardiões.</Text>
+            <Pressable
+              onPress={() => {
+                setModalGuardiaoAtivo(false);
+                navigation.navigate("MeusGuardioes");
+              }}
+              style={{
+                backgroundColor: "#6925B8",
+                paddingVertical: 14,
+                borderRadius: 12,
+                marginBottom: 10,
+              }}
+            >
+              <Text style={{ color: "#FFFFFF", fontWeight: "bold", fontSize: 16, textAlign: "center" }}>Ver meus guardiões</Text>
+            </Pressable>
+            <Pressable
+              onPress={() => setModalGuardiaoAtivo(false)}
+              style={{
+                paddingVertical: 10,
+              }}
+            >
+              <Text style={{ color: "#6925B8", fontSize: 15, textAlign: "center", fontWeight: "500" }}>Agora não</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <StatusBar style="auto" />
     </View>
   );

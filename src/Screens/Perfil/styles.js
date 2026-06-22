@@ -28,7 +28,6 @@ export default StyleSheet.create({
   },
 
   // Foto de perfil
-
   photoUpload: {
     alignItems: 'center',
     justifyContent: 'center',
@@ -44,8 +43,8 @@ export default StyleSheet.create({
     justifyContent: 'center',
     borderRadius: '100%',
   },
-
   // ----
+
   text: {
     width: '100%',
     alignItems: 'center',
@@ -143,6 +142,7 @@ export default StyleSheet.create({
     height: 30,
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop: '5%'
   },
 
   textRed: {

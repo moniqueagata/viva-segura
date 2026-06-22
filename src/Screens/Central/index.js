@@ -104,7 +104,6 @@ export default function Central() {
           </View>
         </View>
       </Modal>
-
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Perfil')}>
           <Image source={require('../../../assets/img/arrow_2.png')} 
@@ -114,13 +113,11 @@ export default function Central() {
         </Pressable>
         <Text style={styles.tituloHeader}>Central de Ajuda</Text>
       </View>
-
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <View style={styles.tituloContainer}>
             <Text style={styles.titulo}>Precisa de ajuda?</Text>
           </View>
-          {/* Campo de dúvida com botão de enviar */}
           <View style={styles.searchInput}>
             <Image source={require('../../../assets/img/lupa.png')}
               style={{ width: 18, height: 18 }}
