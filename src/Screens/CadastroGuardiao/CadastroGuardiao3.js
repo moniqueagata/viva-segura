@@ -40,7 +40,7 @@ export default function Passo3Guardiao() {
     return true;
   };
 
-  // ---------------- FOTO ----------------
+  // Foto de perfil
   const tirarFoto = async () => {
     const ok = await solicitarPermissoes();
     if (!ok) return;
@@ -89,8 +89,9 @@ export default function Passo3Guardiao() {
     setImage(null);
     setModal(false);
   };
+  // ----------
 
-  // ---------------- FINALIZAR CADASTRO ----------------
+  // Verificação
   const finalizarCadastro = async (fotoPerfil) => {
     try {
       const usuario = {
@@ -98,36 +99,32 @@ export default function Passo3Guardiao() {
         email,
         senha,
         telefone: telefone.replace(/\D/g, ""),
-        id_role: 2,
         codigo_convite: codigo_convite,
         foto: fotoPerfil || null,
       };
-
       console.log("ENVIANDO:", usuario);
-
-      const response = await api.post("/cadastrar", usuario);
-
+      const response = await api.post("/cadastrar-guardiao", usuario);
       console.log("SUCESSO:", response.data);
-
       setModalSucesso(true);
+
     } catch (error) {
-      console.log(error.response?.data || error.message);
+      console.log("ERRO:",error.response?.data || error.message);
       Alert.alert("Erro ao cadastrar");
     }
   };
+  // ---------
 
   const irLogin = () => {
     setModalSucesso(false);
     navigation.replace("Login");
   };
 
-  // ---------------- PROGRESSO ----------------
+  // Barra de progresso
   const [width, setWidth] = useState(0);
   const animatedValue = useRef(new Animated.Value(-1000)).current;
   const [reactiveValue, setReactiveValue] = useState(-1000);
-
-  const step = 3;
-  const steps = 3;
+  const step = 4;
+  const steps = 4;
 
   useEffect(() => {
     Animated.timing(animatedValue, {
@@ -139,12 +136,11 @@ export default function Passo3Guardiao() {
 
   useEffect(() => {
     setReactiveValue(-width + (width * step) / steps);
-  }, [width]);
+  }, [step, width]);
 
   // ---------------- UI ----------------
   return (
     <View style={styles.container}>
-      {/* MODAL FOTO */}
       <Portal>
         <Modal
           visible={modal}
@@ -170,7 +166,6 @@ export default function Passo3Guardiao() {
           </View>
         </Modal>
       </Portal>
-
       {/* MODAL SUCESSO */}
       <Portal>
         <Modal
@@ -201,8 +196,6 @@ export default function Passo3Guardiao() {
           </View>
         </Modal>
       </Portal>
-
-      {/* HEADER */}
       <View style={styles.header}>
         <Pressable onPress={() => navigation.goBack()}>
           <Image
@@ -211,7 +204,6 @@ export default function Passo3Guardiao() {
             tintColor="#ccc"
           />
         </Pressable>
-
         <View
           style={styles.barra}
           onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
@@ -224,8 +216,6 @@ export default function Passo3Guardiao() {
           />
         </View>
       </View>
-
-      {/* CONTENT */}
       <View style={styles.content}>
         <Text style={styles.titulo}>Adicione sua foto de perfil</Text>
 
@@ -254,11 +244,8 @@ export default function Passo3Guardiao() {
             </Pressable>
           </View>
 
-          <Text style={styles.subtitulo}>
-            Toque para adicionar uma foto
-          </Text>
+          <Text style={styles.subtitulo}>Toque para adicionar uma foto</Text>
         </View>
-
         <View style={styles.button}>
           <Pressable
             style={styles.btnPurple}
@@ -266,7 +253,6 @@ export default function Passo3Guardiao() {
           >
             <Text style={styles.txWhite}>Concluir</Text>
           </Pressable>
-
           <Pressable onPress={() => finalizarCadastro(null)}>
             <Text style={styles.txGrey}>Pular por agora</Text>
           </Pressable>

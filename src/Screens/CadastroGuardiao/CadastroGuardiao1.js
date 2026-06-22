@@ -8,12 +8,10 @@ import styles from'./styles/stylesGuardiao1';
 
 export default function CadastroGuardiao1() {
     const navigation = useNavigation();
-
     const [nome, setNome] = useState('');
     const [telefone, setTelefone] = useState('');
     const [email, setEmail] = useState('');
     const [codUsu, setCodUsu] = useState('');
-
 
     // Validação
     const formularioValido =
@@ -40,20 +38,16 @@ export default function CadastroGuardiao1() {
       setReactiveValue(-width + (width * step) / steps);
     }, [step, width]);
 
-  return (
-<KeyboardAvoidingView
-    style={{ flex: 1 }}
-    behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-  >
+return (
+  <KeyboardAvoidingView style={{ flex: 1, backgroundColor: '#ffffff' }} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <ScrollView
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
       showsVerticalScrollIndicator={false}
     >
-        
-              <View style={styles.header}>
+      <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Passo1')}>
-          <Image source={require('../../../assets/imgGuardiao/arrow_2.png')} 
+          <Image source={require('../../../assets/img/arrow_2.png')} 
             style={{ width: 20, height: 20 }}
             tintColor='#ccc'
             resizeMode='contain' 
@@ -62,25 +56,16 @@ export default function CadastroGuardiao1() {
         <View style={styles.barra}
           onLayout={(e) => setWidth(e.nativeEvent.layout.width)}
         >
-          <Animated.View
-            style={[
-              styles.barraPurple, { transform:[{ translateX: animatedValue }]}
-            ]}
-          />
+          <Animated.View style={[styles.barraPurple, { transform:[{ translateX: animatedValue }]}]} />
         </View>
       </View>
-
         <View style={styles.logo}>
-          <Image source={require('../../../assets/imgGuardiao/logo.png')} 
+          <Image source={require('../../../assets/img/logo.png')} 
             style={{ width: 130, height: 130 }} 
             resizeMode='contain'
           />
         </View>
-
-        <Text style={styles.subtitulo}>
-          Preencha as informações que estão abaixo
-        </Text>
-
+        <Text style={styles.subtitulo}>Preencha as informações que estão abaixo</Text>
         <View style={styles.inputsContainer}>
           <PaperInput
             label={<Text style={{ fontSize: 15, letterSpacing: 0.4 }}>Nome</Text>}
@@ -110,7 +95,6 @@ export default function CadastroGuardiao1() {
             keyboardType='phone-pad'
             render={props => ( <TextInputMask {...props} type={'cel-phone'} options={{maskType: 'BRL', withDDD: true, dddMask: '(11) '}} />)}
           />
-
           <PaperInput
             label={<Text style={{ fontSize: 15, letterSpacing: 0.4 }}>E-mail</Text>}
             mode='outlined'
@@ -140,7 +124,6 @@ export default function CadastroGuardiao1() {
             maxLength={100}
           />               
         </View>
-
         <View style={styles.buttonContainer}>
           <Pressable style={[styles.btnPurple, !formularioValido && {opacity: 0.5}]}
             onPress={() => { 
@@ -149,8 +132,7 @@ export default function CadastroGuardiao1() {
             <Text style={styles.txWhite}>Continuar</Text>
           </Pressable>
         </View>
-        
-            <StatusBar style="auto" />
+      <StatusBar style="auto" />
     </ScrollView>
   </KeyboardAvoidingView>
   );

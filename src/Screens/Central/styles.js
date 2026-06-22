@@ -16,24 +16,14 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#fff',
     paddingHorizontal: 22,
-    paddingTop: 10,
-    gap: 36
-  },
-
-  buttonArrow: {
-    width: 28,
-    height: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 30,
+    paddingTop: 30,
+    gap: 33
   },
 
   tituloHeader: {
-    fontSize: 24,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: '700',
     color: '#6925b8',
-        marginTop: 30,
-
   },
 
   scroll: {
@@ -55,64 +45,55 @@ export default StyleSheet.create({
   },
 
   titulo: {
-    fontSize: 35,
-    fontWeight: '500',
+    fontSize: 28,
+    fontWeight: '700',
     color: '#220049',
   },
 
   searchInput: {
     width: '100%',
     flexDirection: 'row',
-    height: 58,
-    backgroundColor: '#fdfdfd',
+    height: 50,
+    backgroundColor: '#fff',
     borderRadius: 30,
-    marginTop: 15,
     alignItems: 'center',
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
     borderWidth: 1,
-    borderColor: '#eee',
+    borderColor: '#ddd',
+    marginVertical: '5%',
+    paddingLeft: 18,
+    paddingRight: 8
   },
 
   input: {
-    height: 58,
-    width: '78%',
-    borderRadius: 35,
-    paddingHorizontal: 15,
-    fontSize: 18,
+    width: '75%',
     outlineStyle: 'none',
   },
 
   btnEnviar: {
-    width: 36,
-    height: 36,
-    borderRadius: 18,
+    width: 40,
+    height: 40,
+    borderRadius: 30,
     backgroundColor: '#6925b8',
     alignItems: 'center',
     justifyContent: 'center',
-    marginRight: 10,
-  },
-
-  btnEnviarTexto: {
-    color: '#fff',
-    fontSize: 18,
-    fontWeight: '700',
   },
 
   chat: {
-    width: 240,
-    height: 55,
+    width: 230,
+    height: 50,
     backgroundColor: '#6925b8',
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 30,
     gap: 10,
-    marginVertical: 20
+    marginVertical: '5%'
   },
 
   textChat: {
-    fontSize: 19,
-    fontWeight: '500',
+    fontSize: 17,
+    fontWeight: '400',
     color: '#fff'
   },
 
@@ -124,15 +105,15 @@ export default StyleSheet.create({
   },
 
   subtitulo: {
-    fontSize: 21,
-    fontWeight: '500',
-    marginBottom: 5,
+    fontSize: 18,
+    fontWeight: '700',
+    marginBottom: 9,
     color: '#220049',
+    paddingLeft: 4,
   },
 
   card: {
     width: '100%',
-    minHeight: 200,
     backgroundColor: '#fff',
     borderRadius: 15,
     borderWidth: 1,
@@ -140,21 +121,21 @@ export default StyleSheet.create({
     paddingHorizontal: 15,
     paddingVertical: 20,
     alignItems: 'flex-start',
-    gap: 22,
-    marginBottom: 20,
+    gap: 10,
+    marginBottom: 10,
   },
 
   row: {
     width: '100%',
     flexDirection: 'row',
-    gap: 15,
+    gap: 10,
     marginBottom: 4,
     paddingLeft: 5
   },
 
   categoria: {
-    fontSize: 21,
-    fontWeight: '500',
+    fontSize: 17,
+    fontWeight: '700',
     color: '#6925b8'
   },
 
@@ -174,27 +155,27 @@ export default StyleSheet.create({
   },
 
   textFaq: {
-    fontSize: 17,
+    fontSize: 16,
     fontWeight: '400',
     color: '#404040',
-    lineHeight: 24
-  },
-
-  textResposta: {
-    fontSize: 15,
-    fontWeight: '400',
-    color: '#666',
-    lineHeight: 22,
-    paddingHorizontal: 3,
-    paddingBottom: 8,
+    lineHeight: 22
   },
 
   linha: {
     width: '100%',
-    height: 2,
+    height: 1,
     backgroundColor: '#eee',
-    borderRadius: 2,
+    borderRadius: 10,
     marginVertical: 11,
+  },
+
+  textResposta: {
+    fontSize: 15,
+    fontWeight: '300',
+    color: '#999',
+    lineHeight: 22,
+    paddingLeft: 18,
+    marginVertical: 5,
   },
 
   modalOverlay: {

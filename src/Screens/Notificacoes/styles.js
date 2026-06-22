@@ -10,30 +10,20 @@ export default StyleSheet.create({
 
   header: {
     width: '100%',
-    height: 88,
+    height: 80,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'flex-start',
     backgroundColor: '#fff',
     paddingHorizontal: 22,
-    gap: 36
-  },
-
-  buttonHeader: {
-    width: 28,
-    height: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-        marginTop:40,
-
+    paddingTop: 30,
+    gap: 33
   },
 
   tituloHeader: {
-    fontSize: 24,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: '700',
     color: '#6925b8',
-     marginTop:40,
-
   },
 
   content: {

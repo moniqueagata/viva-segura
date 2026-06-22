@@ -47,25 +47,24 @@ export default function CadastroGuardiao2() {
     const [width, setWidth] = useState(0);
     const animatedValue = useRef(new Animated.Value(-1000)).current;
     const [reactiveValue, setReactiveValue] = useState(-1000);
+    const step = 3;
     const steps = 4;
 
     useEffect(() => {
-        Animated.timing(animatedValue, {
-            toValue: reactiveValue,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
+      Animated.timing(animatedValue, {
+        toValue: reactiveValue,
+        duration: 500,
+        useNativeDriver: false,
+      }).start();
     }, [reactiveValue]);
 
     useEffect(() => {
-        const passoAtual = (caracteres && maiusculaEMinuscula && numero && senhasIguais) ? 4 : 3;
-        setReactiveValue(-width + (width * passoAtual) / steps);
-
-    }, [caracteres, maiusculaEMinuscula, numero, senhasIguais, width]);
+      setReactiveValue(-width + (width * step) / steps);
+    }, [step, width]);
 
     return (
         <KeyboardAvoidingView
-            style={{ flex: 1 }}
+            style={{ flex: 1, backgroundColor: '#ffffff' }}
             behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
         >
             <ScrollView
@@ -75,7 +74,7 @@ export default function CadastroGuardiao2() {
             >
                 <View style={styles.header}>
                     <Pressable style={styles.btnExit} onPress={() => navigation.navigate('Passo1')}>
-                        <Image source={require('../../../assets/imgGuardiao/arrow_2.png')}
+                        <Image source={require('../../../assets/img/arrow_2.png')}
                             style={{ width: 20, height: 20 }}
                             tintColor='#ccc'
                             resizeMode='contain'
@@ -93,14 +92,12 @@ export default function CadastroGuardiao2() {
                 </View>
 
                 <View style={styles.logo}>
-                    <Image source={require('../../../assets/imgGuardiao/logo.png')}
+                    <Image source={require('../../../assets/img/logo.png')}
                         style={{ width: 130, height: 130 }}
                         resizeMode='contain'
                     />
                 </View>
-
                 <Text style={styles.titulo}>Crie uma senha segura</Text>
-
                 <View style={styles.inputsContainer}>
                     <PaperInput
                         label={<Text style={{ fontSize: 15, letterSpacing: 0.4 }}>Senha</Text>}
@@ -121,7 +118,6 @@ export default function CadastroGuardiao2() {
                             />
                         }
                     />
-
                     <PaperInput
                         label={<Text style={{ fontSize: 15, letterSpacing: 0.4 }}>Confirmar senha</Text>}
                         mode='outlined'
@@ -136,8 +132,6 @@ export default function CadastroGuardiao2() {
                         error={exibirErro}
                     />
                 </View>
-
-
                 <View style={styles.validacoesContainer}>
                     <Text style={styles.textValidar}>
                         Mínimo de 8 caracteres {' '}

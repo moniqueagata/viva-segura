@@ -2,11 +2,10 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'space-between',
-    paddingBottom: 5,
   },
 
   header: {
@@ -17,24 +16,14 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     backgroundColor: '#fff',
     paddingHorizontal: 22,
-    paddingTop: 10,
-    gap: 36,
-  },
-
-  buttonArrow: {
-    width: 28,
-    height: 28,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: 20,
+    paddingTop: 30,
+    gap: 33,
   },
 
   tituloHeader: {
-    fontSize: 24,
-    fontWeight: '500',
+    fontSize: 20,
+    fontWeight: '700',
     color: '#6925b8',
-        marginTop: 20,
-
   },
 
   scroll: {
@@ -52,13 +41,13 @@ export default StyleSheet.create({
   coontainerData: {
     width: '100%',
     alignItems: 'center',
-    marginVertical: 20
+    marginVertical: '8%'
   },
 
   data: {
-    fontSize: 18,
-    fontWeight: '500',
-    color: '#220049'
+    fontSize: 15,
+    fontWeight: '300',
+    color: '#6925b8'
   },
 
   containerMensagem: {
@@ -69,71 +58,70 @@ export default StyleSheet.create({
   // Balões de mensagem
   balao: {
     maxWidth: '100%',
-    minHeight: 55,
+    minHeight: 50,
     padding: 14,
     marginBottom: 10,
-    borderRadius: 15,
+    borderRadius: 22,
     justifyContent: 'center'
   },
 
   balaoD: {
-    backgroundColor: '#9149e4',
+    backgroundColor: '#ab83eb',
     alignSelf: 'flex-end',
-    borderBottomRightRadius: 2,
+    borderBottomRightRadius: 0,
   },
 
   textWhite: {
-    fontSize: 19,
-    fontWeight: '400',
+    fontSize: 16,
+    fontWeight: '300',
     color: '#fff'
   },
 
   balaoE: {
-    backgroundColor: '#f8f8f8',
+    backgroundColor: '#fafafa',
     alignSelf: 'flex-start',
-    borderBottomLeftRadius: 2,
+    borderBottomLeftRadius: 0,
   },
 
   textBlack: {
-    fontSize: 19,
-    fontWeight: '400',
+    fontSize: 16,
+    fontWeight: '300',
     color: '#454545'
   },
   // ------
 
   // Hora 
-
   horario: {
-    fontSize: 15,
-    fontWeight: '500',
-    color: '#757575',
+    fontSize: 13,
+    fontWeight: '300',
+    color: '#999',
   },
+  // -----
 
   inputBar:{
     width: '100%',
-    height: 88,
+    height: 80,
     paddingHorizontal: 15,
     alignItems: 'center',
     justifyContent: 'space-between',
     flexDirection: 'row',
-    borderTopWidth: 1,
-    borderColor: '#ddd',
     gap: 10
   },
 
   input: {
     width: '85%',
-    height: 55,
+    height: 50,
     borderRadius: 30,
-    backgroundColor: '#f8f8f8',
-    fontSize: 19,
-    padding: 20,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    backgroundColor: '#fff',
+    paddingHorizontal: 18,
     outlineStyle: 'none'
   },
 
   send: {
-    width: 53,
-    height: 53,
+    width: 50,
+    height: 50,
     backgroundColor: '#6925b8',
     alignItems: 'center',
     justifyContent: 'center',

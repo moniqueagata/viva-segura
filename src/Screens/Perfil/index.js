@@ -1,45 +1,32 @@
-  import { StatusBar } from "expo-status-bar";
-  import {
-    Image,
-    ScrollView,
-    View,
-    Text,
-    Pressable,
-    Animated,
-    Easing,
-    useWindowDimensions,
-  } from "react-native";
-  import styles from "./styles";
-  import { useNavigation } from "@react-navigation/native";
-  import { useState, useEffect, useRef } from "react";
+import { StatusBar } from "expo-status-bar";
+import { Image, ScrollView, View, Text, Pressable } from "react-native";
+import styles from "./styles";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import { useState, useCallback } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import SOSButton from "../../components/SOSButton";
+import BottomNav from "../../components/BottomNav";
 
-  import BottomNav from "../../components/BottomNav";
-
-  import AsyncStorage from "@react-native-async-storage/async-storage";
-
-  export default function Perfil() {
+export default function Perfil() {
     const navigation = useNavigation();
-
-    
-    //pegar dados da usuaria
     const [usuario, setUsuario] = useState(null);
-
-    useEffect(() => {
-      const carregarUsuario = async () => {
-        const dados = await AsyncStorage.getItem("user");
-
-        if (dados) {
-          setUsuario(JSON.parse(dados));
-        }
-      };
-
-      carregarUsuario();
-    }, []);
+    
+    // Carregar dados
+    useFocusEffect(
+        useCallback(() => {
+            const carregarUsuario = async () => {
+            const dados = await AsyncStorage.getItem("user");
+            if (dados) {
+                setUsuario(JSON.parse(dados));
+            }
+            };
+            carregarUsuario();
+        }, [])
+    );
 
     // Logout -> Sair da conta
     const fazerLogout = async () => {
         await AsyncStorage.removeItem("user");
-
         navigation.reset({
             index: 0,
             routes: [{ name: 'Login' }],
@@ -102,7 +89,7 @@
                                 tintColor='#ccc'  
                             />
                         </Pressable>
-                        <Pressable style={styles.button}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate("AlterarSenha")}>
                             <View style={styles.grid}>
                                 <View style={styles.circle}>
                                     <Image source={require('../../../assets/img/password.png')}
@@ -138,7 +125,7 @@
                                 tintColor='#ccc'  
                             />
                         </Pressable>
-                        <Pressable style={styles.button}>
+                        <Pressable style={styles.button} onPress={() => navigation.navigate("TermosPrivacidade")}>
                             <View style={styles.grid}>
                                 <View style={styles.circle}>
                                     <Image source={require('../../../assets/img/terms.png')}
@@ -147,7 +134,7 @@
                                         resizeMode='contain'
                                     />
                                 </View>
-                                <Text style={styles.textButton}>Termos</Text>
+                                <Text style={styles.textButton}>Termos e Privacidade</Text>
                             </View>
                             <Image source={require('../../../assets/img/arrow_2.png')}
                                 style={{ width: 14, height: 14, transform: [{ scaleX: -1 }] }}
@@ -165,10 +152,11 @@
                 </View>
           </View>
         </ScrollView>
-
-        <BottomNav abaAtivaInicial={3} />
-
-        
+        {/* Botão de SOS */}
+        <SOSButton />
+        {/* Navegação */}
+        <BottomNav abaAtivaInicial={4} />
+        {/* --------- */}
         <StatusBar style="auto" />
       </View>
     );

@@ -8,7 +8,6 @@ import { useState, useEffect } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../../services/api';
 
-
 export default function EditarPerfil() {
   const navigation = useNavigation();
   const [modal, setModal] = useState(false);
@@ -92,15 +91,14 @@ export default function EditarPerfil() {
         setUsuario(JSON.parse(user));
       }
     }
-
     carregarUsuario();
   }, []);
 
   useEffect(() => {
-  if (usuario?.foto) {
-    setFoto(usuario.foto);
-  }
-}, [usuario]);
+    if (usuario?.foto) {
+      setFoto(usuario.foto);
+    }
+  }, [usuario]);
 
   const salvar = async () => {
     try {
@@ -125,45 +123,15 @@ export default function EditarPerfil() {
         JSON.stringify(response.data.data)
       );
 
-      Alert.alert(
-      "Sucesso",
-      "Atualizado com sucesso!",
-      [
-        {
-          text: "OK",
-          onPress: () => navigation.goBack()
-        }
-      ]
-    );
+      Alert.alert("Sucesso","Atualizado com sucesso!",
+        [{ text: "OK", onPress: () => navigation.goBack()}]
+      );
 
-  } catch (error) {
-    console.log(error.response?.data || error.message);
-    alert("Erro ao atualizar");
-  }
-};
-
-// const [foto, setFoto] = useState(usuario?.foto || null);
-
-// const escolherFoto = async () => {
-//   const permissao = await ImagePicker.requestMediaLibraryPermissionsAsync();
-
-//   if (permissao.status !== "granted") {
-//     alert("Permissão negada");
-//     return;
-//   }
-
-//   const resultado = await ImagePicker.launchImageLibraryAsync({
-//     mediaTypes: ['images'],
-//     allowsEditing: true,
-//     aspect: [1, 1],
-//     quality: 0.1,
-// base64: false,
-//   });
-
-//   if (!resultado.canceled) {
-//   setFoto(resultado.assets[0].uri);
-// }
-// };
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      alert("Erro ao atualizar");
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -202,9 +170,7 @@ export default function EditarPerfil() {
         </Pressable>
         <Text style={styles.tituloHeader}>Editar perfil</Text>
       </View>
-
       <View style={styles.content}>
-
         <View style={styles.photoUpload}>
           <Pressable style={styles.upload} onPress={() => setModal(true)}>
             {foto ? (
@@ -223,7 +189,7 @@ export default function EditarPerfil() {
           <Pressable style={styles.edit} onPress={() => setModal(true)}>
             <Image
               source={require('../../../assets/img/pen.png')}
-              style={{ width: 18, height: 18 }}
+              style={{ width: 20, height: 20 }}
               tintColor='#fff'
               resizeMode='contain'
             />

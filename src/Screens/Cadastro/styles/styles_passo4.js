@@ -47,7 +47,6 @@ export default StyleSheet.create({
     marginTop: '10%',
   },
 
-
   // Foto de Perfil
   photoUpload: {
     alignItems: 'center',

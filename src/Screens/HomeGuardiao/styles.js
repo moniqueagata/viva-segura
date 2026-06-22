@@ -1,56 +1,141 @@
 import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
-    container: {
-    backgroundColor: '#F3F9F7',
+
+  header: {
+    width: '100%',
+    height: 88,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 22,
+    paddingTop: 30,
+  },
+
+  headerText: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: '#43af86',
+    paddingLeft: 10
+  },
+
+  upload: {
+    width: 47,
+    height: 47,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    overflow: 'hidden'
+  },
+
+  content: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    paddingVertical: 22,
+  },
+
+  scroll: {
+    width: '100%',
+  },
+
+  // Card de solicitação
+  cardSolicitacao: {
+    padding: 15,
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#d4ddda',
+    borderRadius: 20,
+    marginVertical: '5%',
+    borderWidth: 1,
+  },
+
+  fotoSolicitacao: {
+    width: 50,
+    height: 50,
+    borderRadius: 25,
+    backgroundColor: '#f1f1f1',
+    overflow: 'hidden',
+    borderWidth: 1,
+    borderColor: '#4B0082',
+  },
+
+  btnAceitar: {
+    flex: 1,
+    height: 38,
+    backgroundColor: '#87D3B6',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  btnRecusar: {
+    flex: 1,
+    height: 38,
+    backgroundColor: '#d13f3f',
+    borderRadius: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+
+  // Card de compartilhamento de rota
+  cardRota: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#d4ddda',
     borderRadius: 20,
     padding: 18,
     marginBottom: 20,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.05,
-    shadowRadius: 5,
-    elevation: 2,
   },
-  headerRow: {
+
+  row: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#EBF4F1',
+    backgroundColor: '#f5faf8',
     padding: 10,
     borderRadius: 15,
   },
-  avatarImage: {
+
+  fotoUsuaria: {
     width: 35,
     height: 35,
-    borderRadius: 17.5,
-    marginRight: 10,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    borderWidth: 1,
+    borderColor: '#318f7b',
+    overflow: 'hidden'
   },
-  headerText: {
-    color: '#4B0082',
-    fontSize: 15,
-    marginLeft: 10,
-    flex: 1
-  },
+
   mapPlaceholder: {
     width: '50%',
     height: 110,
-    backgroundColor: '#E8E8E8',
+    backgroundColor: '#ddd',
     borderRadius: 12,
     position: 'relative',
     overflow: 'hidden',
   },
+
   dot: {
     width: 10,
     height: 10,
     borderRadius: 5,
     position: 'absolute',
   },
+
   button: {
-    backgroundColor: '#4B0082',
+    width: 150,
+    height: 33,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#87D3B6',
     borderRadius: 20,
-    paddingVertical: 10,
     alignItems: 'center',
   },
+
   buttonText: {
     color: '#FFF',
     fontSize: 13,

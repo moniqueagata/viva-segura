@@ -3,114 +3,97 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-   backgroundColor:'#ffffff'
+    backgroundColor:'#ffffff',
+    paddingTop: 8,
+  },
+
+  header: {
+    width: '100%',
+    height: 88,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 22,
+    paddingTop: 30,
+  },
+
+  upload: {
+    width: 47,
+    height: 47,
+    backgroundColor: '#f1f1f1',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: '100%',
+    overflow: 'hidden'
+  },
+
+  textHeader:{
+    fontSize: 16,
+    fontWeight: '700',
+    color: "#550fa4",
+    paddingLeft: 10,
   },
 
   content: {
-      flex: 1,
-      width: '100%',
-      paddingHorizontal: 20,
-      alignItems: 'center',
-    },
-    
- fundoEmbaixo: {
- 
- width: '100%',
-    height: 88,
-    position:'absolute',
-    bottom:0,
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 20,
     alignItems: 'center',
-    justifyContent: 'space-around',
-    flexDirection: 'row',
-    backgroundColor: '#550FA4',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    paddingBottom: 3,
-    paddingHorizontal: 10
-},
-botao: {
-    backgroundColor: "#FAFAFA",
-    width: '80%',
-    borderRadius: 10,
-    marginBottom: 27,
-      height: 53,
-     alignItems: "center",
-     justifyContent: 'center',
-   flexDirection:'row',
+    paddingVertical: 22,
+    gap: 5,
+  },
+ 
+  subtitulo:{
+    fontSize: 16,
+    fontWeight: 700,
+    marginBottom: 20,
+    textAlign:'center',
+    color: '#724d9c',
   },
 
-  texto: {
-    color: "#550FA4",
-    fontSize: 20,
-    fontWeight: "500",
-    marginTop:2,
-      marginLeft: '10%',
+  // Botão SOS
+  buttonSos: {
+    backgroundColor: '#fff',
+    width: 175,
+    height: 175,
+    alignItems: "center",
+    justifyContent: 'center',
+    borderRadius: 100,
+    borderWidth: 2,
+    borderColor: "#ff8da9",
+    marginVertical: '4%',
+  }, 
+
+  circle: {
+    backgroundColor: "#ff8da9",
+    width: 160,
+    height: 160,
+    borderRadius: 100,
+    alignItems: "center",
+    justifyContent: 'center',
   },
-  imagem:{
-      height: 33,
-       width: 33,
-         marginLeft: '5%',
+  // -------
+
+  desc: {
+    fontSize: 13, 
+    color: "#888", 
+    textAlign: "center", 
+    marginVertical: '3%', 
+    lineHeight: 18
   },
-  textoSosPequeno2:{
-    color: "#5e5d5d",
-    fontSize: 13,
-        fontWeight:300,
-  
-     textAlign:'center',
-        marginBottom: 40,
-  },
-    textoSosPequeno:{
-    color: "#5e5d5d",
-    fontSize: 13,
-        fontWeight:300,
-     marginBottom:2,
-     textAlign:'center',
-  },
-  textoEmergencia:{
-    color: "#F66E91",
-    fontSize: 18,
-        fontWeight:600,
-     marginTop:1,
-          marginBottom: 8,
-     textAlign:'center',
-  },
-  imagemSos:{
-     height: 178,
-       width: 178,
-        marginVertical: 15
-  },
-  textoAjuda:{
-     color: "#653F8F",
-    fontSize: 16,
-        fontWeight:700,
-     marginTop:1,
-          marginBottom: 25,
-     textAlign:'center',
-  },
-  viewFlex:{
-  flexDirection:'row',
-  marginVertical:30,
-  },
-  notificacao:{
-    width:23,
-    height:23,
-    marginTop:27,
-    marginLeft:200,
-  },
- 
-  ola:{
-    fontSize:16,
-    fontWeight:'bold',
-    color: "rgb(85, 15, 164)",
-    marginTop:35,
-    marginLeft:10
-  },
-  iconiUsario:{
-    width:36,
-    height:36,
-   borderRadius: 50,
-   marginLeft:15,
-   marginTop:25,
+    
+  button: {
+    backgroundColor: 'transparent',
+    width: '85%',
+    height: 60,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: "#ddd",
+    marginBottom: 22,
+    alignItems: "center",
+    justifyContent: 'center',
+    flexDirection:'row',
+    gap: 12,
   },
 
   // Navegação

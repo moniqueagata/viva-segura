@@ -1,27 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import {
-  View,
-  Text,
-  Pressable,
-  Image,
-  FlatList,
-  useWindowDimensions,
-  Animated,
-  ActivityIndicator,
-} from "react-native";
-
+import { View, Text, Pressable, Image, FlatList, useWindowDimensions, Animated, ActivityIndicator } from "react-native";
 import styles from "./styles";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import api from "../../services/api";
 import { StatusBar } from "expo-status-bar";
+import BottomNav from "../../components/BottomNav";
+import SOSButton from "../../components/SOSButton";
 
 export default function MeusGuardioes() {
   const navigation = useNavigation();
 
   const [guardioes, setGuardioes] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [idUsuario, setIdUsuario] = useState(null);
 
   // pega usuário logado
@@ -71,49 +62,6 @@ export default function MeusGuardioes() {
     }
   };
 
-  // ---------------- NAV ANIMATION ----------------
-
-  const { width } = useWindowDimensions();
-
-  const [medidas, setMedidas] = useState({});
-  const [abaAtiva, setAbaAtiva] = useState(2);
-  const larguraAba = 60;
-  const posicaoX = useRef(new Animated.Value(0)).current;
-
-  useEffect(() => {
-    const medidaAtual = medidas[abaAtiva];
-
-    if (medidaAtual) {
-      const { x, width } = medidaAtual;
-
-      const destinoX = x + width / 2 - larguraAba / 2;
-
-      Animated.spring(posicaoX, {
-        toValue: destinoX,
-        useNativeDriver: true,
-        bounciness: 4,
-      }).start();
-    }
-  }, [abaAtiva, medidas]);
-
-  const abaLayout = (index, event) => {
-    const { x, width } = event.nativeEvent.layout;
-
-    setMedidas((prev) => ({
-      ...prev,
-      [index]: { x, width },
-    }));
-  };
-
-  const abas = [
-    { label: "Home", rota: "Home", imagem: require("../../../assets/img/home.png"), index: 0 },
-    { label: "Mapa", rota: "Mapa", imagem: require("../../../assets/img/map.png"), index: 1 },
-    { label: "Guardião", rota: "MeusGuardioes", imagem: require("../../../assets/img/angel.png"), index: 2 },
-    { label: "Você", rota: "Perfil", imagem: require("../../../assets/img/profile.png"), index: 3 },
-  ];
-
-  // ---------------- UI ----------------
-
   return (
     <View style={styles.container}>
 
@@ -138,7 +86,7 @@ export default function MeusGuardioes() {
         ) : (
           <FlatList
             data={guardioes}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id_guardiao.toString()}
 
             ListEmptyComponent={
               <View style={styles.vazio}>
@@ -177,80 +125,35 @@ export default function MeusGuardioes() {
                       })
                     }
                   >
-
                     <Text style={styles.btnChatText}>
                       chat
                     </Text>
                   </Pressable>
 
                   <Pressable style={styles.btnRemover} >
-
                     <Text style={styles.btnRemoverTexto}>
                       ✕
                     </Text>
-
                   </Pressable>
-
                 </View>
-
               </View>
             )}
           />
         )}
-
         <Pressable
           style={styles.botao}
           onPress={() => navigation.navigate("AddGuardiao")}
         >
           <Text style={styles.buttonText}>Novo Guardião +</Text>
         </Pressable>
-
       </View>
-
-      {/* NAV BAR */}
-      <View style={styles.navegacao}>
-
-        <Animated.View
-          style={[
-            styles.line,
-            {
-              width: larguraAba,
-              transform: [{ translateX: posicaoX }],
-            },
-          ]}
-        />
-
-        {abas.map((aba) => (
-          <Pressable
-            key={aba.index}
-            style={styles.buttonNav}
-            onPress={() => {
-              setAbaAtiva(aba.index);
-              navigation.navigate(aba.rota);
-            }}
-            onLayout={(e) => abaLayout(aba.index, e)}
-          >
-            <Image
-              source={aba.imagem}
-              style={{ width: 22, height: 22 }}
-              tintColor={abaAtiva === aba.index ? "#ff80aa" : "#fff"}
-            />
-
-            <Text
-              style={[
-                styles.textNav,
-                abaAtiva === aba.index && { color: "#ff80aa" },
-              ]}
-            >
-              {aba.label}
-            </Text>
-          </Pressable>
-        ))}
-
-      </View>
-
+      {/* Botão de SOS */}
+        <SOSButton />
+      {/* Navegação */}
+      {/* Navegação */}
+      <BottomNav abaAtivaInicial={2} />
+      {/* --------- */}
       <StatusBar style="auto" />
-
     </View>
   );
 }

@@ -1,7 +1,7 @@
 import { View, Image, Pressable, Text, Animated, useWindowDimensions } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useRef, useState, useEffect } from "react";
-import styles from "../../Screens/Mapa/styles";
+import styles from "../BottomNav/styles";
 
 export default function BottomNav({ abaAtivaInicial = 0 }) {
   const navigation = useNavigation();
@@ -40,7 +40,8 @@ export default function BottomNav({ abaAtivaInicial = 0 }) {
       { label: 'Home', rota: "Home", imagem: require('../../../assets/img/home.png'), index: 0 },
       { label: 'Mapa', rota: "Mapa", imagem: require('../../../assets/img/map.png'), index: 1 },
       { label: 'Guardião', rota: "MeusGuardioes", imagem: require('../../../assets/img/angel.png'), index: 2 },
-      { label: 'Você', rota: "Perfil", imagem: require('../../../assets/img/profile.png'), index: 3 }
+      { label: 'Mural', rota: "Mural", imagem: require('../../../assets/img/mural.png'), index: 3 },
+      { label: 'Você', rota: "Perfil", imagem: require('../../../assets/img/profile.png'), index: 4 }
     ];
     //----------
 

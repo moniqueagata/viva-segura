@@ -3,11 +3,13 @@ import { StyleSheet } from 'react-native';
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#fff',
+    paddingTop: 10
   },
-  // Cabeçalho
+
   header: {
     height: 88,
+    width: '100%',
     flexDirection: 'row',
     alignItems: 'center',
     paddingHorizontal: 20,
@@ -16,12 +18,7 @@ export default StyleSheet.create({
     borderBottomColor: '#F0F0F0',
     gap: 15
   },
-  backArrow: {
-    fontSize: 28,
-    fontWeight: 'bold',
-    color: '#4B0082', // Roxo escuro
-    marginRight: 15,
-  },
+
   avatarCircle: {
     width: 48,
     height: 48,
@@ -29,18 +26,21 @@ export default StyleSheet.create({
     backgroundColor: '#EAEAEA',
     justifyContent: 'center',
     alignItems: 'center',
-    marginRight: 12,
+    marginLeft: 10,
   },
+
   avatarImage: {
     width: '100%',
     height: '100%',
     borderRadius: 24,
   },
+
   headerName: {
-    fontSize: 22,
+    fontSize: 18,
     fontWeight: 'bold',
     color: '#4B0082',
   },
+  
   // Área de Mensagens
   chatArea: {
     flex: 1,

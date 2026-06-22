@@ -17,7 +17,6 @@ import { useState } from 'react';
     });
   };
 
-
 export default function CentralAjuda() {
     const navigation = useNavigation();
     const [focus, setFocus] = useState(false);
@@ -42,7 +41,6 @@ export default function CentralAjuda() {
       }
     };
  
-
   return (
     <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === 'ios' ? 'padding' : undefined}>
       <View style={styles.container}>
@@ -60,8 +58,6 @@ export default function CentralAjuda() {
           <Image source={require('../../../assets/img/iso.png')} 
                 style={{ width: 120, height: 120, marginTop: 50}} 
             /> 
-            
-
         <FlatList data={[...mensagens].reverse()}
           keyExtractor={(item) => item.id.toString()}
           inverted={true}

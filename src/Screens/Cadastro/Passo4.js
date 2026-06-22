@@ -4,14 +4,12 @@ import { Modal, Portal } from "react-native-paper";
 import * as ImagePicker from 'expo-image-picker';
 import { useState, useRef, useEffect } from "react"
 import { useNavigation, useRoute } from '@react-navigation/native';
-import LottieView from 'lottie-react-native';
 import styles from "./styles/styles_passo4";
 import api from "../../services/api";
 
 export default function Passo4() {
     const navigation = useNavigation();
     const [modal, setModal] = useState(false);
-    const [modalSucesso, setModalSucesso] = useState(false); // Modal de confirmação de cadastro
     const [image, setImage] = useState(null);
     const route = useRoute();
     
@@ -25,47 +23,24 @@ export default function Passo4() {
       senha
     } = route.params || {};
 
+    // Verificação
+    const irParaPasso5 = () => {
+      navigation.navigate("Passo5", {
+        nome,
+        cpf,
+        email,
+        senha,
+        dataNasc: formatarData(dataNasc),
+        telefone: telefone.replace(/\D/g, ''),
+        id_role: perfilSelecionado === "guardiao" ? 2 : 1,
+        foto: image || null
+      });
+    };   
+
     const formatarData = (data) => {
       const [dia, mes, ano] = data.split('/');
       return `${ano}-${mes}-${dia}`;
     };
-
-    // Verificação 
-    const finalizarCadastro = async (fotoPerfil) => {
-      try {
-        const usuario = {
-          nome,
-          cpf,
-          email,
-          senha,
-          dataNasc: formatarData(dataNasc),
-          telefone: telefone.replace(/\D/g, ''), 
-          id_role: perfilSelecionado === "guardiao" ? 2 : 1,
-          foto: fotoPerfil || null
-        };
-        
-        console.log("Enviando dados completos para a API:", usuario);
-        const response = await api.post("/cadastrar", usuario);
-        console.log("Sucesso:", response.data);
-        setModalSucesso(true);
-
-      } catch (error) {
-        console.log("ERRO NO CADASTRO:", error);
-
-        if (error.response) {
-          console.log("BACKEND:", error.response.data);
-          alert(JSON.stringify(error.response.data));
-        } else {
-          alert(error.message);
-        }
-      }
-    };
-
-    const irParaLogin = () => {
-      setModalSucesso(false);
-      navigation.navigate('Login');
-    };
-    //----------
 
     // Foto de perfil  
     const solicitarPermissoes = async () => {
@@ -90,8 +65,8 @@ export default function Passo4() {
           mediaTypes: 'images',
           allowsEditing: true,
           aspect: [1, 1],
-        quality: 0.1,
-base64: false,
+          quality: 0.1,
+          base64: false,
         });
   
         if (!resultado.canceled) {
@@ -140,7 +115,7 @@ base64: false,
     const animatedValue = useRef(new Animated.Value(-1000)).current;
     const [reactiveValue, setReactiveValue] = useState(-1000);
     const step = 4;
-    const steps = 4;
+    const steps = 5;
 
     useEffect(() => {
       Animated.timing(animatedValue, {
@@ -179,28 +154,6 @@ base64: false,
           </View>
         </Modal>
       </Portal>
-
-      <Portal>
-        <Modal visible={modalSucesso} dismissable={false} contentContainerStyle={styles.modalSucesso}>
-          <View style={styles.modal}>
-            <LottieView
-              source={require('../../../assets/img/sucesso.json')} 
-              autoPlay
-              loop={false}
-              style={{ width: 220, height: 220 }}
-            />
-            <View style={styles.textsModal}>
-              <Text style={[styles.titulo, { fontSize: 25 }]}>Cadastro Realizado</Text>
-              <Text style={[styles.subtitulo, { paddingHorizontal: 20 }]}>Sua conta foi criada com sucesso!</Text>
-            </View>
-
-            <Pressable style={styles.btnPurple} onPress={irParaLogin}>
-              <Text style={styles.txWhite}>Ir para o Login</Text>
-            </Pressable>
-          </View>
-        </Modal>
-      </Portal>
-
       <View style={styles.header}>
         <Pressable onPress={() => navigation.navigate('Passo3')}>
           <Image source={require('../../../assets/img/arrow_2.png')} 
@@ -242,11 +195,11 @@ base64: false,
         </View>
 
         <View style={styles.button}>
-            <Pressable style={styles.btnPurple} onPress={() => finalizarCadastro(image)}>
-                <Text style={styles.txWhite}>Concluir</Text>
+            <Pressable style={styles.btnPurple} onPress={() => irParaPasso5(image)}>
+                <Text style={styles.txWhite}>Continuar</Text>
             </Pressable>
             <View style={styles.link}>
-            <Pressable onPress={() => finalizarCadastro(null)}>
+            <Pressable onPress={() => irParaPasso5(null)}>
                 <Text style={styles.txGrey}>Pular por agora</Text>
             </Pressable>
         </View>

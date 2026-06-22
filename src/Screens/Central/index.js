@@ -14,18 +14,14 @@ import { useState } from 'react';
     return (
       <View style={styles.card}>
         <View style={styles.row}>
-          <Image source={icone} style={{ width: 29, height: 29 }} tintColor='#6925b8'/>
+          <Image source={icone} style={{ width: 24, height: 24 }} tintColor='#6925b8'/>
           <Text style={styles.categoria}>{categoria}</Text>
         </View>
         <View style={styles.cardButtons}>
           {perguntas.map((p, index) => (
             <View key={index}>
               <Pressable style={styles.button} onPress={() => togglePergunta(index)}>
-                <Text style={styles.textFaq}>{p.titulo}</Text>
-                <Image source={require('../../../assets/img/arrow_2.png')} 
-                  style={{ width: 17, height: 17, transform: [{ rotate: aberto === index ? '90deg' : '270deg' }] }}
-                  tintColor='#bbb'
-                />
+                <Text style={styles.textFaq}>• {p.titulo}</Text>
               </Pressable>
               {aberto === index && (
                 <Text style={styles.textResposta}>{p.resposta}</Text>
@@ -89,7 +85,6 @@ export default function Central() {
 
   return (
     <View style={styles.container}>
-
       <Modal
         visible={modalVisivel}
         transparent
@@ -109,44 +104,29 @@ export default function Central() {
           </View>
         </View>
       </Modal>
-
       <View style={styles.header}>
-        <Pressable style={styles.buttonArrow} onPress={() => navigation.navigate('Perfil')}>
+        <Pressable onPress={() => navigation.navigate('Perfil')}>
           <Image source={require('../../../assets/img/arrow_2.png')} 
-            style={{ width: 20, height: 20 }} 
+            style={{ width: 18, height: 18 }} 
             tintColor='#6925b8'
           />
         </Pressable>
         <Text style={styles.tituloHeader}>Central de Ajuda</Text>
       </View>
-
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
-
           <View style={styles.tituloContainer}>
             <Text style={styles.titulo}>Precisa de ajuda?</Text>
           </View>
-
-          {/* Botão falar com suporte logo abaixo do título */}
-          <Pressable style={styles.chat} onPress={() => navigation.navigate('HelpChat')}>
-            <Image source={require('../../../assets/img/chat.png')} 
-              style={{ width: 28, height: 28 }}
-              tintColor='#fff'
-            />
-            <Text style={styles.textChat}>Falar com suporte</Text>
-          </Pressable>
-
-          {/* Campo de dúvida com botão de enviar */}
           <View style={styles.searchInput}>
             <Image source={require('../../../assets/img/lupa.png')}
-              style={{ width: 22, height: 22 }}
+              style={{ width: 18, height: 18 }}
               tintColor='#aaa'
             />
             <TextInput
               style={styles.input}
-              placeholder='Digite sua dúvida'
-              placeholderTextColor='#808080'
-              underlineColorAndroid='transparent'
+              placeholder='Procurar...'
+              placeholderTextColor='#999'
               value={duvida}
               onChangeText={setDuvida}
               onSubmitEditing={enviarDuvida}
@@ -156,10 +136,9 @@ export default function Central() {
               style={[styles.btnEnviar, { opacity: duvida.trim().length > 0 ? 1 : 0.3 }]}
               onPress={enviarDuvida}
             >
-              <Text style={styles.btnEnviarTexto}>↑</Text>
+              <Image source={require('../../../assets/img/send.png')} style={{ width: 12, height: 12 }} tintColor="#fff" />
             </Pressable>
           </View>
-
           <View style={styles.session}>
             <Text style={styles.subtitulo}>Dúvidas frequentes</Text>
 
@@ -172,7 +151,14 @@ export default function Central() {
               />
             ))}
           </View>
-
+            {/* Botão falar com suporte logo abaixo do título */}
+          <Pressable style={styles.chat} onPress={() => navigation.navigate('HelpChat')}>
+            <Image source={require('../../../assets/img/chat.png')} 
+              style={{ width: 23, height: 23 }}
+              tintColor='#fff'
+            />
+            <Text style={styles.textChat}>Falar com suporte</Text>
+          </Pressable>
         </View>
       </ScrollView>
       <StatusBar style="auto" />
