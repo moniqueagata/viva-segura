@@ -10,8 +10,7 @@ import BottomNav from "../../components/BottomNav";
 export default function Perfil() {
     const navigation = useNavigation();
     const [usuario, setUsuario] = useState(null);
-    
-    // Carregar dados
+
     useFocusEffect(
         useCallback(() => {
             const carregarUsuario = async () => {
@@ -24,7 +23,6 @@ export default function Perfil() {
         }, [])
     );
 
-    // Logout -> Sair da conta
     const fazerLogout = async () => {
         await AsyncStorage.removeItem("user");
         navigation.reset({
@@ -54,14 +52,10 @@ export default function Perfil() {
                   )}
                   </View>
               </View>
-
               <View style={styles.text}>
                 <Text style={styles.nome}>{usuario?.nome || "Nome"}</Text>
-                <Text style={styles.id}>
-                    Código: {usuario?.codigo_convite || "----"}
-                </Text>
+                <Text style={styles.id}>Código: {usuario?.codigo_convite || "----"}</Text>
               </View>
-
               <Pressable
                 style={styles.buttonEdit}
                 onPress={() => navigation.navigate("EditarPerfil")}
@@ -69,7 +63,6 @@ export default function Perfil() {
                 <Text style={styles.textWhite}>Editar perfil</Text>
               </Pressable>
             </View>
-
             <View style={styles.settings}>
                     <Text style={styles.sessions}>Preferências</Text>
                     <View style={styles.gridButtons}>
@@ -106,7 +99,6 @@ export default function Perfil() {
                             />
                         </Pressable>
                     </View>
-
                     <Text style={styles.sessions}>Suporte</Text>
                     <View style={styles.gridButtons}>
                         <Pressable style={styles.button} onPress={() => navigation.navigate('Central')}>
@@ -142,13 +134,11 @@ export default function Perfil() {
                             />
                         </Pressable>
                     </View>
-
                     <View style={styles.logout}>
                         <Pressable style={styles.buttonLogout} onPress={fazerLogout}>
                             <Text style={styles.textRed}>Sair da conta</Text>
                         </Pressable>
                     </View>
-
                 </View>
           </View>
         </ScrollView>

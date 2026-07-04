@@ -6,7 +6,6 @@ import { useState } from 'react';
 
   const FaqCard = ({ categoria, icone, perguntas }) => {
     const [aberto, setAberto] = useState(null);
-
     const togglePergunta = (index) => {
       setAberto(aberto === index ? null : index);
     };

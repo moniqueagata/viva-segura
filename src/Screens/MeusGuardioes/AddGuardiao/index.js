@@ -66,42 +66,29 @@ export default function AddGuardiao() {
 
   return (
     <View style={styles.container}>
-
-      {/* MODAL SUCESSO */}
       <Modal visible={modal} transparent animationType="fade">
-  <View style={styles.modal}>
-    <View style={styles.overlay}>
-
-      <View style={styles.circleCheck}>
-        <Image source={require('../../../../assets/img/check.png')} 
-        style={{ width: 90, height: 90 }} 
-        resizeMode='contain'
-         />
-      </View>
-
-      <Text style={styles.tituloModal}>
-        Guardião adicionado
-        </Text> 
-        
-        <Text style={styles.subtitulo}>
-          Codigo enviado para seu guardião!
-          </Text>
-          
-      <Pressable
-        style={styles.buttonModal}
-        onPress={() => {
-          setModal(false);
-          navigation.replace("MeusGuardioes");
-        }}
-      >
-        <Text style={styles.txWhite}>Continuar</Text>
-      </Pressable>
-
-    </View>
-  </View>
-</Modal>
-
-      {/* TOPO */}
+        <View style={styles.modal}>
+          <View style={styles.overlay}>
+            <View style={styles.circleCheck}>
+              <Image source={require('../../../../assets/img/check.png')} 
+              style={{ width: 90, height: 90 }} 
+              resizeMode='contain'
+              />
+            </View>
+            <Text style={styles.tituloModal}>Guardião adicionado</Text> 
+            <Text style={styles.subtitulo}>Codigo enviado para seu guardião!</Text> 
+            <Pressable
+              style={styles.buttonModal}
+              onPress={() => {
+                setModal(false);
+                navigation.replace("MeusGuardioes");
+              }}
+            >
+              <Text style={styles.txWhite}>Continuar</Text>
+            </Pressable>
+          </View>
+        </View>
+      </Modal>
       <View style={styles.topo}>
         <Pressable onPress={() => navigation.goBack()}>
           <Image
@@ -110,27 +97,20 @@ export default function AddGuardiao() {
           />
         </Pressable>
       </View>
-
-      {/* HEADER */}
       <View style={styles.header}>
         <Text style={styles.titulo}>Novo guardião</Text>
-
         <Image
           source={require("../../../../assets/img/angel.png")}
           style={styles.icon}
         />
       </View>
-
-      {/* INPUTS */}
       <View style={styles.inputsContainer}>
-
         <Text style={styles.label}>Nome</Text>
         <TextInput
           style={styles.input}
           value={nome}
           onChangeText={setNome}
         />
-
         <Text style={styles.label}>E-mail</Text>
         <TextInput
           style={styles.input}
@@ -138,41 +118,24 @@ export default function AddGuardiao() {
           onChangeText={setEmail}
           autoCapitalize="none"
         />
-
       </View>
-
-      {/* NOTIFICAÇÕES */}
       <View style={styles.notificacaoContainer}>
-
-        <Text style={styles.notificacaoTitulo}>
-          🔔 Notificações
-        </Text>
-
+        <Text style={styles.notificacaoTitulo}>🔔 Notificações</Text>
         <View style={styles.linha}>
-          <Text style={styles.textoNotificacao}>
-            Receber alertas via E-mail
-          </Text>
-
+          <Text style={styles.textoNotificacao}>Receber alertas via E-mail</Text>
           <Switch
             value={whats}
             onValueChange={setWhats}
           />
         </View>
-
         <View style={styles.linha}>
-          <Text style={styles.textoNotificacao}>
-            Compartilhar localização em tempo real
-          </Text>
-
+          <Text style={styles.textoNotificacao}>Compartilhar localização em tempo real</Text>
           <Switch
             value={localizacao}
             onValueChange={setLocalizacao}
           />
         </View>
-
       </View>
-
-      {/* BOTÃO */}
       <Pressable
         style={styles.botao}
         onPress={salvarGuardiao}

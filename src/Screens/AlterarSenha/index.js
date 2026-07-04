@@ -3,8 +3,6 @@ import { View, Text, Pressable, Image, ScrollView, TextInput, Alert } from 'reac
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import * as Notifications from 'expo-notifications';
-import Constants from 'expo-constants';
 import styles from './styles';
 import api from '../../services/api'; 
 

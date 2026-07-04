@@ -10,8 +10,6 @@ export default function Passo3() {
   const navigation = useNavigation();
   const route = useRoute();
   const { nome, cpf, dataNasc, telefone, email, perfilSelecionado } = route.params;
-
-  // Senha
   const [senha, setSenha] = useState("");
   const [mostrarSenha, setMostrarSenha] = useState(false);
   const [confirmarSenha, setConfirmarSenha] = useState("");
@@ -41,7 +39,6 @@ export default function Passo3() {
     });
   };
 
-  // Barra de progresso
   // Barra de progresso
   const [width, setWidth] = useState(0);
   const animatedValue = useRef(new Animated.Value(-1000)).current;

@@ -13,8 +13,7 @@ export default function MenuLateral({ visivel, onFechar, favoritos, curtidas }) 
               <Text style={styles.menuFechar}>✕</Text>
             </Pressable>
           </View>
-
-          <Text style={styles.menuSecao}>♥ Favoritos ({favoritos.length})</Text>
+          <Text style={styles.menuSecao}>💜 Favoritos ({favoritos.length})</Text>
           <FlatList
             data={favoritos}
             keyExtractor={(item) => "fav-" + item.id}
@@ -26,7 +25,6 @@ export default function MenuLateral({ visivel, onFechar, favoritos, curtidas }) 
               </Pressable>
             )}
           />
-
           <Text style={styles.menuSecao}>👍 Curtidas ({curtidas.length})</Text>
           <FlatList
             data={curtidas}

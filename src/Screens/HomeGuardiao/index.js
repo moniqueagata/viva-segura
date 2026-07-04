@@ -9,7 +9,7 @@ import { useNavigation } from "@react-navigation/native";
 import BottomNavGuardiao from "../../components/BottomNavGuardiao";
 import styles from "./styles";
 import api from "../../services/api";
-import MaterialIcons from '@expo/vector-icons/MaterialIcons'; // -> Icone Pin
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 export default function HomeGuardiao() {
   const navigation = useNavigation();
@@ -19,11 +19,7 @@ export default function HomeGuardiao() {
   const [nomeGuardiao, setNomeGuardiao] = useState("");
   const [fotoGuardiao, setFotoGuardiao] = useState(null);
   const [usuarios, setUsuarios] = useState([]);
-
-  // Solicitação enviada pela usuária
   const [solicitacoesPendentes, setSolicitacoesPendentes] = useState([]);
-
-  // Alertas
   const [alertaPrincipal, setAlertaPrincipal] = useState(null);
   const [quantidadeAlertas, setQuantidadeAlertas] = useState(0);
   const pulseAnim = useRef(new Animated.Value(1)).current;
@@ -77,9 +73,7 @@ export default function HomeGuardiao() {
     }, 5000);
     return () => clearInterval(interval);
   }, []);
-  // -------
 
-  // Buscar dados do guardião
   useEffect(() => {
     const carregarUsuario = async () => {
       const user = await AsyncStorage.getItem("user");
@@ -106,9 +100,8 @@ export default function HomeGuardiao() {
     };
     carregarUsuarios();
   }, []);
-  // ---------
 
-  // Solicitação de compartilhamento de trajeto 
+  // Solicitação de compartilhamento 
   useEffect(() => {
     const carregarSolicitacoes = async () => {
       const user = await AsyncStorage.getItem('user');
@@ -142,13 +135,12 @@ export default function HomeGuardiao() {
       console.log('Erro ao aceitar:', error.response?.data || error.message);
     }
   };
-  // --------
 
   // Geolocalização + Cálculo de distância
   useEffect(() => {
     const buscarLocalizacao = async () => {
       try {
-         // LOCALIZAÇÃO DA USUÁRIA
+      
         if (usuarios.length === 0) return; 
         const { id_usuaria } = usuarios[0].usuaria;
         const response = await api.get(`/localizacao/${id_usuaria}`);
@@ -168,7 +160,7 @@ export default function HomeGuardiao() {
           const local = enderecoConvertido[0];
           setEndereco(`${local.street || ""}, ${local.streetNumber || ""}`);
         }
-        // LOCALIZAÇÃO DO GUARDIÃO
+
         const permissao = await Location.requestForegroundPermissionsAsync();
         if (permissao.status === "granted") {
           const localGuardiao = await Location.getCurrentPositionAsync({});
@@ -205,7 +197,6 @@ export default function HomeGuardiao() {
     const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
     return R * c;
   };
-  // -------
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#FFFFFF" }} edges={['bottom']}>

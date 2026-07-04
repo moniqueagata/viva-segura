@@ -5,7 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 import { useState } from 'react';
 
-  // Formatação de data e hora do chat
+  // Formatação de data e hora
   const hora = (data) => {
     return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
@@ -16,7 +16,6 @@ import { useState } from 'react';
       year: 'numeric'
     });
   };
-  // -----
 
 export default function HelpChat() {
     const navigation = useNavigation();
@@ -27,8 +26,6 @@ export default function HelpChat() {
       { id: 1, text: 'Olá! Como podemos ajudar?', side: 'left', createdAt: new Date() } // Mensagem inicial do suporte
     ]);
     const [text, setText] = useState('');
-
-    // Enviar mensagem
     const enviar = () => {
       if (text.trim().length > 0){
         const novaMensagem = {
@@ -41,7 +38,6 @@ export default function HelpChat() {
         setText('');
       }
     };
-    // ----
 
   return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#ffffff' }} edges={['right', 'left']}>

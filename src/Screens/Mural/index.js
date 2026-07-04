@@ -13,8 +13,25 @@ import styles from "./styles";
 import BottomNav from "../../components/BottomNav";
 import SOSButton from "../../components/SOSButton";
 
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: false,
+  }),
+});
+
 export default function Mural() {
   const navigation = useNavigation();
+  const [noticias, setNoticias] = useState([]);
+  const [carregando, setCarregando] = useState(true);
+  const [atualizando, setAtualizando] = useState(false);
+  const [erro, setErro] = useState(null);
+  const [categoriaAtiva, setCategoriaAtiva] = useState('todas');
+  const [busca, setBusca] = useState('');
+  const [favoritos, setFavoritos] = useState([]);
+  const [curtidas, setCurtidas] = useState([]);
+  const [menuAberto, setMenuAberto] = useState(false);
   const [holding, setHolding] = useState(false);
   const holdTimeout = useRef(null);
 
@@ -26,13 +43,11 @@ export default function Mural() {
         const usuarioConvertido = JSON.parse(user);
         setNomeUsuario(usuarioConvertido.nome);
         setFotoUsuario(usuarioConvertido.foto);
-
         const idUsuario = usuarioConvertido.id_usuaria || usuarioConvertido.id;
-        // Salva o push token no banco
+
         try {
           const { status: statusExistente } = await Notifications.getPermissionsAsync();
           let statusFinal = statusExistente;
-
           if (statusExistente !== "granted") {
             const { status } = await Notifications.requestPermissionsAsync();
             statusFinal = status;
@@ -43,68 +58,53 @@ export default function Mural() {
               projectId: 'f8650a80-bd8b-4ac4-a922-6f6fc64eee67',
             });
             const tokenObtido = tokenData.data;
-
             console.log("TOKEN OBTIDO:", tokenObtido);
             console.log("ID USUARIO:", idUsuario);
-
             const resposta = await api.post(`/usuaria/${idUsuario}/salvar-token`, {
               push_token: tokenObtido,
             });
-
             console.log("RESPOSTA DO BACKEND:", resposta.data);
             console.log("Push Token salvo:", tokenObtido);
           }
-
         } catch (error) {
           console.log("Erro ao salvar token:", error);
         }
 
-        // Verifica guardiões pendentes
-     try {
-  const pendentes = await api.get(`/guardioes-pendentes/${idUsuario}`);
-  const vinculo = await api.get(`/guardioes/${idUsuario}`);
-
-  if (pendentes.data.length > 0) {
-    Alert.alert(
-      "⏳ Guardiões Pendentes",
-      "Você possui convites aguardando aceite."
-    );
-  } else if (vinculo.data.length > 0) {
-    Alert.alert(
-      "🛡️ Guardião Ativo!",
-      "Seu convite foi aceito e seu guardião está ativo."
-    );
-  }
-} catch (error) {
-  console.log("Erro ao verificar pendentes:", error);
-}
-
-        
+        try {
+          const pendentes = await api.get(`/guardioes-pendentes/${idUsuario}`);
+          const vinculo = await api.get(`/guardioes/${idUsuario}`);
+          if (pendentes.data.length > 0) {
+            Alert.alert(
+              "⏳ Guardiões Pendentes",
+              "Você possui convites aguardando aceite."
+            );
+          } else if (vinculo.data.length > 0) {
+            Alert.alert(
+              "🛡️ Guardião Ativo!",
+              "Seu convite foi aceito e seu guardião está ativo."
+            );
+          }
+        } catch (error) {
+          console.log("Erro ao verificar pendentes:", error);
+        }
       }
     };
-
     carregarUsuario();
   }, []);
 
   const enviarSOS = async () => {
     try {
       const user = await AsyncStorage.getItem("user");
-
       if (!user) return;
-
       const usuario = JSON.parse(user);
-
-      console.log("USUARIO COMPLETO:", usuario);
-
+      console.log("USUARIO:", usuario);
       const permissao = await Location.requestForegroundPermissionsAsync();
-
       if (permissao.status !== "granted") {
         Alert.alert("Permissão negada");
         return;
       }
 
       const local = await Location.getCurrentPositionAsync({});
-
       const idUsuario = usuario.id_usuaria || usuario.id;
 
       console.log({
@@ -118,24 +118,20 @@ export default function Mural() {
         latitude: local.coords.latitude,
         longitude: local.coords.longitude,
       });
-
       Alert.alert("🚨 SOS enviado!");
-    } catch (err) {
-      console.log(err);
-      Alert.alert("Erro ao enviar SOS");
-     console.log('ERRO STATUS:', error.response?.status);
 
- console.log('ERRO:', error.response?.data)
-console.log('ERRO MESSAGE:', error.message);
+    } catch (error) {
+      console.log(error);
+      Alert.alert("Erro ao enviar SOS");
+      console.log('ERRO STATUS:', error.response?.status);
+      console.log('ERRO:', error.response?.data);
+      console.log('ERRO MESSAGE:', error.message);
       
     }
   };
 
-
-
   const iniciarHold = () => {
     setHolding(true);
-
     holdTimeout.current = setTimeout(() => {
       enviarSOS();
       setHolding(false);
@@ -144,30 +140,10 @@ console.log('ERRO MESSAGE:', error.message);
 
   const cancelarHold = () => {
     setHolding(false);
-
     if (holdTimeout.current) {
       clearTimeout(holdTimeout.current);
     }
   };
-Notifications.setNotificationHandler({
-  handleNotification: async () => ({
-    shouldShowAlert: true,
-    shouldPlaySound: true,
-    shouldSetBadge: false,
-  }),
-});
-
-
-
-  const [noticias, setNoticias] = useState([]);
-  const [carregando, setCarregando] = useState(true);
-  const [atualizando, setAtualizando] = useState(false);
-  const [erro, setErro] = useState(null);
-  const [categoriaAtiva, setCategoriaAtiva] = useState('todas');
-  const [busca, setBusca] = useState('');
-  const [favoritos, setFavoritos] = useState([]);
-  const [curtidas, setCurtidas] = useState([]);
-  const [menuAberto, setMenuAberto] = useState(false);
 
   const carregar = useCallback(async (categoriaId, termo) => {
     try {
@@ -201,10 +177,8 @@ Notifications.setNotificationHandler({
 
   const ehFavorito = (id) => favoritos.some((n) => n.id === id);
   const ehCurtido = (id) => curtidas.some((n) => n.id === id);
-
   const aoFavoritar = async (item) => setFavoritos(await alternarFavorito(item));
   const aoCurtir = async (item) => setCurtidas(await alternarCurtida(item));
-
   const aoCompartilhar = async (item) => {
     try {
       await Share.share({ message: `${item.titulo}\n${item.link}` });
@@ -215,25 +189,19 @@ Notifications.setNotificationHandler({
 
   return (
     <View style={styles.container}>
+      <View style={styles.cabecalho}>
+        <Pressable onPress={() => setMenuAberto(true)}>
+          <Ionicons name="menu" size={26} color="#6925b8" />
+        </Pressable>
+        <Text style={styles.titulo}>Mural Viva Segura</Text>       
+        <View style={{ width: 20 }} />
+      </View>
       <View style={styles.content}>
-        <View style={styles.cabecalho}>
-          <Pressable onPress={() => setMenuAberto(true)}>
-            <Ionicons name="menu" size={26} color="#6925b8" />
-          </Pressable>
-          <View style={styles.tituloContainer}>
-            <Text style={styles.titulo}>Mural</Text>
-            <Text style={styles.subtitulo}>
-              Notícias selecionadas para você
-            </Text>
-          </View>          
-          <View style={{ width: 26 }} />
-        </View>
-
         <View style={styles.buscaContainer}>
-          <Ionicons name="search" size={18} color="#999" />
+          <Ionicons name="search" size={18} color="#aaa" />
           <TextInput
             style={styles.buscaInput}
-            placeholder="Pesquisar notícias..."
+            placeholder="Procurar notícias..."
             placeholderTextColor="#aaa"
             value={busca}
             onChangeText={setBusca}
@@ -241,8 +209,7 @@ Notifications.setNotificationHandler({
             returnKeyType="search"
           />
         </View>
-
-    <View style={styles.filtrosWrapper}>
+        <View style={styles.filtrosWrapper}>
           <ScrollView
             horizontal
             showsHorizontalScrollIndicator={false}
@@ -261,7 +228,6 @@ Notifications.setNotificationHandler({
             ))}
           </ScrollView>
         </View>
-
         {carregando ? (
           <ActivityIndicator size="large" color="#ff80aa" style={{ marginTop: 30 }} />
         ) : erro ? (

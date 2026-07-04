@@ -2,13 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   container: { flex: 1, backgroundColor: '#fff' },
-  content: { flex: 1, paddingHorizontal: 22, paddingTop: 60 },
-  cabecalho: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginBottom: 14 },
-  titulo: { fontSize: 24, fontFamily: 'Poppins_700Bold', color: '#6925b8' },
-
-  buscaContainer: { flexDirection: 'row', alignItems: 'center', gap: 8, backgroundColor: '#f4f2fa', borderRadius: 28, paddingHorizontal: 14, paddingVertical: 10, marginBottom: 14 },
- 
-  buscaInput: { flex: 1, fontFamily: 'Poppins_400Regular', fontSize: 13, color: '#333' },
+  content: { flex: 1, paddingHorizontal: 22 },
+  cabecalho: { width: '100%', height: 88, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingHorizontal: 22, paddingTop: 30, marginBottom: 10 },
+  titulo: { fontSize: 16, fontFamily: 'Poppins_700Bold', fontWeight: 'bold', color: '#6925b8' },
+  buscaContainer: { width: '100%', height: 50, flexDirection: 'row', alignItems: 'center', gap: 10, backgroundColor: '#fff', borderWidth: 1, borderColor: '#ccc', borderRadius: 8, paddingHorizontal: 15, marginBottom: 25},
+  buscaInput: { flex: 1, fontFamily: 'Poppins_400Regular', color: '#454545' },
 
 filtrosWrapper: { marginHorizontal: -22, marginBottom: 14 },
   filtrosContainer: { paddingHorizontal: 22, gap: 10 },
@@ -35,25 +33,15 @@ filtrosWrapper: { marginHorizontal: -22, marginBottom: 14 },
   vazioTexto: { fontSize: 14, fontFamily: 'Poppins_400Regular', color: '#aaa' },
   erroTexto: { fontSize: 14, fontFamily: 'Poppins_400Regular', color: '#993556', textAlign: 'center', marginTop: 30 },
 
-  menuOverlay: { flex: 1, backgroundColor: 'rgba(105,37,184,0.45)', flexDirection: 'row' },
-  menuPainel: { width: '78%', height: '100%', backgroundColor: '#fff', padding: 22, paddingTop: 60 },
+  menuOverlay: { flex: 1, backgroundColor: 'hsla(0, 0%, 0%, 0.45)', flexDirection: 'row' },
+  menuPainel: { width: '75%', height: '100%', backgroundColor: '#fff', padding: 22,},
   menuTopo: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 },
-  menuTitulo: { fontSize: 20, fontFamily: 'Poppins_700Bold', color: '#6925b8' },
-  menuFechar: { fontSize: 18, color: '#999' },
+  menuTitulo: { fontSize: 25, fontFamily: 'Poppins_700Bold',  fontWeight: 'bold', color: '#6925b8' },
+  menuFechar: { fontSize: 20, color: '#999' },
   menuSecao: { fontSize: 13, fontFamily: 'Poppins_500Medium', color: '#6925b8', marginTop: 10, marginBottom: 8 },
   menuItem: { paddingVertical: 8, borderBottomWidth: 1, borderBottomColor: '#f5f5f5' },
   menuItemTexto: { fontSize: 12, fontFamily: 'Poppins_400Regular', color: '#444' },
   menuVazio: { fontSize: 12, fontFamily: 'Poppins_400Regular', color: '#bbb' },
 
-  tituloContainer: {
-  alignItems: 'center',
-},
 
-subtitulo: {
-  fontSize: 12,
-  color: '#999',
-  fontFamily: 'Poppins_400Regular',
-  marginTop: -2,
-  textAlign: 'center',
-},
 });

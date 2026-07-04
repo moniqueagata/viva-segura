@@ -1,13 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { View, Text, FlatList, Image, Pressable } from "react-native";
+import { View, Text, FlatList, Image, Pressable, Linking, Alert } from "react-native";
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useNavigation } from "@react-navigation/native";
 import styles from "./styles";
 import BottomNavGuardiao from "../../components/BottomNavGuardiao";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-
-import { Linking, Alert } from "react-native";
 
 export default function CentralEmergencia() {
   const navigation = useNavigation();
@@ -33,13 +31,10 @@ export default function CentralEmergencia() {
   };
 
   const [alertas, setAlertas] = useState([]);
-
   const buscarAlertas = async () => {
     try {
       const response = await api.get("/botao-panico-ativos");
-
       const agrupados = {};
-
       response.data.forEach((alerta) => {
         if (!agrupados[alerta.id_usuaria]) {
           agrupados[alerta.id_usuaria] = {
@@ -50,21 +45,17 @@ export default function CentralEmergencia() {
           agrupados[alerta.id_usuaria].quantidadeAlertas++;
         }
       });
-
       setAlertas(Object.values(agrupados));
     } catch (error) {
       console.log(error);
     }
   };
 
-
   useEffect(() => {
     buscarAlertas();
-
     const interval = setInterval(() => {
       buscarAlertas();
     }, 5000);
-
     return () => clearInterval(interval);
   }, []);
 
@@ -86,10 +77,8 @@ export default function CentralEmergencia() {
           <Text style={styles.status}>🚨 EMERGÊNCIA ATIVA </Text>
         </View>
       </View>
-      {/* info */}
       <Text style={styles.info}>{item.quantidadeAlertas} acionamentos SOS</Text>
       <Text style={styles.info}>Último alerta: {item.dataHoraAlerta}</Text>
-      {/* ações */}
       <View style={styles.actions}>
         <Pressable
           style={styles.btnSecundario}

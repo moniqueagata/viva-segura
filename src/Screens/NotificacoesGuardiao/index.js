@@ -8,7 +8,6 @@ export default function NotificacoesGuardiao() {
 
   return (
     <View style={styles.container}>
-      {/* Cabeçalho */}
       <View style={styles.header}>
         <Pressable style={styles.buttonHeader} onPress={() => navigation.navigate('PerfilGuardiao')}>
           <Image 
@@ -19,15 +18,13 @@ export default function NotificacoesGuardiao() {
         </Pressable>
         <Text style={styles.tituloHeader}>Notificações</Text> 
       </View>
-
       <View style={styles.content}>
         <Image 
-  source={require('../../../assets/img/sino.png')} 
-  style={styles.sinoIcone}
-/>
+          source={require('../../../assets/img/sino.png')} 
+          style={styles.sinoIcone}
+        />
         <Text style={styles.textoVazio}>Não há notificações disponíveis</Text>
       </View>
-
       <StatusBar style="auto" />
     </View>
   );
