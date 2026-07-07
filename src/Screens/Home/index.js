@@ -99,7 +99,7 @@ export default function Home() {
         longitude: local.coords.longitude,
       });
 
-      Alert.alert("🚨 SOS enviado!");
+      console.log("🚨 SOS enviado!");
     } catch (error) {
       Alert.alert("Erro ao enviar SOS");
       console.log('ERRO SOS:', error.response?.data)

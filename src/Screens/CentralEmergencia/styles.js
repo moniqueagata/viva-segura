@@ -3,27 +3,38 @@ import { StyleSheet } from "react-native";
 export default StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#F7F7F7",
+    backgroundColor: "#fff",
+  },
+
+  header: {
+    width: '100%',
+    height: 88,
+    flexDirection: 'row',
+    justifyContent: "space-between",
+    alignItems: "center",
+    paddingHorizontal: 22,
+    paddingTop: 30,
   },
 
   title: {
-    fontSize: 30,
+    fontSize: 20,
     fontWeight: "bold",
-    marginTop: 25,
-    marginLeft: 16,
     color: "#6c27a8",
   },
 
-  subtitle: {
-    fontSize: 17,
-    marginLeft: 16,
-    marginTop: 7,
-    color: "#717171",
+  content: {
+    flex: 1,
+    width: '100%',
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    paddingBottom: 22,
+    gap: 5,
   },
 
   card: {
+    width: '100%',
     backgroundColor: "#fff",
-    borderRadius: 18,
+    borderRadius: 10,
     padding: 16,
     marginBottom: 14,
     elevation: 3,
@@ -82,8 +93,10 @@ export default StyleSheet.create({
   },
 
   btnSecundario: {
-    flex: 1,
-    padding: 12,
+    width: 140,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
     borderWidth: 1,
     borderColor: "#6c27a8",
@@ -91,8 +104,10 @@ export default StyleSheet.create({
   },
 
   btnPrincipal: {
-    flex: 1,
-    padding: 12,
+    width: 140,
+    height: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
     borderRadius: 12,
     backgroundColor: "#6c27a8",
     alignItems: "center",

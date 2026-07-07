@@ -20,8 +20,8 @@ const SNAP_TOP = SCREEN_HEIGHT * 0.15;
 
 const TIPOS = [
   { id: 'Casa', icone: <Ionicons name="home-sharp" size={22} color="#7859cc" /> },
-  { id: 'Trabalho', icone: <Ionicons name="school" size={23} color="#7859cc" /> },
-  { id: 'Escola', icone: <FontAwesome5 name="suitcase" size={22} color="#7859cc" /> },
+  { id: 'Trabalho', icone: <FontAwesome5 name="suitcase" size={22} color="#7859cc" /> },
+  { id: 'Escola', icone: <Ionicons name="school" size={23} color="#7859cc" /> },
   { id: 'Outro', icone: <Fontisto name="map-marker-alt" size={24} color="#7859cc" /> },
 ];
 

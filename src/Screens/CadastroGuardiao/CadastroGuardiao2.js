@@ -65,7 +65,7 @@ export default function CadastroGuardiao2() {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={styles.header}>
-                    <Pressable style={styles.btnExit} onPress={() => navigation.navigate('Passo1')}>
+                    <Pressable style={styles.btnExit} onPress={() => navigation.navigate('CadastroGuardiao1')}>
                         <Image source={require('../../../assets/img/arrow_2.png')}
                             style={{ width: 20, height: 20 }}
                             tintColor='#ccc'

@@ -97,18 +97,21 @@ export default function CentralEmergencia() {
   );
 
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar style="dark" />
-      <Text style={styles.title}>Central de Emergência</Text>
-      <Text style={styles.subtitle}>Veja aqui os alertas recebidos em tempo real!</Text>
-      <FlatList
-        data={alertas}
-        keyExtractor={(item) => item.id_alerta.toString()}
-        renderItem={renderItem}
-        contentContainerStyle={{ padding: 16, paddingBottom: 120 }}
-        showsVerticalScrollIndicator={false}
-      />
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Alertas Recebidos</Text>
+      </View>
+      <View style={styles.content}>
+        <FlatList
+          data={alertas}
+          keyExtractor={(item) => item.id_alerta.toString()}
+          renderItem={renderItem}
+          contentContainerStyle={{ padding: 16, paddingBottom: 120 }}
+          showsVerticalScrollIndicator={false}
+        />
+      </View>
       <BottomNavGuardiao abaAtivaInicial={2} />
-    </SafeAreaView>
+      <StatusBar style="dark" />
+    </View>
   );
 }
