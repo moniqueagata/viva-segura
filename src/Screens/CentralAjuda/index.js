@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './style';
 import { useState } from 'react';
 
-  // Formatação de data e hora do chat
+  // Formatação de data e hora
   const hora = (data) => {
     return data.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
   };
@@ -26,8 +26,6 @@ export default function CentralAjuda() {
       { id: 1, text: 'Olá! Como podemos ajudar?', side: 'left', createdAt: new Date() } // Mensagem inicial do suporte
     ]);
     const [text, setText] = useState('');
-
-    // Enviar mensagem
     const enviar = () => {
       if (text.trim().length > 0){
         const novaMensagem = {

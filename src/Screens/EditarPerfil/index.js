@@ -10,6 +10,7 @@ import api from '../../services/api';
 
 export default function EditarPerfil() {
   const navigation = useNavigation();
+  const [usuario, setUsuario] = useState({});
   const [modal, setModal] = useState(false);
   const [foto, setFoto] = useState(null);
 
@@ -78,10 +79,6 @@ export default function EditarPerfil() {
     setFoto(null);
     setModal(false);
   };
-  //----------
-
-  //atualizar dados
-  const [usuario, setUsuario] = useState({});
 
   useEffect(() => {
     async function carregarUsuario() {
@@ -103,14 +100,11 @@ export default function EditarPerfil() {
   const salvar = async () => {
     try {
       const user = await AsyncStorage.getItem("user");
-
       if (!user) {
         alert("Usuário não encontrado");
         return;
       }
-
       const dados = JSON.parse(user);
-
       const response = await api.put(`/usuaria/${dados.id_usuaria}`, {
         nome: usuario.nome,
         email: usuario.email,
@@ -122,11 +116,9 @@ export default function EditarPerfil() {
         "user",
         JSON.stringify(response.data.data)
       );
-
       Alert.alert("Sucesso","Atualizado com sucesso!",
         [{ text: "OK", onPress: () => navigation.goBack()}]
       );
-
     } catch (error) {
       console.log(error.response?.data || error.message);
       alert("Erro ao atualizar");
@@ -195,9 +187,7 @@ export default function EditarPerfil() {
             />
           </Pressable>
         </View>
-
         <View style={styles.gridInputs}>
-
           <Text style={styles.label}>Nome</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -206,8 +196,6 @@ export default function EditarPerfil() {
               onChangeText={(text) => setUsuario({ ...usuario, nome: text })}
             />
           </View>
-
-
           <Text style={styles.label}>Email</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -221,7 +209,6 @@ export default function EditarPerfil() {
               resizeMode='cover'
             />
           </View>
-
           <Text style={styles.label}>Telefone</Text>
           <View style={styles.inputContainer}>
             <TextInput
@@ -236,7 +223,6 @@ export default function EditarPerfil() {
             />
           </View>
         </View>
-
         <Pressable style={styles.buttonPurple} onPress={salvar}>
           <Text style={styles.textWhite}>Salvar alterações</Text>
         </Pressable>

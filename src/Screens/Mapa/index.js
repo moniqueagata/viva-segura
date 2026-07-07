@@ -9,7 +9,6 @@ import MapView, { Marker, Polyline } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { getDistance } from 'geolib';
 import api from '../../services/api';
-import SOSButton from "../../components/SOSButton";
 import BottomNav from "../../components/BottomNav";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Feather from '@expo/vector-icons/Feather';
@@ -20,12 +19,11 @@ const { height: SCREEN_HEIGHT } = Dimensions.get('window');
 const SNAP_BOTTOM = (SCREEN_HEIGHT * 0.50) - 110;
 const SNAP_TOP = 0;
 
-// Icones - Locais Seguros
+// Icones 
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import Foundation from '@expo/vector-icons/Foundation';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Entypo from '@expo/vector-icons/Entypo';
 
 const ICONE_TIPO = {
   delegacia: <MaterialCommunityIcons name="police-station" size={18} color="#6925b8" />,
@@ -34,14 +32,11 @@ const ICONE_TIPO = {
   terminal: <FontAwesome5 name="bus" size={15} color="#6925b8" />,
   policia: <MaterialCommunityIcons name="police-station" size={18} color="#6925b8" />,
 };
-// ----------
 
 export default function Mapa() {
   const navigation = useNavigation();
   const mapRef = useRef(null);
-
   const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
   const [usuario, setUsuario] = useState(null);
   const [modal, setModal] = useState(false);
   const [endereco, setEndereco] = useState('Obtendo endereço...');
@@ -52,18 +47,25 @@ export default function Mapa() {
   const [alertas, setAlertas] = useState([]);
   const [rotaAtiva, setRotaAtiva] = useState(null);
   const [carregandoLocais, setCarregandoLocais] = useState(false);
-  const [compartilhando, setCompartilhando] = useState(false);
   const [enderecoDestino, setEnderecoDestino] = useState('');
   const [coordenadasDestino, setCoordenadasDestino] = useState(null);
   const [distanciaAtual, setDistanciaAtual] = useState(null);
-
-  // Modal seleção de guardiões - Compartilhar Localização
   const [modalGuardioes, setModalGuardioes] = useState(false);;
   const [guardioes, setGuardioes] = useState([]);
   const [selecionados, setSelecionados] = useState([]);
   const [guardiaoCompartilhado, setGuardiaoCompartilhado] = useState(null);
   const [chegouAoDestino, setChegouAoDestino] = useState(false);
   const [modalSucesso, setModalSucesso] = useState(false);
+
+  useEffect(() => {
+    async function carregarDados() {
+      const dados = await AsyncStorage.getItem("user");
+      if (dados) {
+        setUsuario(JSON.parse(dados));
+      }
+    }
+    carregarDados();
+  }, []);
 
   // Animação do Painel
   const posicaoY = useRef(new Animated.Value(SNAP_BOTTOM)).current;
@@ -90,28 +92,26 @@ export default function Mapa() {
       posicaoPainel.current = pontoDestino;
       posicaoY.setOffset(pontoDestino);
       posicaoY.setValue(0);
-
       Animated.spring(posicaoY, { toValue: 0, tension: 65, friction: 11, useNativeDriver: true }).start();
     }
+  };
+
+  const abrirPainel = () => {
+    posicaoPainel.current = SNAP_TOP;
+    posicaoY.setOffset(SNAP_TOP);
+    posicaoY.setValue(0);
+    Animated.spring(posicaoY, {
+      toValue: 0,
+      tension: 65,
+      friction: 11,
+      useNativeDriver: true,
+    }).start();
   };
 
   useEffect(() => {
     posicaoY.setOffset(SNAP_BOTTOM);
     posicaoY.setValue(0);
   }, []);
-  // -----------
-
-  // Buscar dados
-  useEffect(() => {
-    async function carregarDados() {
-      const dados = await AsyncStorage.getItem("user");
-      if (dados) {
-        setUsuario(JSON.parse(dados));
-      }
-    }
-    carregarDados();
-  }, []);
-  // --------
 
   // Localização + geocodificação reversa + envio à API
   useEffect(() => {
@@ -250,7 +250,6 @@ export default function Mapa() {
       });
     } catch { }
   };
-  // -------
 
   // Filtra locais seguros conforme a usuária digita
   const filtroPesquisa = (texto) => {
@@ -331,14 +330,12 @@ export default function Mapa() {
       setBuscando(false);
     }
   };
-  // -------
 
   // Rota traçada
   const tracarRota = async (destLat, destLng) => {
     if (!location) return;
     const origLat = location.latitude;
     const origLng = location.longitude;
-
     try {
       const url = `https://router.project-osrm.org/route/v1/foot/${origLng},${origLat};${destLng},${destLat}?overview=full&geometries=geojson`;
       const res = await fetch(url);
@@ -378,10 +375,8 @@ export default function Mapa() {
       });
     }
   };
-  // ----------
 
-  // Compartilhamento de rota - Modal
-  // Guardiões vinculados a usuária
+  // Compartilhamento de rota 
   useEffect(() => {
     async function carregarGuardioes() {
       if (!usuario?.id_usuaria) return;
@@ -438,19 +433,6 @@ export default function Mapa() {
       console.log('ERRO COMPARTILHAR:', error.response?.data || error.message);
       Alert.alert('Erro', 'Não foi possível compartilhar. Tente novamente.');
     }
-  };
-  // -------------
-
-  const abrirPainel = () => {
-    posicaoPainel.current = SNAP_TOP;
-    posicaoY.setOffset(SNAP_TOP);
-    posicaoY.setValue(0);
-    Animated.spring(posicaoY, {
-      toValue: 0,
-      tension: 65,
-      friction: 11,
-      useNativeDriver: true,
-    }).start();
   };
 
   return (
@@ -640,7 +622,7 @@ export default function Mapa() {
             </Animated.View>
           </PanGestureHandler>
         </View>
-        {/* MODAIS - Seleção de guardião, Confirmação de compartilhamento de Trajeto e Conclusão de Trajeto */}
+        {/* MODAIS */}
         <Modal
           visible={modalGuardioes}
           onDismiss={() => setModalGuardioes(false)}
@@ -650,9 +632,7 @@ export default function Mapa() {
             <Text style={styles.modalSubtitulo}>Escolha com quem você deseja compartilhar</Text>
             <ScrollView showsVerticalScrollIndicator={false} style={styles.scroll}>
               {guardioes.length === 0 ? (
-                <Text style={{ textAlign: 'center', marginVertical: '10%', fontSize: 13, fontWeight: '300', color: '#aaa'}}>
-                  Você ainda não tem guardiões vinculados
-                </Text>
+                <Text style={{ textAlign: 'center', marginVertical: '10%', fontSize: 13, fontWeight: '300', color: '#aaa'}}>Você ainda não tem guardiões vinculados</Text>
               ) : (
                 guardioes.map((guardiao) => {
                     const selecionado = selecionados.includes(guardiao.id_guardiao);

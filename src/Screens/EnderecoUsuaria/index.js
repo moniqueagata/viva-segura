@@ -20,15 +20,14 @@ const SNAP_TOP = SCREEN_HEIGHT * 0.15;
 
 const TIPOS = [
   { id: 'Casa', icone: <Ionicons name="home-sharp" size={22} color="#7859cc" /> },
-  { id: 'Trabalho', icone: <Ionicons name="school" size={23} color="#7859cc" /> },
-  { id: 'Escola', icone: <FontAwesome5 name="suitcase" size={22} color="#7859cc" /> },
+  { id: 'Trabalho', icone: <FontAwesome5 name="suitcase" size={22} color="#7859cc" /> },
+  { id: 'Escola', icone: <Ionicons name="school" size={23} color="#7859cc" /> },
   { id: 'Outro', icone: <Fontisto name="map-marker-alt" size={24} color="#7859cc" /> },
 ];
 
 export default function EnderecoUsuaria() {
   const navigation = useNavigation();
   const mapRef = useRef(null);
-
   const [usuario, setUsuario] = useState(null);
   const [enderecos, setEnderecos] = useState([]);
   // Pesquisa input
@@ -45,9 +44,8 @@ export default function EnderecoUsuaria() {
 
   // Painel
   const posicaoY = useRef(new Animated.Value(SNAP_BOTTOM)).current;
-   const posicaoPainel = useRef(SNAP_BOTTOM);
+  const posicaoPainel = useRef(SNAP_BOTTOM);
   const [scrollAtivo, setScrollAtivo] = useState(false);
-
   const gesto = Animated.event(
     [{ nativeEvent: { translationY: posicaoY } }],
     { useNativeDriver: true }
@@ -64,11 +62,9 @@ export default function EnderecoUsuaria() {
       } else {
         pontoDestino = SNAP_BOTTOM;
       }
-
       posicaoPainel.current = pontoDestino;
       posicaoY.setOffset(pontoDestino);
       posicaoY.setValue(0);
-
       Animated.spring(posicaoY, { toValue: 0, tension: 65, friction: 11, useNativeDriver: true }).start();
     }
   };
@@ -77,7 +73,6 @@ export default function EnderecoUsuaria() {
     posicaoY.setOffset(SNAP_BOTTOM);
     posicaoY.setValue(0);
   }, []);
-  // ---------
 
   // Carrega usuária + endereços salvos
   useEffect(() => {
@@ -100,7 +95,6 @@ export default function EnderecoUsuaria() {
       console.log("Erro ao carregar endereços:", err);
     }
   }, []);
-  // ----------
 
   const [regiaoMapa, setRegiaoMapa] = useState({
     latitude: -23.5505,
@@ -109,7 +103,7 @@ export default function EnderecoUsuaria() {
     longitudeDelta: 0.05,
   });
 
-  // Buscar endereço digitado
+  // Buscar endereço
   const buscarEndereco = async () => {
     if (!pesquisa.trim()) return;
 

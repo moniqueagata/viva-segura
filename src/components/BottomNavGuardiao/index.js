@@ -5,44 +5,41 @@ import styles from "../BottomNavGuardiao/styles";
 
 export default function BottomNavGuardiao({ abaAtivaInicial = 0 }) {
     const navigation = useNavigation();
-
     // Animação na navegação
-        const { width } = useWindowDimensions();
-        const [medidas, setMedidas] = useState({});
-        const [abaAtiva, setAbaAtiva] = useState(abaAtivaInicial);
-        const larguraAba = 60;
-        const posicaoX = useRef(new Animated.Value(0)).current;
-      
-        useEffect(() => {
-          const medidaAtual = medidas[abaAtiva];
-      
-          if (medidaAtual) {
-            const { x, width } = medidaAtual;
-      
-            const destinoX = x + (width / 2) - (larguraAba / 2);
-      
-            Animated.spring(posicaoX, {
-              toValue: destinoX,
-              useNativeDriver: true,
-              bounciness: 4,
-            }).start();
-          }
-        }, [abaAtiva, medidas]);
-      
-        const abaLayout = (index, event) => {
-          const { x, width } = event.nativeEvent.layout;
-          setMedidas(prev => ({
-            ...prev, [index]: { x, width }
-          }));
-        };
-      
-        const abas = [
-          { label: 'Home', rota: "HomeGuardiao", imagem: require('../../../assets/img/home.png'), index: 0 },
-          { label: 'Mensagem', rota: "ChatGuardiao", imagem: require('../../../assets/img/message.png'), index: 1 },
-          { label: 'Alertas', rota: "CentralEmergencia", imagem: require('../../../assets/img/mural.png'), index: 2 },
-          { label: 'Você', rota: "PerfilGuardiao", imagem: require('../../../assets/img/profile.png'), index: 3 }
-        ];
-        //----------
+    const [medidas, setMedidas] = useState({});
+    const [abaAtiva, setAbaAtiva] = useState(abaAtivaInicial);
+    const larguraAba = 60;
+    const posicaoX = useRef(new Animated.Value(0)).current;
+  
+    useEffect(() => {
+      const medidaAtual = medidas[abaAtiva];
+  
+      if (medidaAtual) {
+        const { x, width } = medidaAtual;
+  
+        const destinoX = x + (width / 2) - (larguraAba / 2);
+  
+        Animated.spring(posicaoX, {
+          toValue: destinoX,
+          useNativeDriver: true,
+          bounciness: 4,
+        }).start();
+      }
+    }, [abaAtiva, medidas]);
+  
+    const abaLayout = (index, event) => {
+      const { x, width } = event.nativeEvent.layout;
+      setMedidas(prev => ({
+        ...prev, [index]: { x, width }
+      }));
+    };
+  
+    const abas = [
+      { label: 'Home', rota: "HomeGuardiao", imagem: require('../../../assets/img/home.png'), index: 0 },
+      { label: 'Mensagem', rota: "ChatGuardiao", imagem: require('../../../assets/img/message.png'), index: 1 },
+      { label: 'Alertas', rota: "CentralEmergencia", imagem: require('../../../assets/img/mural.png'), index: 2 },
+      { label: 'Você', rota: "PerfilGuardiao", imagem: require('../../../assets/img/profile.png'), index: 3 }
+    ];
 
   return (
     <View style={styles.navegacao}>

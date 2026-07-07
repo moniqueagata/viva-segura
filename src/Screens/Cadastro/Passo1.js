@@ -6,7 +6,6 @@ import { useState, useRef, useEffect } from "react";
 
 export default function Passo1() {
   const navigation = useNavigation();
-  // Escolha de perfil
   const [perfil, setPerfil] = useState(null);
 
   // Barra de progresso

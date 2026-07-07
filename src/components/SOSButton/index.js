@@ -12,30 +12,22 @@ export default function SOSButton({ style }) {
   const enviarSOS = async () => {
     try {
       const user = await AsyncStorage.getItem("user");
-
       if (!user) return;
-
       const usuario = JSON.parse(user);
 
-      const permissao =
-        await Location.requestForegroundPermissionsAsync();
-
+      const permissao = await Location.requestForegroundPermissionsAsync();
       if (permissao.status !== "granted") {
         Alert.alert("Permissão negada");
         return;
       }
-
       const local = await Location.getCurrentPositionAsync({});
-
-      const idUsuario =
-        usuario.id_usuaria || usuario.id;
+      const idUsuario = usuario.id_usuaria || usuario.id;
 
       await api.post("/botao-panico", {
         id_usuaria: idUsuario,
         latitude: local.coords.latitude,
         longitude: local.coords.longitude,
       });
-
       Alert.alert("🚨 SOS enviado!");
     } catch (err) {
       console.log(err);
@@ -45,7 +37,6 @@ export default function SOSButton({ style }) {
 
   const iniciarHold = () => {
     setHolding(true);
-
     holdTimeout.current = setTimeout(() => {
       enviarSOS();
       setHolding(false);
@@ -54,7 +45,6 @@ export default function SOSButton({ style }) {
 
   const cancelarHold = () => {
     setHolding(false);
-
     if (holdTimeout.current) {
       clearTimeout(holdTimeout.current);
     }

@@ -18,13 +18,11 @@ import styles from "./styles/styles_passo2";
 
 export default function Passo2() {
   const navigation = useNavigation();
-
   const [nome, setNome] = useState("");
   const [cpf, setCpf] = useState("");
   const [dataNasc, setDataNasc] = useState("");
   const [telefone, setTelefone] = useState("");
   const [email, setEmail] = useState("");
-
   const route = useRoute();
   const perfilSelecionado = route.params?.perfilSelecionado;
 

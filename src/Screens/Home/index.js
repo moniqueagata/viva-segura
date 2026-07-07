@@ -8,7 +8,7 @@ import BottomNav from "../../components/BottomNav";
 import * as Location from "expo-location";
 import api from "../../services/api";
 import * as Notifications from "expo-notifications"; 
-// Notificações
+
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -21,7 +21,6 @@ export default function Home() {
   const navigation = useNavigation();
   const [holding, setHolding] = useState(false);
   const holdTimeout = useRef(null);
-
   const [modalGuardiaoPendente, setModalGuardiaoPendente] = useState(false);
   const [guardiaoPendente, setGuardiaoPendente] = useState(null);
   const [modalGuardiaoAtivo, setModalGuardiaoAtivo] = useState(false);
@@ -71,9 +70,8 @@ export default function Home() {
     };
     carregarUsuario();
   }, []);
-  // ------------
 
-  // Botão de pânico - SOS
+  // Botão SOS
   const enviarSOS = async () => {
     try {
       const user = await AsyncStorage.getItem("user");
@@ -101,7 +99,7 @@ export default function Home() {
         longitude: local.coords.longitude,
       });
 
-      Alert.alert("🚨 SOS enviado!");
+      console.log("🚨 SOS enviado!");
     } catch (error) {
       Alert.alert("Erro ao enviar SOS");
       console.log('ERRO SOS:', error.response?.data)
@@ -123,7 +121,6 @@ export default function Home() {
       clearTimeout(holdTimeout.current);
     }
   };
-  // ------------
 
   return (
     <View style={styles.container}>

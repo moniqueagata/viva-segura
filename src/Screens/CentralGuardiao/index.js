@@ -4,13 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 import styles from './style';
 import { useState } from 'react';
 
-// Componente FAQ com a lógica de abrir/fechar resposta
 const FaqCard = ({ categoria, icone, perguntas }) => {
-  // Guarda o índice da pergunta que está aberta. Se for null, nenhuma está aberta.
   const [perguntaAberta, setPerguntaAberta] = useState(null);
-
   const alternarPergunta = (index) => {
-    // Se clicar na que já está aberta, ela fecha (volta a ser null). Se não, abre a nova.
     setPerguntaAberta(perguntaAberta === index ? null : index);
   };
 
@@ -24,14 +20,11 @@ const FaqCard = ({ categoria, icone, perguntas }) => {
       <View style={styles.cardButtons}>
         {perguntas.map((p, index) => {
           const isOpen = perguntaAberta === index;
-
           return (
             <View key={index} style={[styles.perguntaContainer, isOpen && styles.perguntaContainerAberta]}>
                 <Pressable style={styles.button} onPress={() => alternarPergunta(index)}>
                 <Text style={styles.textFaq}>{p.titulo}</Text>
               </Pressable>
-                    
-              {/* Se a pergunta estiver aberta, mostra o texto da resposta */}
               {isOpen && (
                 <View style={styles.respostaContainer}>
                   <Text style={styles.textResposta}>{p.resposta}</Text>
@@ -41,9 +34,6 @@ const FaqCard = ({ categoria, icone, perguntas }) => {
           );
         })}
       </View>
-      <Pressable>
-        
-      </Pressable>
     </View>
   );
 };
@@ -52,7 +42,6 @@ export default function CentralGuardiao() {
   const navigation = useNavigation();
   const [busca, setBusca] = useState('');
 
-  // Adicionei as respostas reais ou fictícias aqui na lista:
   const listaFaq = [
     {
       categoria: 'Perguntas frequentes',
@@ -90,34 +79,26 @@ export default function CentralGuardiao() {
         </Pressable>
         <Text style={styles.tituloHeader}>Central de ajuda</Text>
       </View>
-
       <ScrollView style={styles.scroll} showsVerticalScrollIndicator={false}>
         <View style={styles.content}>
           <Image source={require('../../../assets/img/chat.png')} style={styles.bigIconTop} tintColor='#4FD1C5' />
           <Text style={styles.tituloCall}>Como podemos ajudar?</Text>
-
           <View style={styles.searchInputContainer}>
             <Image source={require('../../../assets/img/lupa.png')} style={{ width: 20, height: 20, marginLeft: 15 }} tintColor='#bbb' />
             <TextInput style={styles.input} placeholder="Procurar na Central de ajuda" placeholderTextColor="#bbb" value={busca} onChangeText={setBusca} />
           </View>
-
           {listaFaq.map((item, idx) => (
             <FaqCard key={idx} categoria={item.categoria} icone={item.icone} perguntas={item.perguntas} />
           ))}
         </View>
-
-         <View style={styles.footerChatContainer}>
-        <Text style={styles.textFaleConosco}>Fale conosco</Text>
-        <Image source={require('../../../assets/img/arrow_2.png')} style={{ width: 20, height: 20, transform: [{ rotate: '180deg' }] }} tintColor='#5A189A' />
-        <Pressable style={styles.floatingChatBtn} onPress={() => navigation.navigate('CentralAjuda')}>
-          <Image source={require('../../../assets/img/chat.png')} style={{ width: 28, height: 28 }} tintColor='#fff' />
-        </Pressable>
-      </View>
-
+        <View style={styles.footerChatContainer}>
+          <Text style={styles.textFaleConosco}>Fale conosco</Text>
+          <Image source={require('../../../assets/img/arrow_2.png')} style={{ width: 20, height: 20, transform: [{ rotate: '180deg' }] }} tintColor='#5A189A' />
+          <Pressable style={styles.floatingChatBtn} onPress={() => navigation.navigate('CentralAjuda')}>
+            <Image source={require('../../../assets/img/chat.png')} style={{ width: 28, height: 28 }} tintColor='#fff' />
+          </Pressable>
+        </View>
       </ScrollView>
-
-     
-
       <StatusBar style="auto" />
     </View>
   );

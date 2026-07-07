@@ -19,13 +19,12 @@ import api from "../../services/api";
 export default function Passo3Guardiao() {
   const navigation = useNavigation();
   const route = useRoute();
-
   const { nome, email, telefone, senha, codigo_convite } = route.params;
   const [modal, setModal] = useState(false);
   const [modalSucesso, setModalSucesso] = useState(false);
   const [image, setImage] = useState(null);
 
-  // ---------------- PERMISSÃO ----------------
+  // Foto de perfil
   const solicitarPermissoes = async () => {
     const camera = await ImagePicker.requestCameraPermissionsAsync();
     const galeria = await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -40,7 +39,6 @@ export default function Passo3Guardiao() {
     return true;
   };
 
-  // Foto de perfil
   const tirarFoto = async () => {
     const ok = await solicitarPermissoes();
     if (!ok) return;
@@ -89,7 +87,6 @@ export default function Passo3Guardiao() {
     setImage(null);
     setModal(false);
   };
-  // ----------
 
   // Verificação
   const finalizarCadastro = async (fotoPerfil) => {
@@ -112,7 +109,6 @@ export default function Passo3Guardiao() {
       Alert.alert("Erro ao cadastrar");
     }
   };
-  // ---------
 
   const irLogin = () => {
     setModalSucesso(false);
@@ -138,7 +134,6 @@ export default function Passo3Guardiao() {
     setReactiveValue(-width + (width * step) / steps);
   }, [step, width]);
 
-  // ---------------- UI ----------------
   return (
     <View style={styles.container}>
       <Portal>
@@ -166,7 +161,6 @@ export default function Passo3Guardiao() {
           </View>
         </Modal>
       </Portal>
-      {/* MODAL SUCESSO */}
       <Portal>
         <Modal
           visible={modalSucesso}

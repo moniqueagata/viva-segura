@@ -3,7 +3,8 @@ import { View, Text, ScrollView, Pressable, Image } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import SOSButton from "../../components/SOSButton";
 import styles from './styles';
-const SECTIONS = [
+
+const sessoes = [
   {
     id: 'sobre',
     title: 'Sobre o Viva Segura',
@@ -59,7 +60,7 @@ export default function TermosPrivacidade({ navigation }) {
       >
         <View style={styles.content}>
           <Text style={styles.subtitulo}>Consulte as informações sobre o uso do aplicativo,{'\n'}privacidade e proteção de dados.</Text>
-          {SECTIONS.map((section) => (
+          {sessoes.map((section) => (
             <View key={section.id} style={styles.card}>
             
               <View style={styles.iconWrapper}>
@@ -73,8 +74,8 @@ export default function TermosPrivacidade({ navigation }) {
           ))}
         </View>
       </ScrollView>
-        {/* Botão SOS */}
-        <SOSButton/>
+      {/* Botão SOS */}
+      <SOSButton/>
     </View>
   );
 }

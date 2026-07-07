@@ -108,7 +108,6 @@ export default function Passo4() {
       setImage(null);
       setModal(false);
     };
-    //----------
 
     // Barra de progresso
     const [width, setWidth] = useState(0);

@@ -27,7 +27,6 @@ export default function AcompanharRota() {
   const [fotoGuardiao, setFotoGuardiao] = useState(null);
   const [fotoUsuaria, setFotoUsuaria] = useState(null);
   const [modalVisible, setModalVisible] = useState(false);
-
   const [locationUsuaria, setLocationUsuaria] = useState(null);
   const [locationGuardiao, setLocationGuardiao] = useState(null);
   const [distancia, setDistancia] = useState(0);
@@ -37,7 +36,6 @@ export default function AcompanharRota() {
   const [bateria, setBateria] = useState(null);
   const [ultimaAtualizacao, setUltimaAtualizacao] = useState("");
   const slideAnim = useRef(new Animated.Value(1000)).current;
-
   // Trajeto da usuária
   const mapRef = useRef(null);
   const [mapaPronto, setMapaPronto] = useState(false);
@@ -47,7 +45,6 @@ export default function AcompanharRota() {
     carregarTudo();
   }, []);
 
-  // Quando o carregamento do mapa estivar pronto
   useEffect(() => {
     if (
       mapaPronto &&
@@ -73,11 +70,9 @@ export default function AcompanharRota() {
   );
 
   const carregarTudo = async () => {
-    // FOTO DA USUÁRIA
     if (usuaria?.foto) {
       setFotoUsuaria(usuaria.foto);
     }
-    // FOTO DO GUARDIÃO
     const user = await AsyncStorage.getItem("user");
     if (user) {
       const usuarioConvertido = JSON.parse(user);
@@ -86,7 +81,7 @@ export default function AcompanharRota() {
       }
     }
 
-    // LOCALIZAÇÃO EM TEMPO REAL
+    // Localização do guardião e da usuária
     const permissao = await Location.requestForegroundPermissionsAsync();
     if (permissao.status !== "granted") {
       return;
@@ -101,7 +96,6 @@ export default function AcompanharRota() {
       setStatusMovimento("Parada");
     }
 
-    // Localização do guardião
     const latitudeGuardiao = local.coords.latitude;
     const longitudeGuardiao = local.coords.longitude;
     setLocationGuardiao({
@@ -109,7 +103,6 @@ export default function AcompanharRota() {
       longitude: longitudeGuardiao,
     });
 
-    // Buscar localização da usuária
     try {
       const res = await api.get(`/localizacao/${usuaria.id_usuaria}`);
       const dados = res.data;
@@ -137,7 +130,6 @@ export default function AcompanharRota() {
     try {
       const rotaRes = await api.get(`/rota-compartilhada/dados/${usuaria.id_usuaria}`);
       const rota = rotaRes.data.rota;
-
       const url = `https://router.project-osrm.org/route/v1/foot/${rota.origemLongitude},${rota.origemLatitude};${rota.destinoLongitude},${rota.destinoLatitude}?overview=full&geometries=geojson`;
       const osrmRes = await fetch(url);
       const osrmJson = await osrmRes.json();

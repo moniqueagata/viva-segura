@@ -26,12 +26,10 @@ export default function Welcome() {
               <Text style={styles.descricao}>Acompanhe trajetos, compartilhe localização e peça ajuda com um toque</Text>
             </View>
           </View>
-          
         <View style={styles.buttonContainer}>
           <Pressable style={styles.btnPurple} onPress={() => navigation.navigate('Passo1')}>
             <Text style={styles.txWhite}>Criar conta</Text>
           </Pressable>
-
           <View style={styles.linkView}>
             <Text style={styles.txLink}>Já possui conta?</Text><Pressable onPress={() => navigation.navigate('Login')}><Text style={styles.link}>Entrar</Text></Pressable>
           </View>

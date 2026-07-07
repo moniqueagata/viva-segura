@@ -5,27 +5,22 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LogBox } from 'react-native';
 
-LogBox.ignoreLogs(['Text strings must be rendered within a <Text> component',]);
+LogBox.ignoreLogs(['Text strings must be rendered within a <Text> component', 'expo-notifications: Android Push notifications', '`expo-notifications` functionality is not fully supported in Expo Go']);
 
-// Telas iniciais do app
+// Telas - Usuária
 import Splash from "./src/Screens/Splash";
 import Welcome from "./src/Screens/Welcome";
 import Login from "./src/Screens/Login";
-// Cadastro Usuaria
 import Passo1 from "./src/Screens/Cadastro/Passo1";
 import Passo2 from "./src/Screens/Cadastro/Passo2";
 import Passo3 from "./src/Screens/Cadastro/Passo3";
 import Passo4 from './src/Screens/Cadastro/Passo4';
 import Passo5 from './src/Screens/Cadastro/Passo5';
-// Main principal - Usuária
 import Home from "./src/Screens/Home";
 import Telefones from "./src/Screens/Telefones";
 import EnderecoUsuaria from './src/Screens/EnderecoUsuaria';
-//Mapa
 import Mapa from "./src/Screens/Mapa";
-// Mural notícias
 import Mural from "./src/Screens/Mural";
-// Perfil Usuária
 import Perfil from "./src/Screens/Perfil";
 import EditarPerfil from "./src/Screens/EditarPerfil";
 import AlterarSenha from './src/Screens/AlterarSenha';
@@ -33,22 +28,18 @@ import Notificacoes from "./src/Screens/Notificacoes";
 import Central from "./src/Screens/Central";
 import HelpChat from "./src/Screens/HelpChat";
 import TermosPrivacidade from './src/Screens/TermosPrivacidade';
-//Tela meus guardiões
 import MeusGuardioes from "./src/Screens/MeusGuardioes";
 import AddGuardiao from "./src/Screens/MeusGuardioes/AddGuardiao";
 
-//Cadastro Guardião 
+// Telas - Guardião 
 import CadastroGuardiao1 from "./src/Screens/CadastroGuardiao/CadastroGuardiao1";
 import CadastroGuardiao2 from "./src/Screens/CadastroGuardiao/CadastroGuardiao2";
 import CadastroGuardiao3 from "./src/Screens/CadastroGuardiao/CadastroGuardiao3";
-// Main - Guardião
 import HomeGuardiao from "./src/Screens/HomeGuardiao";
 import AcompanharRota from './src/Screens/HomeGuardiao/AcompanharRota';
 import CentralEmergencia from "./src/Screens/CentralEmergencia";
-// Chat
 import ChatGuardiao from './src/Screens/ChatGuardiao';
 import Mensagens from './src/Screens/Mensagens';
-// Perfil Guardião
 import PerfilGuardiao from './src/Screens/PerfilGuardiao';
 import NotificacoesGuardiao from './src/Screens/NotificacoesGuardiao';
 import CentralAjuda from './src/Screens/CentralAjuda';

@@ -10,7 +10,6 @@ export default function PerfilGuardiao() {
   const navigation = useNavigation();
   const [usuario, setUsuario] = useState(null);
 
-  // Carregar dados
   useFocusEffect(
     useCallback(() => {
         const carregarUsuario = async () => {
@@ -23,7 +22,6 @@ export default function PerfilGuardiao() {
     }, [])
     );
 
-  // Logout -> Sair da conta
     const fazerLogout = async () => {
         await AsyncStorage.removeItem("user");
         navigation.reset({
@@ -53,12 +51,10 @@ return (
               )}
               </View>
           </View>
-
           <View style={styles.text}>
             <Text style={styles.nome}>{usuario?.nome || "Nome"}</Text>
-            <Text style={styles.desc}>Protegendo: 5 usuárias</Text>
+            <Text style={styles.desc}>Protegendo...</Text>
           </View>
-
           <Pressable
             style={styles.buttonEdit}
             onPress={() => navigation.navigate("EditarPerfilGuardiao")}
@@ -103,7 +99,6 @@ return (
                         />
                     </Pressable>
                 </View>
-
                 <Text style={styles.sessions}>Suporte</Text>
                 <View style={styles.gridButtons}>
                     <Pressable style={styles.button} onPress={() => navigation.navigate('CentralGuardiao')}>
@@ -139,17 +134,14 @@ return (
                         />
                     </Pressable>
                 </View>
-
                 <View style={styles.logout}>
                     <Pressable style={styles.buttonLogout} onPress={fazerLogout}>
                         <Text style={styles.textRed}>Sair da conta</Text>
                     </Pressable>
                 </View>
-
             </View>
       </View>
     </ScrollView>
-
       {/* Navegação */}
       <BottomNavGuardiao abaAtivaInicial={3} />
       {/* --------- */}

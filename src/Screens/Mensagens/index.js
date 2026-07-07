@@ -19,28 +19,14 @@ const formatarHorario = (dataString) => {
 export default function Mensagens() {
     const navigation = useNavigation();
     const route = useRoute();
-
     const contato = route.params?.contato;
     const tipoUsuario = route.params?.tipoUsuario;
     const origem = route.params?.origem;
-
     const scrollRef = useRef();
-
     const [mensagens, setMensagens] = useState([]);
     const [texto, setTexto] = useState("");
     const [usuarioLogado, setUsuarioLogado] = useState(null);
 
-    const getBubbleStyle = (msg) => {
-        const enviadoPorUsuaria = msg.enviado_por === "usuario";
-
-        if (tipoUsuario === "usuario") {
-            return enviadoPorUsuaria ? styles.sentBubble : styles.receivedBubble;
-        } else {
-            return enviadoPorUsuaria ? styles.guardianReceivedBubble : styles.guardianSentBubble;
-        }
-    };
-
-    // ─── CARREGAR USUÁRIO ────────────────────────────────────────
     useEffect(() => {
         const carregarUsuario = async () => {
             const dados = await AsyncStorage.getItem("user");
@@ -52,7 +38,16 @@ export default function Mensagens() {
         carregarUsuario();
     }, []);
 
-    // ─── BUSCAR MENSAGENS ────────────────────────────────────────
+    const getBubbleStyle = (msg) => {
+        const enviadoPorUsuaria = msg.enviado_por === "usuario";
+        if (tipoUsuario === "usuario") {
+            return enviadoPorUsuaria ? styles.sentBubble : styles.receivedBubble;
+        } else {
+            return enviadoPorUsuaria ? styles.guardianReceivedBubble : styles.guardianSentBubble;
+        }
+    };
+
+    // Buscar mensagens
     useEffect(() => {
         if (!usuarioLogado || !contato) return;
         buscarMensagens();
@@ -83,7 +78,6 @@ export default function Mensagens() {
         }
     };
 
-    // ─── ENVIAR MENSAGEM ─────────────────────────────────────────
     const enviarMensagem = async (textoCustom = null) => {
         const conteudo = textoCustom ?? texto;
         if (!conteudo.trim()) return;
@@ -105,18 +99,14 @@ export default function Mensagens() {
                 guardiao_id: idGuardiao,
                 enviado_por: tipoUsuario
             });
-
             if (!textoCustom) setTexto("");
             buscarMensagens();
-
         } catch (error) {
             console.log("ERRO AO ENVIAR MENSAGEM:", error);
         }
     };
 
-    // ─── SOS NO CHAT ─────────────────────────────────────────────
-
-
+    // Botão SOS no chat (apenas para a usuária)
     const dispararSosChat = async () => {
         try {
             const permissao = await Location.requestForegroundPermissionsAsync();
@@ -125,43 +115,29 @@ export default function Mensagens() {
                 Alert.alert("Permissão negada", "Precisamos da sua localização para enviar o SOS.");
                 return;
             }
-
             const local = await Location.getCurrentPositionAsync({});
             const { latitude, longitude } = local.coords;
-
             const linkMaps = `https://www.google.com/maps?q=${latitude},${longitude}`;
             const mensagemSOS = `🚨 SOS! Preciso de ajuda! Minha localização agora: ${linkMaps}`;
-
             await enviarMensagem(mensagemSOS);
-
             Alert.alert("🚨 SOS enviado!", "Sua localização foi compartilhada no chat.");
-
         } catch (err) {
             console.log("Erro SOS chat:", err);
             Alert.alert("Erro", "Não foi possível enviar o SOS.");
         }
     };
 
-    // ─── RENDER ──────────────────────────────────────────────────
     return (
         <View style={styles.container}>
-            <KeyboardAvoidingView
-                style={{ flex: 1 }}
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                keyboardVerticalOffset={20}
-            >
+            <KeyboardAvoidingView style={{ flex: 1 }} behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={20}>
                 <View style={styles.header}>
-                    <Pressable
-                        onPress={() => navigation.navigate(origem)}
-                        style={styles.backButton}
-                    >
+                    <Pressable onPress={() => navigation.navigate(origem)} style={styles.backButton}>
                         <Image
                             source={require('../../../assets/img/arrow_2.png')}
                             style={{ width: 20, height: 20 }}
                             tintColor='#6925b8'
                         />
                     </Pressable>
-
                     <View style={styles.avatarCircle}>
                         {contato?.foto ? (
                             <Image
@@ -184,19 +160,12 @@ export default function Mensagens() {
                     ref={scrollRef}
                     style={styles.chatArea}
                     contentContainerStyle={styles.chatContent}
-                    onContentSizeChange={() =>
-                        scrollRef.current?.scrollToEnd({ animated: true })
-                    }
+                    onContentSizeChange={() => scrollRef.current?.scrollToEnd({ animated: true })}
                 >
                     {mensagens.map((msg) => (
-                        <View
-                            key={msg.id}
-                            style={[styles.bubble, getBubbleStyle(msg)]}
-                        >
+                        <View key={msg.id} style={[styles.bubble, getBubbleStyle(msg)]}>
                             <Text style={styles.messageText}>{msg.texto}</Text>
-                            <Text style={styles.messageTime}>
-                                {formatarHorario(msg.created_at)}
-                            </Text>
+                            <Text style={styles.messageTime}>{formatarHorario(msg.created_at)}</Text>
                         </View>
                     ))}
                 </ScrollView>
@@ -208,20 +177,14 @@ export default function Mensagens() {
                             onChangeText={setTexto}
                             autoFocus={true}
                         />
-                        {/* BOTÃO SOS — só aparece para a usuária */}
+                        {/* BOTÃO SOS */}
                         {tipoUsuario === "usuario" && (
-                            <Pressable
-                                style={styles.sosButtonChat}
-                                onPress={dispararSosChat}
-                            >
+                            <Pressable style={styles.sosButtonChat} onPress={dispararSosChat}>
                                 <Text style={styles.sosButtonText}>SOS</Text>
                             </Pressable>
                         )}
                     </View>
-                    <Pressable
-                        style={styles.sendCircleButton}
-                        onPress={() => enviarMensagem()}
-                    >
+                    <Pressable style={styles.sendCircleButton} onPress={() => enviarMensagem()}>
                         <Text style={styles.sendIconArrow}>↑</Text>
                     </Pressable>
                 </View>

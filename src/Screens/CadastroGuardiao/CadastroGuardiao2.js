@@ -11,12 +11,7 @@ import api from "../../services/api";
 export default function CadastroGuardiao2() {
     const navigation = useNavigation();
     const route = useRoute();
-
     const { nome, telefone, email, codUsu } = route.params || {};
-
-    const [checked, setChecked] = useState(false);
-
-    // Senha
     const [senha, setSenha] = useState("");
     const [mostrarSenha, setMostrarSenha] = useState(false);
     const [confirmarSenha, setConfirmarSenha] = useState('');
@@ -28,9 +23,7 @@ export default function CadastroGuardiao2() {
     const maiusculaEMinuscula = /[A-Z]/.test(senha) && /[a-z]/.test(senha);
     const numero = /[0-9]/.test(senha);
 
-
     // Verificação 
-
     const finalizarCadastro = () => {
        
     navigation.navigate("CadastroGuardiao3", {
@@ -41,7 +34,6 @@ export default function CadastroGuardiao2() {
         codigo_convite: codUsu
       });
     };
-
     
     // Barra de progresso
     const [width, setWidth] = useState(0);
@@ -73,7 +65,7 @@ export default function CadastroGuardiao2() {
                 showsVerticalScrollIndicator={false}
             >
                 <View style={styles.header}>
-                    <Pressable style={styles.btnExit} onPress={() => navigation.navigate('Passo1')}>
+                    <Pressable style={styles.btnExit} onPress={() => navigation.navigate('CadastroGuardiao1')}>
                         <Image source={require('../../../assets/img/arrow_2.png')}
                             style={{ width: 20, height: 20 }}
                             tintColor='#ccc'

@@ -66,7 +66,6 @@ export default function Passo5() {
     setModal(false);
     navigation.navigate('Login');
   };
-  //----------
 
   // Barra de progresso
     const [width, setWidth] = useState(0);
