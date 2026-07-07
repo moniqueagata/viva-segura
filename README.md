@@ -8,7 +8,7 @@
 
 A **Viva Segura** é um aplicativo mobile voltado à **segurança feminina**, desenvolvido como Trabalho de Conclusão de Curso (TCC) no curso Técnico de Desenvolvimento de Sistemas. O objetivo do app é oferecer mais Segurança e proteção às mulheres durante seus deslocamentos diários, conectando-as a pessoas de confiança em tempo real.
 
-## Sobre o projeto
+## 💡 Sobre o projeto
 
 Muitas mulheres enfrentam insegurança ao se deslocarem sozinhas, seja a pé, de transporte público ou por aplicativo. O Viva Segura nasce para reduzir essa insegurança, permitindo que a usuária compartilhe sua localização, converse e acione ajuda de forma rápida com uma pessoa de sua confiança, o **Guardião**.
 
@@ -25,18 +25,8 @@ O app trabalha com dois perfis (personas):
 - 🆘 **Botão de SOS** — em situações de emergência, envia um alerta imediato ao Guardião.
 - 📌 **Endereços de confiança** — a Usuária pode cadastrar endereços confiaveis (casa, trabalho, etc.).
 - 📰 **Mural de notícias** — conteúdo informativo voltado ao público feminino.
-<br>
-<h3 align="center">🚀 Tecnologias utilizadas</h3>
 
-<div align="center">
-
-![React Native](https://img.shields.io/badge/React_Native-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
-![Expo](https://img.shields.io/badge/Expo-000020?style=for-the-badge&logo=expo&logoColor=white)
-![Laravel](https://img.shields.io/badge/Laravel-FF2D20?style=for-the-badge&logo=laravel&logoColor=white)
-![XAMPP](https://img.shields.io/badge/XAMPP-df5f16?style=for-the-badge&logo=xampp&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white)
-
-</div>
+## 🚀 Tecnologias utilizadas
 
 - [React Native](https://reactnative.dev/)
 - [Expo](https://expo.dev/)
