@@ -4,38 +4,49 @@
 
 <br>
 
-# ♀️ Viva Segura
-
-A **Viva Segura** é um aplicativo mobile voltado à **segurança feminina**, desenvolvido como Trabalho de Conclusão de Curso (TCC) no curso Técnico de Desenvolvimento de Sistemas. O objetivo do app é oferecer mais Segurança e proteção às mulheres durante seus deslocamentos diários, conectando-as a pessoas de confiança em tempo real.
+**Viva Segura** é um aplicativo desenvolvido como Trabalho de Conclusão de Curso do curso Técnico de Desenvolvimento de Sistemas na **ETEC de Guaianazes**. O objetivo do app é oferecer segurança e proteção às mulheres durante seus deslocamentos diários.
 
 ## 💡 Sobre o projeto
 
-Muitas mulheres enfrentam insegurança ao se deslocarem sozinhas, seja a pé, de transporte público ou por aplicativo. O Viva Segura nasce para reduzir essa insegurança, permitindo que a usuária compartilhe sua localização, converse e acione ajuda de forma rápida com uma pessoa de sua confiança, o **Guardião**.
+Com o aumento de casos de feminicídio no Brasil, muitas mulheres se sentem **inseguras** ao se deslocarem desacompanhadas durante o cotidiano. 
 
-O app trabalha com dois perfis (personas):
+O **Viva Segura** nasce para reduzir essa insegurança, permitindo que a usuária compartilhe sua localização, converse e acione ajuda de forma rápida.
 
-- 👩 **Usuária (Protegida)** — pessoa que utiliza os recursos de proteção durante seus trajetos.
-- 😇 **Guardião** — pessoa de confiança escolhida pela usuária que acompanha seus deslocamentos e é acionada em casos de emergência.
+O aplicativo conta com dois perfis de acesso:
 
-## ✨ Principais funcionalidades
+- 👩 **Usuária** — perfil destinado as mulheres, que utiliza os principais recursos do app.
+- 😇 **Guardião** — contato de confiança escolhida pela usuária que acompanha seus deslocamentos e é acionado(a) em casos de emergência.
 
-- 🔐 **Autenticação e escolha de persona** — ao entrar no app, o usuário define se é Usuária ou Guardião.
-- 📍 **Compartilhamento de rota** — a Usuária compartilha seu trajeto em tempo real com o Guardião escolhido.
+### Principais funcionalidades
+
+- 🔐 **Autenticação e escolha de perfil** — ao entrar no app, o usuário define se é Usuária ou Guardião.
+- 📍 **Compartilhamento de trajeto** — a Usuária compartilha seu trajeto em tempo real com o Guardião escolhido.
 - 💬 **Chat** — comunicação direta entre Usuária e Guardião.
-- 🆘 **Botão de SOS** — em situações de emergência, envia um alerta imediato ao Guardião.
+- 🚨 **Botão de SOS** — em situações de emergência, envia um alerta imediato ao Guardião.
 - 📌 **Endereços de confiança** — a Usuária pode cadastrar endereços confiaveis (casa, trabalho, etc.).
 - 📰 **Mural de notícias** — conteúdo informativo voltado ao público feminino.
 
-## 🚀 Tecnologias utilizadas
+<div align="center">
 
-- [React Native](https://reactnative.dev/)
-- [Expo](https://expo.dev/)
-- [OSRM (Open Source Routing Machine)](http://project-osrm.org/)
-- [Laravel](https://laravel.com/) — Backend do app → ([Viva Segura - backend](https://github.com/Kaawanny/app-viva-segura-backend))
+### 💻 Tecnologias utilizadas
 
-## 📱 Telas do App
+![Expo](https://img.shields.io/badge/-Expo-0D1117?style=for-the-badge&logo=expo&logoColor=f0f0f0&labelColor=0D1117)&nbsp;
+![React Native](https://img.shields.io/badge/-React_Native-0D1117?style=for-the-badge&logo=react&logoColor=61DAFB&labelColor=0D1117)&nbsp;
+![JavaScript](https://img.shields.io/badge/-JavaScript-0D1117?style=for-the-badge&logo=javascript&logoColor=ffe240&labelColor=0D1117)&nbsp;
+![Laravel](https://img.shields.io/badge/-Laravel-0D1117?style=for-the-badge&logo=laravel&logoColor=e63124&labelColor=0D1117)&nbsp;
+![MySQL](https://img.shields.io/badge/-MySQL-0D1117?style=for-the-badge&logo=mysql&logoColor=7bafd6&labelColor=0D1117)&nbsp;
+![Git](https://img.shields.io/badge/-Git-0D1117?style=for-the-badge&logo=git&logoColor=fc8b2e&labelColor=0D1117)&nbsp;
 
-<h3 align="center">👩 Usuária (Protegida)</h3>
+<a url="https://project-osrm.org/">
+
+  ![Project OSRM](https://img.shields.io/badge/API_Project_OSRM-0D1117?style=for-the-badge&logoColor=7bafd6&labelColor=0D1117)&nbsp;
+</a>
+
+</div>
+
+## 📱 Prints do aplicativo
+
+<h3 align="center">Usuária</h3>
 <table align="center">
   <tr>
     <td align="center">Home</td>
@@ -49,7 +60,7 @@ O app trabalha com dois perfis (personas):
   </tr>
 </table>
 
-<h3 align="center">😇 Guardião</h3>
+<h3 align="center">Guardião</h3>
 <table align="center">
   <tr>
     <td align="center">Home</td>
@@ -69,29 +80,27 @@ O app trabalha com dois perfis (personas):
 ```
 app-viva-segura/
 ├── assets/          # Imagens e ícones
-├── screenshots/     # Prints do app 
+├── screenshots/     # Prints
 ├── src/
 │   ├── components/  # Componentes reutilizáveis da interface
 │   ├── Screens/     # Telas do aplicativo
 │   └── services/
-│       └── api.js   # Configuração da conexão com o backend (IP)
+│       └── api.js   # Configuração do IP e conexão com o banco
 └── App.js           # Ponto de entrada da aplicação
 ```
 
-## Como executar o projeto
+## Como executar o projeto?
 
-> ⚠️ **Importante:** o backend precisa estar rodando **antes** de iniciar o app, pois o frontend depende da API para autenticação e persistência de dados.
+> ⚠️ **Importante:** o back-end precisa estar rodando **ANTES** de iniciar a aplicação, pois ela depende da API para autenticação e persistência de dados.
 
-### 1. Rodando o backend
+### 1. Rodando o back-end
 
-O backend está em um repositório separado, feito em Laravel, e utiliza o **XAMPP** para o banco de dados MySQL.
-
-🔗 **[app-viva-segura-backend](https://github.com/Kaawanny/app-viva-segura-backend)**
+O back-end está em um repositório separado, que utiliza o **XAMPP** para o banco de dados **MySQL** - 🔗 **[app-viva-segura-backend](https://github.com/Kaawanny/app-viva-segura-backend)**
 
 **Pré-requisitos:**
 
 - [PHP](https://www.php.net/) e [Composer](https://getcomposer.org/) instalados
-- [XAMPP](https://www.apachefriends.org/) instalado (para o MySQL)
+- [XAMPP](https://www.apachefriends.org/) instalado
 
 **Passo a passo:**
 
@@ -108,7 +117,7 @@ composer install
 # Rode as migrations
 php artisan migrate
 
-# Popule o banco com os seeders
+# Popule o banco com as Seeders
 php artisan db:seed --class=RoleSeeder
 php artisan db:seed --class=LocalSeguroSeeder
 
@@ -116,55 +125,77 @@ php artisan db:seed --class=LocalSeguroSeeder
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-> O `--host=0.0.0.0` é necessário para que o celular (rodando o app via Expo Go) consiga acessar a API pela rede local, e não só o `localhost` do computador.
+> O `--host=0.0.0.0` é necessário para que o celular (rodando via **Expo Go**) consiga acessar a API pela rede local, e não só o `localhost` do computador.
 
-### 2. Rodando o app mobile
+### 2. Rodando o aplicativo
 
 **Pré-requisitos:**
 
 - [Node.js](https://nodejs.org/) instalado
 - [Expo CLI](https://docs.expo.dev/get-started/installation/) instalado globalmente
-- App **Expo Go** instalado no celular (Android/iOS) ou um emulador configurado
+- [Expo Go](https://expo.dev/go) instalado no celular (Android/iOS) ou um emulador configurado
 
 **Passo a passo:**
 
 ```bash
 # Clone o repositório
-git clone https://github.com/moniqueagata/app-viva-segura.git
+git clone https://github.com/aghelloworld/app-viva-segura.git
 
 # Acesse a pasta do projeto
 cd app-viva-segura
 
 # Instale as dependências
 npm install
-
-# Inicie o projeto
-npx expo start
 ```
  
-> ⚠️ Antes de rodar, altere o IP configurado no `api.js` do app para o **IP local do seu computador** (o mesmo que está rodando o backend). Celular e computador precisam estar na mesma rede Wi-Fi.
+> ⚠️ Antes de iniciar o app, altere o IP configurado no `api.js` que se encontra na pasta `services` dentro do projeto, para o **IP local do seu computador**.
+
+<div align="center">
+  
+  Celular e computador precisam estar configurados na **mesma rede Wi-Fi**.
+
+  <img src="screenshots/local_api.png">
+
+</div>
+<br>
+
+Para descobrir o IP local do seu computador é necessário abrir um novo terminal.
 
 ```bash
 # Abra um novo terminal e execute
 ipconfig
 ```
-- Procure por **"Endereço IPv4"** copie o IP e cole na URL do `api.js`.
+<div align="center">
 
-Após rodar o comando, escaneie o QR Code exibido no terminal com o app **Expo Go** para visualizar o aplicativo no seu celular.
+  Procure por **"Endereço IPv4"** e copie a numeração do IP local.
 
-## 👩🏻‍💻 Autores
+  <img src="screenshots/endereco_ip.png">
+  <br><br>
 
-Projeto desenvolvido como Trabalho de Conclusão de Curso, pelos integrantes:
+  Depois de copiar o IP, cole na *url* que está no `api.js`.
 
-- *[Alice Oliveira](https://github.com/alicejeoliveira-eng)*
-- *[Beatriz Maurício](https://github.com/biaa15042008)*
-- *Júlio César*
-- *[Kawanny Avanci](https://github.com/Kaawanny)*
-- *[Monique Agata](https://github.com/moniqueagata)*
-- *[Larissa Araújo](https://github.com/LarissaaraujoM)*
-- *[Luccas Gustavo](https://github.com/LuccasDrewj)*
-- *[Samira Sampaio](https://github.com/samppSamis)*
+  <img src="screenshots/url_api.png">
+</div>
+<br>
 
-## 📄 Licença
+Em seguida execute o comando abaixo para iniciar o app, e escanei o **QR Code** exibido no terminal com o *Expo Go* instalado em seu celular.
 
-Este projeto é de caráter acadêmico desenvolvido para fins de TCC, realizado em *2026* na instituição **Etec de Guaianases**.
+```bash
+# inicie o aplicativo
+npx expo start
+```
+
+### ✨ Tudo pronto!
+
+O **Viva Segura** está pronto para ser executado.
+Agora você pode acessar o app pelo *Expo Go* e explorar suas funcionalidades na prática.
+
+#
+
+<div align="center">
+
+Projeto dedicado a todas as mulheres que lutam por uma vida mais segura e livre da violência.
+
+### Viva Segura - Livre para Ser. Segura para Viver. 💜
+
+</div>
