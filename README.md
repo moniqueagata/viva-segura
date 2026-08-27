@@ -14,8 +14,8 @@ O **Viva Segura** nasce para reduzir essa insegurança, permitindo que a usuári
 
 O aplicativo conta com dois perfis de acesso:
 
-- 👩 **Usuária** — perfil destinado as mulheres, que utiliza os principais recursos do app.
-- 😇 **Guardião** — contato de confiança escolhida pela usuária que acompanha seus deslocamentos e é acionado(a) em casos de emergência.
+- 👩 **Usuária** — perfil destinado ás mulheres, que utiliza os principais recursos do app.
+- 😇 **Guardião** — contato de confiança escolhido pela usuária que acompanha seus deslocamentos e é acionado(a) em casos de emergência.
 
 ### Principais funcionalidades
 
@@ -23,7 +23,7 @@ O aplicativo conta com dois perfis de acesso:
 - 📍 **Compartilhamento de trajeto** — a Usuária compartilha seu trajeto em tempo real com o Guardião escolhido.
 - 💬 **Chat** — comunicação direta entre Usuária e Guardião.
 - 🚨 **Botão de SOS** — em situações de emergência, envia um alerta imediato ao Guardião.
-- 📌 **Endereços de confiança** — a Usuária pode cadastrar endereços confiaveis (casa, trabalho, etc.).
+- 📌 **Endereços de confiança** — a Usuária pode cadastrar endereços confiaveís (casa, trabalho, etc.).
 - 📰 **Mural de notícias** — conteúdo informativo voltado ao público feminino.
 
 <div align="center">
@@ -37,9 +37,10 @@ O aplicativo conta com dois perfis de acesso:
 ![MySQL](https://img.shields.io/badge/-MySQL-0D1117?style=for-the-badge&logo=mysql&logoColor=7bafd6&labelColor=0D1117)&nbsp;
 ![Git](https://img.shields.io/badge/-Git-0D1117?style=for-the-badge&logo=git&logoColor=fc8b2e&labelColor=0D1117)&nbsp;
 
-<a url="https://project-osrm.org/">
+<a href="https://project-osrm.org/">
 
   ![Project OSRM](https://img.shields.io/badge/API_Project_OSRM-0D1117?style=for-the-badge&logoColor=7bafd6&labelColor=0D1117)&nbsp;
+  
 </a>
 
 </div>
@@ -91,7 +92,9 @@ app-viva-segura/
 
 ## Como executar o projeto?
 
-> ⚠️ **Importante:** o back-end precisa estar rodando **ANTES** de iniciar a aplicação, pois ela depende da API para autenticação e persistência de dados.
+Como o aplicativo depende da API para realizar autenticação e armazenar os dados, o back-end deve estar funcionando **ANTES** de iniciar o app.
+
+> ⚠️ **Importante:** durante a execução local, o celular e o computador precisam estar conectados à **mesma rede Wi-Fi**.
 
 ### 1. Rodando o back-end
 
@@ -99,13 +102,17 @@ O back-end está em um repositório separado, que utiliza o **XAMPP** para o ban
 
 **Pré-requisitos:**
 
-- [PHP](https://www.php.net/) e [Composer](https://getcomposer.org/) instalados
-- [XAMPP](https://www.apachefriends.org/) instalado
+Antes de iniciar, certifique-se de que os seguintes programas estão instalados:
+
+- [PHP](https://www.php.net/)
+- [Composer](https://getcomposer.org/) 
+- [XAMPP](https://www.apachefriends.org/)
 
 **Passo a passo:**
 
 ```bash
 # Clone o repositório
+
 git clone https://github.com/Kaawanny/app-viva-segura-backend.git
 cd app-viva-segura-backend
 
@@ -125,13 +132,17 @@ php artisan db:seed --class=LocalSeguroSeeder
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-> O `--host=0.0.0.0` é necessário para que o celular (rodando via **Expo Go**) consiga acessar a API pela rede local, e não só o `localhost` do computador.
+> O `--host=0.0.0.0` permite que o servidor seja acessado pelo celular através da rede local. Sem essa configuração, a API ficará disponível apenas no computador por meio do `localhost`.
 
 ### 2. Rodando o aplicativo
 
+Com o back-end em execução, agora é necessário configurar e iniciar o aplicativo.
+
 **Pré-requisitos:**
 
-- [Node.js](https://nodejs.org/) instalado
+Certifique-se de que os seguintes recursos estão instalados:
+
+- [Node.js](https://nodejs.org/)
 - [Expo CLI](https://docs.expo.dev/get-started/installation/) instalado globalmente
 - [Expo Go](https://expo.dev/go) instalado no celular (Android/iOS) ou um emulador configurado
 
@@ -139,7 +150,7 @@ php artisan serve --host=0.0.0.0 --port=8000
 
 ```bash
 # Clone o repositório
-git clone https://github.com/aghelloworld/app-viva-segura.git
+git clone https://github.com/agthvie/app-viva-segura.git
 
 # Acesse a pasta do projeto
 cd app-viva-segura
@@ -148,54 +159,60 @@ cd app-viva-segura
 npm install
 ```
  
-> ⚠️ Antes de iniciar o app, altere o IP configurado no `api.js` que se encontra na pasta `services` dentro do projeto, para o **IP local do seu computador**.
+### 3. Configurando o endereço da API
 
-<div align="center">
-  
-  Celular e computador precisam estar configurados na **mesma rede Wi-Fi**.
+Antes de iniciar o aplicativo, é necessário informar onde o back-end está sendo executado.
 
-  <img src="screenshots/local_api.png">
+Para isso, abra o arquivo `api.js`, localizado na pasta `services`, e altere o endereço da API para utilizar o **IP local do computador**.
 
-</div>
-<br>
+<img src="screenshots/local_api.png">
 
-Para descobrir o IP local do seu computador é necessário abrir um novo terminal.
+Como o aplicativo será executado no celular, não é possível utilizar simplesmente `localhost`. Nesse caso, o celular precisa acessar o computador pela **rede Wi-Fi** utilizando o endereço **IP local** da máquina.
+
+**🛜 Como descobrir o IP local?**
+
+Abra um novo terminal no computador e execute:
 
 ```bash
-# Abra um novo terminal e execute
+# Eexecute o comando
 ipconfig
 ```
-<div align="center">
 
-  Procure por **"Endereço IPv4"** e copie a numeração do IP local.
+Procure por **"Endereço IPv4"** e copie o endereço apresentado.
 
-  <img src="screenshots/endereco_ip.png">
-  <br><br>
+<img src="screenshots/endereco_ip.png">
 
-  Depois de copiar o IP, cole na *url* que está no `api.js`.
+> ❗ **Importante:** o celular e o computador precisam estar conectados à **mesma rede Wi-Fi** para que o aplicativo consiga acessar a API.
 
-  <img src="screenshots/url_api.png">
-</div>
-<br>
+Depois de copiar o endereço IPv4, substitua o IP configurado na *url* do arquivo `api.js`.
 
-Em seguida execute o comando abaixo para iniciar o app, e escanei o **QR Code** exibido no terminal com o *Expo Go* instalado em seu celular.
+<img src="screenshots/url_api.png">
+
+### 4. Iniciando o aplicativo
+
+Com o back-end funcionando e o IP configurado, o aplicativo já pode ser iniciado.
+
+No terminal, dentro da pasta do projeto, execute:
 
 ```bash
 # inicie o aplicativo
 npx expo start
 ```
 
+Após executar o comando, o *Expo* exibirá um **QR Code** no terminal.
+
+Abra o aplicativo *Expo Go* no celular e escaneie o QR Code exibido.
+
+Se todas as configurações estiverem corretas, o **Viva Segura** será carregado no dispositivo.
+
 ### ✨ Tudo pronto!
 
-O **Viva Segura** está pronto para ser executado.
-Agora você pode acessar o app pelo *Expo Go* e explorar suas funcionalidades na prática.
+Agora você pode acessar o **Viva Segura** pelo Expo Go e explorar suas funcionalidades na prática.
 
 #
-
+<br>
 <div align="center">
 
-Projeto dedicado a todas as mulheres que lutam por uma vida mais segura e livre da violência.
-
-### Viva Segura - Livre para Ser. Segura para Viver. 💜
+**Projeto dedicado a todas as mulheres que lutam por uma vida mais segura e livre da violência.**
 
 </div>
