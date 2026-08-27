@@ -4,7 +4,7 @@
 
 <br>
 
-**Viva Segura** é um aplicativo desenvolvido como Trabalho de Conclusão de Curso do curso Técnico de Desenvolvimento de Sistemas na **ETEC de Guaianazes**. O objetivo do app é oferecer segurança e proteção às mulheres durante seus deslocamentos diários.
+**Viva Segura** é um aplicativo desenvolvido como Trabalho de Conclusão de Curso do curso Técnico de Desenvolvimento de Sistemas na *ETEC de Guaianazes*. O objetivo do app é oferecer segurança e proteção às mulheres durante seus deslocamentos diários.
 
 ## 💡 Sobre o projeto
 
@@ -15,23 +15,23 @@ O **Viva Segura** nasce para reduzir essa insegurança, permitindo que a usuári
 O aplicativo conta com dois perfis de acesso:
 
 - 👩 **Usuária** — perfil destinado ás mulheres, que utiliza os principais recursos do app.
-- 😇 **Guardião** — contato de confiança escolhido pela usuária que acompanha seus deslocamentos e é acionado(a) em casos de emergência.
+- 😇 **Guardião** — contato de confiança escolhido pela usuária que acompanha seus deslocamentos e é acionado em casos de emergência.
 
 ### Principais funcionalidades
 
-- 🔐 **Autenticação e escolha de perfil** — ao entrar no app, o usuário define se é Usuária ou Guardião.
-- 📍 **Compartilhamento de trajeto** — a Usuária compartilha seu trajeto em tempo real com o Guardião escolhido.
-- 💬 **Chat** — comunicação direta entre Usuária e Guardião.
-- 🚨 **Botão de SOS** — em situações de emergência, envia um alerta imediato ao Guardião.
-- 📌 **Endereços de confiança** — a Usuária pode cadastrar endereços confiaveís (casa, trabalho, etc.).
+- 🔐 **Autenticação e escolha de perfil** — ao entrar no app, o usuário define se é *Usuária* ou *Guardião*.
+- 📍 **Compartilhamento de trajeto** — a usuária compartilha seu trajeto em tempo real com o Guardião escolhido.
+- 💬 **Chat** — comunicação direta entre usuária e guardião.
+- 🚨 **Botão de SOS** — em situações de emergência, envia um alerta imediato ao guardião.
+- 📌 **Endereços de confiança** — a usuária pode cadastrar endereços confiaveís (casa, trabalho, etc.).
 - 📰 **Mural de notícias** — conteúdo informativo voltado ao público feminino.
 
 <div align="center">
 
 ### 💻 Tecnologias utilizadas
 
-![Expo](https://img.shields.io/badge/-Expo-0D1117?style=for-the-badge&logo=expo&logoColor=f0f0f0&labelColor=0D1117)&nbsp;
 ![React Native](https://img.shields.io/badge/-React_Native-0D1117?style=for-the-badge&logo=react&logoColor=61DAFB&labelColor=0D1117)&nbsp;
+![Expo](https://img.shields.io/badge/-Expo-0D1117?style=for-the-badge&logo=expo&logoColor=f0f0f0&labelColor=0D1117)&nbsp;
 ![JavaScript](https://img.shields.io/badge/-JavaScript-0D1117?style=for-the-badge&logo=javascript&logoColor=ffe240&labelColor=0D1117)&nbsp;
 ![Laravel](https://img.shields.io/badge/-Laravel-0D1117?style=for-the-badge&logo=laravel&logoColor=e63124&labelColor=0D1117)&nbsp;
 ![MySQL](https://img.shields.io/badge/-MySQL-0D1117?style=for-the-badge&logo=mysql&logoColor=7bafd6&labelColor=0D1117)&nbsp;
@@ -47,7 +47,7 @@ O aplicativo conta com dois perfis de acesso:
 
 ## 📱 Prints do aplicativo
 
-<h3 align="center">Usuária</h3>
+<h3 align="center">Telas da usuária</h3>
 <table align="center">
   <tr>
     <td align="center">Home</td>
@@ -61,7 +61,7 @@ O aplicativo conta com dois perfis de acesso:
   </tr>
 </table>
 
-<h3 align="center">Guardião</h3>
+<h3 align="center">Telas do guardião</h3>
 <table align="center">
   <tr>
     <td align="center">Home</td>
@@ -167,14 +167,14 @@ Para isso, abra o arquivo `api.js`, localizado na pasta `services`, e altere o e
 
 <img src="screenshots/local_api.png">
 
-Como o aplicativo será executado no celular, não é possível utilizar simplesmente `localhost`. Nesse caso, o celular precisa acessar o computador pela **rede Wi-Fi** utilizando o endereço **IP local** da máquina.
+Como o aplicativo será executado no celular, não é possível utilizar simplesmente `localhost`. Nesse caso, o celular precisa acessar o computador pela **rede Wi-Fi** utilizando o endereço IP local.
 
-**🛜 Como descobrir o IP local?**
+### 🛜 Como descobrir o IP local?
 
 Abra um novo terminal no computador e execute:
 
 ```bash
-# Eexecute o comando
+# Execute o comando
 ipconfig
 ```
 
@@ -207,12 +207,12 @@ Se todas as configurações estiverem corretas, o **Viva Segura** será carregad
 
 ### ✨ Tudo pronto!
 
-Agora você pode acessar o **Viva Segura** pelo Expo Go e explorar suas funcionalidades na prática.
+Agora você pode acessar o **Viva Segura** e explorar suas funcionalidades na prática.
 
 #
 <br>
 <div align="center">
 
-**Projeto dedicado a todas as mulheres que lutam por uma vida mais segura e livre da violência.**
+<strong> *Projeto dedicado a todas as mulheres que lutam por uma vida mais segura e livre da violência.* </strong>
 
 </div>
