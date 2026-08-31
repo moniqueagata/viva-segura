@@ -150,7 +150,7 @@ Certifique-se de que os seguintes recursos estão instalados:
 
 ```bash
 # Clone o repositório
-git clone https://github.com/agthvie/app-viva-segura.git
+git clone https://github.com/moniqueagata/app-viva-segura.git
 
 # Acesse a pasta do projeto
 cd app-viva-segura
